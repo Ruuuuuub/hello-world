@@ -17,7 +17,8 @@ Trois modes :
 | Arrivée seule | Toutes les gares d'où tu peux venir à 0 € |
 | Départ + arrivée | Un calendrier sur 30 jours avec les jours où il reste des places, puis les horaires |
 
-Filtres par moment de la journée, tri (plus de trains, plus rapide, plus tôt, A→Z),
+Bouton « Réserver ce train » sur chaque train (copie le récapitulatif et ouvre SNCF Connect),
+actualisation automatique des résultats toutes les 10 minutes, filtres par moment de la journée, tri (plus de trains, plus rapide, plus tôt, A→Z),
 clic sur une gare de la carte pour la choisir, et lien partageable (l'URL contient la recherche).
 
 ## Données
