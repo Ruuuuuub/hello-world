@@ -225,20 +225,72 @@ details.fiche[open] summary::after{content:"–"}
   @keyframes pop{from{transform:translateY(6px);opacity:.4}to{transform:none;opacity:1}}
   .ring .fg{transition:stroke-dashoffset .5s}
 }
+
+:root{--marker-wash:#fff5c7}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--marker-wash:#3a3210}}
+:root[data-theme="dark"]{--marker-wash:#3a3210}
+.tipbox{background:var(--marker-wash);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.tipbox .eyebrow{color:var(--ink)}
+.opt.sel{border-color:var(--blue);background:var(--blue-wash)}
+.opt.sel .bub{background:var(--blue);border-color:var(--blue);color:var(--sheet)}
+.photo{border:2px dashed var(--line);border-radius:14px;padding:18px;display:flex;gap:14px;align-items:flex-start;background:var(--paper)}
+.photo .cam{flex:none;width:44px;height:44px;border-radius:12px;background:var(--ink);color:var(--paper);display:grid;place-items:center;font-family:var(--f-mono);font-size:.7rem;letter-spacing:.05em}
+.photo p{font-style:italic}
+.doc{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--sheet)}
+.doc .dh{font-family:var(--f-mono);font-size:.78rem;white-space:pre-line;padding:10px 14px;background:var(--paper);border-bottom:1px solid var(--line);color:var(--ink-soft)}
+.doc .db{padding:14px;white-space:pre-line;font-size:.98rem;overflow-wrap:anywhere}
+.slot{font-family:var(--f-mono);font-weight:700;background:var(--blue-wash);color:var(--blue);border-radius:6px;padding:0 6px;white-space:nowrap}
+.slot.done{background:var(--good-wash);color:var(--good)}
+.subq{border-top:1px solid var(--line);padding-top:16px;display:flex;flex-direction:column;gap:10px}
+.subq:first-child{border-top:0;padding-top:0}
+.subq .qt{font-weight:700;font-size:1.05rem}
+.mini{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:.9rem}
+.mini.ok{color:var(--good)}.mini.ko{color:var(--bad)}
+.script{display:flex;flex-direction:column;gap:6px;font-size:.95rem}
+.script b{font-family:var(--f-mono);font-size:.75rem;color:var(--ink-soft);margin-right:6px}
+.parts{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.part{display:flex;flex-direction:column;gap:10px}
+.part h3{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.part h3 .mono{font-size:.75rem;color:var(--ink-soft);font-weight:500}
+.part .meta{display:flex;gap:14px;flex-wrap:wrap;font-size:.85rem;color:var(--ink-soft)}
+.part .meta b{font-family:var(--f-mono);color:var(--ink)}
+.prog{display:flex;flex-direction:column;gap:0}
+.blk{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
+.blk:first-child{border-top:0;padding-top:0}
+.blk .min{font-family:var(--f-mono);font-size:.75rem;color:var(--ink-soft);width:52px}
+.blk .lbl{display:flex;flex-direction:column;gap:5px;min-width:0}
+.blk .lbl b{font-size:.98rem}
+.blk .track{height:7px;border-radius:4px;background:var(--line);overflow:hidden}
+.blk .track i{display:block;height:100%;background:var(--blue)}
+.blk.done .track i{background:var(--good)}
+.blk .cnt{font-family:var(--f-mono);font-size:.8rem;color:var(--ink-soft)}
+.blk a.btn{padding:8px 12px;font-size:.85rem}
+@media (max-width:480px){.blk{grid-template-columns:1fr auto}.blk .min{display:none}}
+.score{display:flex;flex-direction:column;gap:12px}
+.score .nums{display:flex;gap:18px;flex-wrap:wrap;align-items:baseline}
+.score .tot{font-family:var(--f-display);font-weight:800;font-size:3rem;line-height:1;color:var(--blue)}
+.score .tot.ok{color:var(--good)}
+.sbar{position:relative;height:12px;border-radius:6px;background:var(--line)}
+.sbar i{position:absolute;left:0;top:0;bottom:0;border-radius:6px;background:var(--blue)}
+.sbar .goal{position:absolute;top:-6px;bottom:-6px;width:3px;background:var(--bad);border-radius:2px}
+.sbar .gl{position:absolute;top:-24px;transform:translateX(-50%);font-family:var(--f-mono);font-size:.7rem;color:var(--bad);font-weight:700;white-space:nowrap}
+.level{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;background:var(--ink);color:var(--paper);border-radius:6px;padding:2px 7px}
+.toggle{display:inline-flex;align-items:center;gap:8px;font-size:.9rem;cursor:pointer}
+.toggle input{width:18px;height:18px;accent-color:var(--blue)}
 </style>
 </head>
 <body>
 
 <div class="wrap">
   <header class="top">
-    <div class="brand"><b>TOEIC <span id="hdrDays" class="mono" style="font-size:inherit;color:inherit">J-19</span></b><span>L&amp;R · 10–990</span></div>
+    <div class="brand"><b>TOEIC <span id="hdrDays" class="mono" style="font-size:inherit;color:inherit">J-17</span></b><span>objectif 870</span></div>
     <div class="chips"><span class="chip" id="streak">0 jour</span><span class="chip" id="sync"><i class="dot"></i>Sauvegarde…</span></div>
   </header>
   <nav class="tabs" aria-label="Sections">
     <a href="#accueil" data-v="accueil"><span class="ico">⌂</span>Accueil</a>
     <a href="#vocab" data-v="vocab"><span class="ico">A</span>Vocab<span class="badge" id="bv" hidden></span></a>
-    <a href="#grammaire" data-v="grammaire"><span class="ico">B</span>Part 5<span class="badge" id="bg" hidden></span></a>
-    <a href="#ecoute" data-v="ecoute"><span class="ico">C</span>Part 2<span class="badge" id="bl" hidden></span></a>
+    <a href="#ecoute" data-v="ecoute"><span class="ico">L</span>Écoute<span class="badge" id="bl" hidden></span></a>
+    <a href="#lecture" data-v="lecture"><span class="ico">R</span>Lecture<span class="badge" id="br" hidden></span></a>
     <a href="#fiches" data-v="fiches"><span class="ico">D</span>Fiches</a>
   </nav>
   <main id="main"></main>
@@ -247,10 +299,6 @@ details.fiche[open] summary::after{content:"–"}
 <script>
 (function(){
 "use strict";
-/* ================= DONNÉES ================= */
-const EXAM=new Date(2026,10,21);
-const START=new Date(2026,10,2);
-
 const VOCAB=[
 ["deadline","date limite","The deadline for submitting the budget is Friday.","Bureau"],
 ["to postpone","reporter (à plus tard)","The board meeting has been postponed until next month.","Bureau"],
@@ -412,7 +460,7 @@ const VOCAB=[
 
 /* Part 5 : s = phrase, o = options, a = bonne réponse, c = catégorie, fr = traduction,
    k = l'indice dans la phrase, r = la règle, w = pourquoi chaque option est juste ou fausse */
-const G=(s,o,a,c,fr,k,r,w)=>({s,o,a,c,fr,k,r,w});
+const G=(s,o,a,c,fr,k,r,w,t,h)=>({s,o,a,c,fr,k,r,w,t,h});
 const GRAMMAR=[
 G("The new software will help employees work more ___.",["efficient","efficiency","efficiently","efficiencies"],2,"Nature des mots","Le nouveau logiciel aidera les employés à travailler plus efficacement.","« work more ___ » : on décrit COMMENT ils travaillent, donc on décrit un verbe.","Pour décrire un verbe, on utilise un adverbe (souvent en -ly).",["Adjectif : il décrit un nom, pas un verbe.","Nom (« l'efficacité ») : impossible après « work more ».","Adverbe : il décrit le verbe « work ».","Nom au pluriel : aucun sens ici."]),
 G("Ms. Tanaka gave an ___ presentation at the conference.",["impress","impressive","impressively","impression"],1,"Nature des mots","Mme Tanaka a fait une présentation impressionnante à la conférence.","« an ___ presentation » : le trou est entre un article (an) et un nom.","Article + ___ + nom → adjectif.",["Verbe : un verbe ne peut pas décrire un nom.","Adjectif (-ive) : il décrit « presentation ».","Adverbe : il ne décrit jamais un nom.","Nom : « an impression presentation » ne veut rien dire."]),
@@ -483,7 +531,7 @@ G("Ms. Patel ___ the report yet.",["hasn't finished","didn't finish","doesn't fi
 ];
 
 /* Part 2 : q = question, o = 3 réponses, a = bonne, fr = traduction, k = indice, w = pourquoi */
-const P=(q,o,a,fr,k,w)=>({q,o,a,fr,k,w});
+const P=(q,o,a,fr,k,w,t,h)=>({q,o,a,fr,k,w,t,h});
 const LISTEN=[
 P("Where is the nearest post office?",["It's two blocks from here.","I posted it yesterday.","Yes, it's open."],0,"Où est le bureau de poste le plus proche ?","Where = un lieu.",["Donne un lieu.","Piège sonore : « posted » rappelle « post ».","On ne répond jamais Yes / No à une question en Where."]),
 P("When does the training session start?",["In Room 204.","At ten o'clock.","Yes, I trained hard."],1,"Quand commence la formation ?","When = un moment.",["Répond à Where (un lieu).","Donne un moment.","Yes impossible, et piège « trained »."]),
@@ -517,44 +565,307 @@ P("Why is the store closed today?",["It's a national holiday.","Close to the sta
 P("Haven't we met before?",["Yes, at the trade show last year.","The meeting is at noon.","I met the deadline."],0,"On ne s'est pas déjà rencontrés ?","Question négative = vérifier une info.",["Réponse cohérente.","Piège : « meeting ».","Piège : « met »."])
 ];
 
+/* ---------- Vocabulaire niveau 870+ ---------- */
+VOCAB.push(
+["to streamline","rationaliser, simplifier","We streamlined the ordering process to save time.","Niveau 870+"],
+["to allocate","attribuer, affecter (des fonds)","The board allocated $2 million to research.","Niveau 870+"],
+["to expedite","accélérer (une procédure)","Could you expedite the shipment? We need it by Monday.","Niveau 870+"],
+["tentative","provisoire","The tentative date for the launch is May 3.","Niveau 870+"],
+["contingent upon","subordonné à","The offer is contingent upon a background check.","Niveau 870+"],
+["to waive","renoncer à, supprimer (des frais)","The bank agreed to waive the annual fee.","Niveau 870+"],
+["surplus","excédent","The company reported a budget surplus.","Niveau 870+"],
+["turnover","rotation du personnel / chiffre d'affaires (UK)","High staff turnover increases training costs.","Niveau 870+"],
+["liability","responsabilité (légale), passif","The company denied any liability for the damage.","Niveau 870+"],
+["itemized","détaillé (ligne par ligne)","Please send an itemized receipt.","Niveau 870+"],
+["complimentary","gratuit, offert (≠ complémentaire)","Guests receive a complimentary breakfast.","Niveau 870+"],
+["to adjourn","lever, suspendre (une séance)","The meeting was adjourned at 5 P.M.","Niveau 870+"],
+["to commence","commencer (formel)","The ceremony will commence at noon.","Niveau 870+"],
+["pending","en attente de","The contract is pending approval.","Niveau 870+"],
+["prerequisite","condition préalable","A degree in finance is a prerequisite for this job.","Niveau 870+"],
+["to solicit","solliciter, demander","We are soliciting feedback from our clients.","Niveau 870+"],
+["incentive","incitation, prime","Employees receive incentives for meeting targets.","Niveau 870+"],
+["to endorse","approuver, soutenir publiquement","The union endorsed the new agreement.","Niveau 870+"],
+["proficient","compétent, qui maîtrise","Applicants must be proficient in Excel.","Niveau 870+"],
+["redundant","superflu / licencié (UK)","Remove any redundant information from the report.","Niveau 870+"],
+["to accommodate","accueillir, répondre aux besoins de","The hall can accommodate 300 guests.","Niveau 870+"],
+["to alleviate","atténuer, soulager","The new road will alleviate traffic congestion.","Niveau 870+"],
+["to consolidate","regrouper, consolider","We consolidated our two warehouses into one.","Niveau 870+"],
+["discrepancy","écart, incohérence","There is a discrepancy between the invoice and the order.","Niveau 870+"],
+["to entail","impliquer, entraîner","The job entails frequent travel.","Niveau 870+"],
+["feasible","réalisable","Is it feasible to finish by Friday?","Niveau 870+"],
+["to retain","conserver, fidéliser","We need to retain our best employees.","Niveau 870+"],
+["stringent","strict, rigoureux","The factory follows stringent safety rules.","Niveau 870+"],
+["to supersede","remplacer (une règle)","This policy supersedes all previous versions.","Niveau 870+"],
+["to undergo","subir, faire l'objet de","The building will undergo renovations.","Niveau 870+"],
+["upcoming","à venir, prochain","Please prepare for the upcoming audit.","Niveau 870+"],
+["vacancy","poste vacant / chambre libre","We have a vacancy in the sales team.","Niveau 870+"],
+["to verify","vérifier","Please verify your address before ordering.","Niveau 870+"],
+["to yield","produire, rapporter","The investment yielded a 7% return.","Niveau 870+"],
+["to oversee","superviser","She will oversee the merger.","Niveau 870+"],
+["in compliance with","conformément à","All products are in compliance with EU standards.","Niveau 870+"],
+["on behalf of","au nom de","I'm writing on behalf of the director.","Niveau 870+"],
+["in light of","à la lumière de, compte tenu de","In light of the results, we will change our strategy.","Niveau 870+"],
+["to defer","différer, reporter","Payment can be deferred until next month.","Niveau 870+"],
+["to reimburse","rembourser (des frais)","Travel costs will be reimbursed within 30 days.","Niveau 870+"]
+);
+
+/* ---------- Astuces par catégorie (Part 5) ---------- */
+const CAT_TIPS={
+"Nature des mots":["Regarde d'abord les 4 options : si ce sont des formes du même mot, ne lis que les mots autour du trou. Tu gagnes 10 secondes.","Le mot juste avant et le mot juste après le trou suffisent presque toujours à trouver la nature du mot.","Les adverbes en -ly se placent souvent entre l'auxiliaire et le participe : « has significantly increased »."],
+"Prépositions":["Pour le temps, cherche le repère : une date (on), une durée (for), un point de départ (since), une échéance (by).","Apprends les prépositions avec leur mot : responsible for, interested in, in charge of, in accordance with.","Action ponctuelle (submit, finish) → by. Action qui dure (stay, remain, be open) → until."],
+"Connecteurs":["Pose-toi deux questions : quel sens (cause, opposition, ajout) ? Et qu'est-ce qui suit (un nom ou une phrase) ? Ça élimine trois options sur quatre.","despite / because of / due to + NOM. although / because / even though + SUJET + VERBE.","however, therefore, moreover relient deux phrases, avec ponctuation : « ; however, »."],
+"Temps & voix":["Cherche le marqueur de temps (since, yesterday, next, by the end of) : il impose le temps du verbe.","Si le sujet est une chose (the package, the report), pense au passif : be + participe passé.","Après un modal (will, must, should, can) : toujours la base verbale, sans -s ni -ing."],
+"Pronoms":["Devant un nom → their / his / her. Après une préposition → them / him / her. Seul → theirs / his / hers.","who pour une personne, which pour une chose, whose + nom pour la possession.","« by + -self » = tout seul : by himself, by themselves."],
+"Comparaison":["« than » dans la phrase = comparatif obligatoire. « the … of / in / so far » = superlatif.","much, far, significantly renforcent un comparatif. Jamais very."],
+"Quantité":["Demande-toi si le nom se compte : fewer / many / a few + pluriel, less / much / little + indénombrable.","Indénombrables fréquents au TOEIC : information, equipment, advice, furniture, luggage, feedback."],
+"Accords":["each, every, the number of, everyone → verbe au singulier.","Les mots entre le sujet et le verbe (of the participants, together with…) ne changent pas l'accord : trouve le vrai sujet."],
+"Vocabulaire":["Quand les 4 options ont un sens proche, c'est une question de collocation : quel mot va naturellement avec le complément ?","Apprends les verbes avec leur complément : meet a deadline, conduct a survey, place an order, submit a report."]
+};
+const P2_TIPS=["Concentre-toi sur les 3 premiers mots de la question : c'est là qu'est l'information clé.","Si tu hésites, élimine d'abord les réponses qui répètent un mot de la question.","Une réponse qui ne répond pas directement (« Let me check », « I'm not sure ») est souvent la bonne.","Pendant la Part 2, il n'y a rien à lire : ferme les yeux une seconde et écoute le premier mot."];
+
+/* ---------- Part 5 niveau 870+ ---------- */
+const H=(...x)=>Object.assign(G(...x),{h:1});
+GRAMMAR.push(
+H("The board recommended that the proposal ___ revised before the next meeting.",["is","be","was","will be"],1,"Temps & voix","La direction a recommandé que la proposition soit révisée avant la prochaine réunion.","« recommended that » : un verbe de recommandation suivi de « that ».","recommend / suggest / insist / require that + sujet + BASE VERBALE (subjonctif), même au passé.",["« is » : indicatif, faux après « recommend that ».","Subjonctif : base verbale « be ».","« was » : on ne conjugue pas au passé après « recommended that ».","« will be » : pas de futur dans ce subjonctif."],"Dès que tu vois recommend, suggest, request, insist, require ou it is essential that, cherche la base verbale sans -s : « that he be », « that she submit »."),
+H("Not only ___ the deadline, but the team also came in under budget.",["the team met","did the team meet","the team did meet","has the team met"],1,"Temps & voix","Non seulement l'équipe a respecté le délai, mais elle est aussi restée sous le budget.","« Not only » en tête de phrase.","Not only / Rarely / Never / Seldom en début de phrase → inversion : auxiliaire + sujet + verbe.",["Ordre normal : interdit après « Not only » en tête.","Inversion avec « did » au passé.","Ordre normal avec « did » : toujours pas d'inversion.","Present perfect : la suite « came » est au prétérit."],"Mot négatif en tête de phrase (Not only, Never, Rarely, Hardly, Only after) = inversion comme dans une question. C'est un classique des questions difficiles."),
+H("___ completed the training, the new hires were assigned to their teams.",["Having","Have","Had","Being"],0,"Temps & voix","Après avoir terminé la formation, les nouvelles recrues ont été affectées à leurs équipes.","« ___ completed …, the new hires were… » : il n'y a pas de sujet avant la virgule.","Having + participe passé = « après avoir… » (action terminée avant l'autre).",["« Ayant terminé » : proposition participiale correcte.","Base verbale sans sujet : impossible.","« Had completed » demanderait un sujet ou une inversion conditionnelle.","« Being completed » : passif, sens faux."],"Une virgule et pas de sujet dans la première partie ? Pense à Having + participe (antériorité) ou V-ing (simultané)."),
+H("Had we known about the delay, we ___ the client earlier.",["would notify","will notify","would have notified","had notified"],2,"Temps & voix","Si nous avions été au courant du retard, nous aurions prévenu le client plus tôt.","« Had we known » = If we had known (passé irréel).","Conditionnel passé : If + had + participe → would have + participe. « Had we known » = If we had known.",["Conditionnel présent : ne correspond pas au passé irréel.","Futur : impossible dans une hypothèse irréelle.","would have + participe passé.","Plus-que-parfait : il faut « would have » dans la partie résultat."],"Une phrase qui commence par Had, Should ou Were sans « if » est une condition inversée. Had → would have + participe."),
+H("The renovation will be completed in ___ with the city's safety regulations.",["accordance","according","accord","accordingly"],0,"Prépositions","Les travaux seront réalisés conformément aux règles de sécurité de la ville.","« in ___ with » : expression figée.","in accordance with = conformément à.",["Expression « in accordance with ».","« according to » existe, mais sans « in » ni « with ».","« accord » : on dit « of its own accord » (de son plein gré).","Adverbe « en conséquence »."],"Expressions figées très fréquentes : in accordance with, in compliance with, on behalf of, in light of, with regard to, in response to."),
+H("Ms. Ito accepted the award on ___ of the entire research team.",["behalf","part","account","place"],0,"Prépositions","Mme Ito a reçu le prix au nom de toute l'équipe de recherche.","« on ___ of the team » : elle accepte à la place de l'équipe.","on behalf of = au nom de, pour le compte de.",["on behalf of.","« on the part of » = de la part de : il faudrait « the ».","« on account of » = à cause de : sens faux.","« in place of » = au lieu de : préposition « in »."],"on behalf of tombe souvent dans les e-mails : « I'm writing on behalf of… »."),
+H("The new policy will ___ all full-time employees, regardless of their department.",["effect","affect","effective","affection"],1,"Vocabulaire","La nouvelle politique concernera tous les salariés à temps plein, quel que soit leur service.","« will ___ all employees » : après « will », il faut un verbe qui veut dire « toucher, concerner ».","affect (verbe) = affecter, toucher · effect (nom) = effet.",["« effect » est presque toujours un nom (an effect).","Verbe « affect ».","Adjectif : il faut un verbe après « will ».","Nom « affection »."],"Moyen mnémotechnique : Affect = Action (verbe), Effect = End result (nom)."),
+H("Prices have ___ steadily over the past three quarters.",["raised","risen","rose","arisen"],1,"Vocabulaire","Les prix ont augmenté régulièrement au cours des trois derniers trimestres.","« Prices have ___ » : pas de complément après le verbe.","rise / rose / risen = augmenter tout seul · raise / raised = augmenter QUELQUE CHOSE.",["« raise » a besoin d'un complément (raise prices).","Participe passé de « rise ».","Prétérit : après « have », il faut le participe passé.","« arise » = surgir (un problème)."],"Pas de complément direct → rise. Complément direct → raise. Même logique pour lie / lay."),
+H("Those ___ wish to attend the seminar should register by Friday.",["who","whom","which","whoever"],0,"Pronoms","Les personnes qui souhaitent assister au séminaire doivent s'inscrire avant vendredi.","« Those ___ wish » : « those » = les personnes, et il manque le sujet de « wish ».","those who = ceux qui.",["those who + verbe.","whom : complément, jamais suivi directement d'un verbe.","which : pour des choses.","« whoever » ne s'emploie pas après « those »."],"« Those who » est une structure très fréquente dans les annonces : « Those who are interested… »."),
+H("The committee is committed to ___ the quality of patient care.",["improve","improving","improved","be improved"],1,"Temps & voix","Le comité s'engage à améliorer la qualité des soins.","« committed to ___ » : ici « to » est une préposition.","be committed / dedicated / devoted to + V-ing. Aussi : look forward to, object to, be used to.",["« to improve » : piège, « to » est une préposition ici.","V-ing après la préposition « to ».","Participe passé.","Passif : sens faux."],"Teste : peux-tu mettre un nom après « to » ? (committed to quality → oui). Alors c'est une préposition, et le verbe prend -ing."),
+H("The applicants were ___ qualified that the manager decided to interview all of them.",["such","so","very","too"],1,"Comparaison","Les candidats étaient si qualifiés que la responsable a décidé de tous les recevoir.","« ___ qualified that » : un adjectif seul suivi de « that ».","so + adjectif + that · such + (a) + adjectif + nom + that.",["such demande un nom après l'adjectif.","so + adjectif + that.","very ne s'emploie pas avec « that ».","too = trop : sens négatif, et « too … to »."],"so + adjectif seul ; such + nom. Regarde s'il y a un nom après l'adjectif."),
+H("It was ___ a successful launch that the company doubled its production.",["so","such","too","very"],1,"Comparaison","Le lancement a été un tel succès que l'entreprise a doublé sa production.","« ___ a successful launch that » : il y a un nom (launch) avec « a ».","such + a + adjectif + nom + that.",["so ne se place pas avant « a + nom ».","such a + adjectif + nom.","too : sens « trop ».","very : pas avec « that »."],"« such a » : le « a » est un indice immédiat."),
+H("Rarely ___ such a high level of customer satisfaction.",["we have seen","have we seen","we saw","did we saw"],1,"Temps & voix","Nous avons rarement vu un tel niveau de satisfaction client.","« Rarely » en tête de phrase.","Rarely / Seldom / Never en tête → inversion : auxiliaire + sujet.",["Ordre normal : interdit après « Rarely » en tête.","Inversion avec l'auxiliaire « have ».","Ordre normal.","Après « did », il faut la base « see »."],"Un adverbe négatif en tête de phrase = l'ordre de la question. Cherche l'auxiliaire avant le sujet."),
+H("Full-time employees are ___ to two weeks of paid vacation per year.",["eligible","entitled","allowed","able"],1,"Vocabulaire","Les salariés à temps plein ont droit à deux semaines de congés payés par an.","« are ___ to two weeks » : « to » est suivi d'un nom.","be entitled to + nom = avoir droit à · be eligible for + nom.",["eligible va avec « for ».","entitled to + nom.","allowed to + verbe, pas + nom.","able to + verbe."],"entitled to (droit), eligible for (remplir les conditions). Paire classique des questions difficiles."),
+H("Only staff members who have worked here for a year are ___ for the bonus.",["entitled","eligible","capable","available"],1,"Vocabulaire","Seuls les employés présents depuis un an peuvent prétendre à la prime.","« are ___ for the bonus ».","be eligible for = remplir les conditions pour.",["entitled va avec « to ».","eligible for.","capable of : sens « être capable ».","available : disponible, sens faux."],"Retiens les paires : eligible for, entitled to, responsible for, capable of."),
+H("Please ___ to the guidelines when preparing your report.",["comply","adhere","follow","respect"],1,"Vocabulaire","Veuillez respecter les consignes lors de la rédaction de votre rapport.","« ___ to the guidelines » : le verbe est suivi de « to ».","adhere to = respecter · comply with · follow / respect sans préposition.",["comply va avec « with ».","adhere to.","follow s'emploie sans « to ».","respect s'emploie sans « to »."],"Quand 4 verbes ont le même sens, la préposition qui suit fait la différence."),
+H("The rise in sales can be ___ for by the success of the holiday campaign.",["explained","accounted","caused","resulted"],1,"Vocabulaire","La hausse des ventes s'explique par le succès de la campagne des fêtes.","« ___ for by » : le verbe se construit avec « for ».","account for = expliquer, représenter.",["« explained for » n'existe pas.","account for.","« caused for » n'existe pas.","result in / result from, pas « for »."],"account for a deux sens au TOEIC : expliquer, et représenter une part (« accounts for 30 % of sales »)."),
+H("The CEO addressed the shareholders' ___ about the merger.",["concerned","concerns","concerning","concernedly"],1,"Nature des mots","Le PDG a répondu aux inquiétudes des actionnaires au sujet de la fusion.","« the shareholders' ___ about » : après un possessif.","Possessif (shareholders') + ___ → nom.",["Adjectif.","Nom (les inquiétudes).","Préposition « concernant ».","Adverbe."],"« address concerns » = répondre aux inquiétudes. Collocation fréquente."),
+H("The company's profits increased ___ 15 percent last year.",["at","by","of","with"],1,"Prépositions","Les bénéfices de l'entreprise ont augmenté de 15 % l'an dernier.","« increased ___ 15 percent » : on donne l'ampleur de la hausse.","increase / rise / fall BY + écart · TO + nouveau niveau.",["at : pour un niveau stable (stood at 15 %).","by = l'écart.","« an increase of 15 % » avec le nom, pas avec le verbe.","with : ne s'emploie pas."],"Verbe + by (rose by 15 %). Nom + of (a rise of 15 %). Piège classique."),
+H("The new branch will open ___ the approval of the city council is obtained.",["once","despite","during","whereas"],0,"Connecteurs","La nouvelle agence ouvrira dès que l'accord du conseil municipal sera obtenu.","« ___ the approval … is obtained » : sujet + verbe, idée de temps.","once = dès que, une fois que (+ phrase).",["Dès que.","despite + nom.","during + nom.","whereas = alors que (opposition)."],"Après once, when, as soon as : présent même pour parler du futur (is obtained, pas will be)."),
+H("The shipment was delayed; ___, we were unable to fill the order on time.",["consequently","nevertheless","otherwise","furthermore"],0,"Connecteurs","La livraison a été retardée ; par conséquent, nous n'avons pas pu honorer la commande à temps.","Le retard est la cause, l'échec est la conséquence.","consequently = par conséquent.",["Conséquence.","nevertheless = néanmoins (opposition).","otherwise = sinon.","furthermore = de plus (ajout)."],"Entre deux phrases, identifie la relation logique avant de lire les options."),
+H("Mr. Reyes worked late ___ he could finish the presentation before the deadline.",["so that","in order to","as long as","even if"],0,"Connecteurs","M. Reyes a travaillé tard afin de pouvoir finir la présentation avant l'échéance.","« ___ he could finish » : sujet + verbe, idée de but.","so that + sujet + verbe · in order to + base verbale.",["But + phrase.","in order to + verbe, sans sujet.","as long as = tant que.","even if = même si."],"Pour le but : so that + phrase, in order to / so as to + verbe."),
+H("The proposal, ___ was submitted last week, is still under review.",["that","which","what","it"],1,"Pronoms","La proposition, qui a été soumise la semaine dernière, est toujours à l'étude.","Le trou est entre deux virgules.","Entre virgules → which (chose) ou who (personne). Jamais that.",["that : interdit entre virgules.","which entre virgules.","what ne reprend pas un nom.","it : deux phrases collées sans liaison."],"Virgule avant le trou = jamais « that »."),
+H("All requests must be submitted no ___ than Friday at noon.",["later","latest","late","lately"],0,"Comparaison","Toutes les demandes doivent être remises au plus tard vendredi midi.","« no ___ than ».","no later than = au plus tard.",["no later than.","Superlatif : pas avec « than ».","Pas de comparatif.","lately = récemment."],"Expressions figées des e-mails : no later than, as soon as possible, at your earliest convenience."),
+H("By the time the CEO arrived, the meeting ___ for an hour.",["has started","had been going on","was started","will go on"],1,"Temps & voix","Quand le PDG est arrivé, la réunion durait déjà depuis une heure.","« By the time … arrived » + « for an hour ».","Action en cours avant un moment passé → had been + V-ing.",["Present perfect : pas avec un repère passé.","Plus-que-parfait continu.","Passif : sens faux.","Futur : la phrase est au passé."],"By the time + passé → plus-que-parfait (had + participe). By the time + présent → futur antérieur."),
+H("The software update is ___ to fix the login problem.",["expected","expecting","expectation","expectant"],0,"Temps & voix","La mise à jour devrait corriger le problème de connexion.","« is ___ to fix » : la mise à jour ne prévoit rien, on prévoit qu'elle corrige.","be expected to + verbe = devoir normalement, être censé.",["Passif « is expected to ».","Actif : la mise à jour n'attend rien.","Nom.","Adjectif (« future maman »)."],"be expected to, be scheduled to, be supposed to : très fréquents pour parler de ce qui est prévu."),
+H("The marketing director, together with her assistants, ___ attending the trade fair.",["are","is","were","have been"],1,"Accords","La directrice marketing, accompagnée de ses assistants, participe au salon.","Le vrai sujet est « The marketing director ».","together with, as well as, along with ne changent pas l'accord.",["Pluriel : faux, le sujet est singulier.","Singulier.","Pluriel.","Pluriel."],"Barre mentalement tout ce qui est entre virgules pour trouver le vrai sujet."),
+H("Neither the manager nor the employees ___ informed of the change.",["was","were","has been","is"],1,"Accords","Ni le responsable ni les employés n'ont été informés du changement.","Le sujet le plus proche du verbe est « the employees ».","neither … nor / either … or : le verbe s'accorde avec le sujet le plus proche.",["Singulier : le sujet le plus proche est pluriel.","Pluriel.","Singulier.","Singulier."],"Avec either / neither, regarde seulement le nom juste avant le verbe."),
+H("The hotel staff did everything they could to make the guests feel ___.",["comfortable","comfortably","comfort","comforting"],0,"Nature des mots","Le personnel de l'hôtel a tout fait pour que les clients se sentent à l'aise.","« feel ___ » : feel est ici un verbe d'état.","Après feel, seem, look, become, remain → adjectif (pas adverbe).",["Adjectif après « feel ».","Adverbe : piège, « feel » n'est pas un verbe d'action ici.","Nom.","« réconfortant » : sens faux."],"Verbes d'état (be, feel, seem, look, become, remain, sound) + ADJECTIF."),
+H("Sales for the third quarter were ___ higher than analysts had predicted.",["consider","considerable","considerably","consideration"],2,"Nature des mots","Les ventes du troisième trimestre ont été nettement supérieures aux prévisions.","« ___ higher than » : devant un comparatif.","Adverbe + comparatif : considerably / significantly / much higher.",["Verbe.","Adjectif : il ne modifie pas un adjectif.","Adverbe devant le comparatif.","Nom."],"Devant un adjectif ou un comparatif, il faut un adverbe."),
+H("___ unexpected demand, the store ran out of stock within hours.",["Owing to","Because","Although","Even if"],0,"Connecteurs","En raison d'une demande inattendue, le magasin a été en rupture de stock en quelques heures.","« unexpected demand » : un nom, sans verbe.","owing to / due to / because of + nom.",["Cause + nom.","because + phrase.","although + phrase, et sens d'opposition.","even if + phrase."],"owing to = due to = because of. Les trois prennent un nom."),
+H("All visitors must sign in at the front desk ___ entering the building.",["prior to","previous","before to","ahead"],0,"Prépositions","Tous les visiteurs doivent s'enregistrer à l'accueil avant d'entrer dans le bâtiment.","« ___ entering » : suivi d'un V-ing.","prior to + nom / V-ing = avant (formel).",["prior to + V-ing.","Adjectif « précédent ».","« before to » n'existe pas.","« ahead of » avec « of »."],"prior to = before, en plus formel. Très fréquent dans les consignes."),
+H("The contract will be renewed automatically ___ either party gives notice of cancellation.",["if","unless","whether","provided"],1,"Connecteurs","Le contrat sera renouvelé automatiquement à moins que l'une des parties ne le résilie.","Renouvelé automatiquement SAUF si quelqu'un résilie.","unless = sauf si.",["if : « renouvelé si on résilie », absurde.","Sauf si.","whether = si (alternative).","provided (that) = à condition que : sens inverse."],"Relis la phrase avec « sauf si » puis avec « si » : le sens te donne la réponse."),
+H("The director insisted that every employee ___ the new security badge.",["wears","wear","wore","is wearing"],1,"Temps & voix","Le directeur a exigé que chaque employé porte le nouveau badge.","« insisted that » : verbe d'exigence.","insist / demand / require that + base verbale (sans -s).",["Le -s est un piège : subjonctif, pas d'accord.","Base verbale.","Passé : on ne conjugue pas.","Présent continu."],"Après « insist that », même avec « every employee », pas de -s : wear."),
+H("Ms. Kwan, ___ expertise in finance is widely recognized, will lead the audit.",["who","whose","whom","which"],1,"Pronoms","Mme Kwan, dont l'expertise en finance est largement reconnue, dirigera l'audit.","« ___ expertise » : l'expertise DE Mme Kwan.","whose + nom = dont le / la.",["who + verbe.","Possession.","whom : complément.","which : chose."],"Pronom relatif suivi directement d'un nom sans article ? C'est whose."),
+H("The items ___ in the catalog are available for immediate shipment.",["listing","listed","list","lists"],1,"Temps & voix","Les articles figurant dans le catalogue sont disponibles pour expédition immédiate.","Les articles SONT listés (ils ne listent rien).","Participe passé après un nom = relative passive raccourcie (which are listed).",["Actif : les articles ne listent rien.","= which are listed.","Base : deux verbes conjugués.","Verbe conjugué en trop."],"Nom + participe passé (the items listed, the report attached) = sens passif."),
+H("The survey results will help us better understand ___ our customers expect.",["what","which","that","whose"],0,"Pronoms","Les résultats de l'enquête nous aideront à mieux comprendre ce que nos clients attendent.","« understand ___ our customers expect » : il manque « ce que ».","what = ce que / ce qui.",["Ce que.","which a besoin d'un nom avant.","that ne veut pas dire « ce que ».","whose + nom."],"« ce que » en français → what en anglais."),
+H("Please keep your receipt ___ you need to return the item.",["in case","in case of","unless","so as"],0,"Connecteurs","Gardez votre ticket au cas où vous auriez besoin de retourner l'article.","« ___ you need » : sujet + verbe.","in case + phrase · in case of + nom.",["Au cas où + phrase.","in case of + nom.","Sauf si : sens faux.","so as to + verbe."],"Même logique que because / because of : la version avec « of » prend un nom."),
+H("The new manager is very ___ to the needs of her team.",["sensible","sensitive","sensational","sense"],1,"Vocabulaire","La nouvelle responsable est très attentive aux besoins de son équipe.","Sens : être à l'écoute des besoins.","sensitive = sensible · sensible = raisonnable.",["Faux ami : « sensible » = raisonnable.","sensitive to = à l'écoute de.","« sensationnel ».","Nom ou verbe."],"Les faux amis sont très fréquents dans les questions difficiles : sensible, actually, eventually, attend."),
+H("We regret ___ you that the position has been filled.",["informing","to inform","inform","informed"],1,"Temps & voix","Nous avons le regret de vous informer que le poste a été pourvu.","Annonce d'une mauvaise nouvelle maintenant.","regret to + verbe = avoir le regret de (maintenant) · regret + V-ing = regretter d'avoir fait.",["Regretter une action passée : sens faux.","Formule des lettres officielles.","Base seule.","Participe."],"Formule fixe des lettres de refus : « We regret to inform you that… ».")
+);
+
+/* ---------- Part 2 niveau 870+ ---------- */
+const HP=(...x)=>Object.assign(P(...x),{h:1});
+LISTEN.push(
+HP("When is the budget proposal due?",["Ms. Lin is handling that.","About the budget.","It's due to the rain."],0,"Pour quand la proposition de budget est-elle attendue ?","When… mais la bonne réponse renvoie vers la personne responsable.",["Réponse indirecte : « demande à Mme Lin ».","Piège : répète « budget ».","Piège : « due to » = à cause de."],"Les réponses indirectes (renvoyer vers quelqu'un, « je vérifie ») sont les bonnes dans les questions difficiles."),
+HP("Should I print the report or send it by e-mail?",["Either is fine with me.","Yes, you should.","The printer is new."],0,"J'imprime le rapport ou je l'envoie par e-mail ?","Question à choix (or).",["« Les deux me vont » : réponse typique à une question en « or ».","Yes impossible avec « or ».","Piège : « printer »."],"Aux questions en « or », attends-toi à : l'une des options, « either », « neither », ou « whichever is easier »."),
+HP("Why hasn't the shipment arrived yet?",["Let me check with the warehouse.","It arrived by truck.","Yes, it has."],0,"Pourquoi la livraison n'est-elle pas encore arrivée ?","Why… mais personne ne connaît la raison.",["« Je vérifie » : réponse indirecte cohérente.","Contredit la question, et répond à How.","Yes impossible après Why."],"« Let me check », « I'll find out », « I'm not sure » : souvent justes."),
+HP("Who approved the new design?",["It hasn't been approved yet.","The design looks great.","I approve of it."],0,"Qui a validé le nouveau design ?","Who… mais l'info de base est fausse.",["Corrige la question : personne ne l'a validé.","Piège : répète « design ».","Piège : « approve »."],"Une réponse qui corrige la question (« it hasn't been… ») est souvent la bonne."),
+HP("Weren't you supposed to be in Tokyo this week?",["The trip was postponed.","Yes, it's a nice week.","Tokyo is a big city."],0,"Tu ne devais pas être à Tokyo cette semaine ?","Question négative = « tu devais y être, non ? ».",["Explique pourquoi il n'y est pas.","Piège : « week ».","Piège : « Tokyo »."],"Une réponse qui donne une explication sans dire Yes / No est très fréquente."),
+HP("The conference room is booked all afternoon.",["Then let's meet in my office.","I booked it online.","The book is on the table."],0,"La salle de réunion est réservée tout l'après-midi.","Affirmation qui pose un problème.",["Propose une solution.","Piège : « booked ».","Piège : « book »."],"Une affirmation appelle une réaction logique : solution, accord, surprise."),
+HP("How about hiring a temporary assistant?",["That's worth considering.","About three weeks.","He was hired yesterday."],0,"Et si on embauchait un assistant temporaire ?","How about… = une suggestion.",["Réagit à la suggestion.","Répond à How long.","Piège : « hired »."],"How about / What about / Why don't we = suggestions. Pas de question d'information."),
+HP("Do you want me to call the client, or will you?",["I'll take care of it.","Yes, I called.","The client is happy."],0,"Tu veux que j'appelle le client, ou tu le fais ?","Question à choix entre deux personnes.",["« Je m'en occupe » = c'est moi qui appelle.","Yes impossible avec « or ».","Piège : « client »."],"Les bonnes réponses aux questions difficiles n'utilisent souvent aucun mot de la question."),
+HP("Where did you put the contracts I signed?",["Ms. Park took them to Legal.","Yes, they're signed.","On Tuesday afternoon."],0,"Où as-tu mis les contrats que j'ai signés ?","Where… la réponse donne une localisation indirecte.",["Indique où ils sont (au service juridique).","Yes impossible après Where.","Répond à When."],"Where peut avoir pour réponse une personne : « Ask Tom », « John has them »."),
+HP("Isn't the new printer easier to use?",["I haven't tried it yet.","It's printed in color.","Use the stairs."],0,"La nouvelle imprimante n'est pas plus simple à utiliser ?","Question négative qui demande un avis.",["« Je ne l'ai pas encore essayée » : réponse indirecte cohérente.","Piège : « printed ».","Piège : « use »."],"« I haven't… yet » est une réponse indirecte classique.")
+);
+
+/* ---------- Part 1 : photos ---------- */
+const PH=(d,o,a,w,t)=>({d,o,a,w,t});
+const PHOTOS=[
+PH("Une femme tape sur le clavier d'un ordinateur portable, assise à un bureau.",["She's typing on a laptop.","She's opening a window.","She's putting on her glasses.","She's carrying a computer."],0,["Décrit exactement l'action.","Aucune fenêtre ouverte.","« putting on » = action d'enfiler : elle ne le fait pas.","Elle est assise, elle ne porte pas l'ordinateur."],"Vérifie d'abord le VERBE : l'action décrite se passe-t-elle vraiment sur la photo ?"),
+PH("Des chaises sont empilées contre un mur dans une salle vide.",["Some people are sitting in chairs.","Chairs have been stacked against a wall.","A wall is being painted.","Chairs are being arranged in rows."],1,["Il n'y a personne.","« have been stacked » = état : elles sont empilées.","Personne ne peint.","« are being arranged » = quelqu'un les range en ce moment : personne."],"Photo sans personne : « is being + participe » est presque toujours faux. « has been + participe » décrit un état : souvent juste."),
+PH("Deux hommes se serrent la main devant un immeuble de bureaux.",["They're shaking hands.","They're entering a building.","They're exchanging business cards.","They're waving goodbye."],0,["Action visible.","Ils sont devant, pas en train d'entrer.","Aucune carte de visite.","Ils se serrent la main, pas un signe d'au revoir."],"Méfie-toi des réponses qui ajoutent quelque chose de plausible mais absent (cartes de visite)."),
+PH("Un homme lit un document, debout près d'une photocopieuse.",["He's repairing a copier.","He's reading a document.","He's making copies.","He's sitting at a desk."],1,["Il ne répare rien.","Action visible.","Piège : la photocopieuse est là, mais il ne l'utilise pas.","Il est debout."],"Un objet présent sur la photo ne veut pas dire qu'on l'utilise : vérifie l'action."),
+PH("Des bateaux sont amarrés le long d'un quai, personne à bord.",["Boats are docked along a pier.","People are boarding a boat.","A boat is sailing away.","Fishermen are unloading boxes."],0,["« docked » = amarrés.","Personne à bord.","Ils sont à quai.","Aucun pêcheur."],"Vocabulaire Part 1 à connaître : pier, dock, shelf, stack, lean against, line up, hang."),
+PH("Une serveuse verse du café dans une tasse, à une table de restaurant.",["She's pouring coffee into a cup.","She's wiping the table.","She's taking an order.","She's drinking coffee."],0,["« pour » = verser.","Elle n'essuie pas.","Pas de carnet de commande.","C'est le client qui boit, pas elle."],"Distingue bien les verbes proches : pour (verser), fill (remplir), wipe (essuyer), serve (servir)."),
+PH("Des cartons sont rangés sur des étagères dans un entrepôt vide.",["Boxes are stored on shelves.","Workers are loading a truck.","Shelves are being assembled.","Boxes are being opened."],0,["État : les cartons sont rangés.","Aucun ouvrier.","Personne ne monte les étagères.","Personne ne les ouvre."],"Même règle : pas de personne = pas de « is being + participe »."),
+PH("Une femme arrose des plantes sur un balcon.",["She's watering some plants.","She's planting a tree.","She's sweeping the balcony.","She's buying flowers."],0,["« water » = arroser.","Elle ne plante rien.","« sweep » = balayer.","Elle n'est pas dans un magasin."],"« water » est aussi un verbe (arroser) : piège fréquent."),
+PH("Plusieurs personnes sont assises autour d'une table de réunion et regardent un écran.",["They're looking at a screen.","They're leaving the room.","They're moving a table.","They're turning off a monitor."],0,["Action visible.","Ils sont assis.","Personne ne déplace la table.","Personne ne l'éteint."],"Pour un groupe, cherche l'action que TOUT le monde fait."),
+PH("Un homme monte une échelle appuyée contre un mur.",["He's climbing a ladder.","He's holding a ladder for someone.","He's painting a fence.","He's carrying a ladder."],0,["« climb » = monter.","Il n'y a personne d'autre.","Aucune clôture.","L'échelle est appuyée, il ne la porte pas."],"« leaning against » (appuyé contre) est une expression clé de la Part 1."),
+PH("Des vélos sont garés en rang devant une gare.",["Bicycles are parked in a row.","People are riding bicycles.","A bicycle is being repaired.","A train is leaving the station."],0,["« in a row » = en rang.","Personne ne roule.","Personne ne répare.","Aucun train visible."],"Les réponses qui parlent d'un élément hors cadre (le train) sont fausses."),
+PH("Une femme essaie une veste devant un miroir, dans un magasin.",["She's trying on a jacket.","She's folding some clothes.","She's paying at the counter.","She's hanging a mirror."],0,["« try on » = essayer.","Elle ne plie rien.","Elle n'est pas à la caisse.","Le miroir est déjà en place."],"wearing = porter (état) · putting on = enfiler (action) · trying on = essayer.")
+];
+
+/* ---------- Part 3 : conversations ---------- */
+const Q=(q,o,a,k,w,t)=>({q,o,a,k,w,t});
+const CONVS=[
+{title:"Une livraison en retard",lines:[["W","Hi, I'm calling about the printer I ordered last week. It was supposed to arrive on Monday, but it still hasn't been delivered."],["M","I'm sorry about that. Could you give me your order number?"],["W","Sure, it's 4-5-8-2-1."],["M","Thank you. It looks like the shipment was delayed because of a problem at our warehouse. It will go out today, and I'll upgrade it to express delivery at no extra charge."],["W","That's great, thanks. We really need it for a client presentation on Thursday."]],qs:[
+Q("Why is the woman calling?",["To report a late delivery","To order a new printer","To cancel a presentation","To complain about a damaged product"],0,"« It was supposed to arrive on Monday, but it still hasn't been delivered. »",["C'est le sujet de l'appel.","Elle l'a déjà commandée.","La présentation est maintenue.","Le produit n'est pas arrivé, donc pas abîmé."],"La réponse à « Why is … calling? » est presque toujours dans les deux premières phrases."),
+Q("What caused the problem?",["A warehouse issue","Bad weather","A wrong address","A payment error"],0,"« delayed because of a problem at our warehouse »",["Dit explicitement.","Jamais mentionné.","Jamais mentionné.","Jamais mentionné."],"Écoute les mots de cause : because of, due to, since."),
+Q("What does the man offer to do?",["Upgrade the shipping for free","Give a full refund","Send a technician","Lend her a printer"],0,"« I'll upgrade it to express delivery at no extra charge. »",["« at no extra charge » = « for free ».","Pas de remboursement.","Pas de technicien.","Pas de prêt."],"Les bonnes réponses reformulent : « at no extra charge » devient « for free ».")]},
+{title:"Un déménagement de service",lines:[["M","Linda, have you heard that our department is moving to the fifth floor next month?"],["W","Yes, I read the memo this morning. I'm glad, actually. We'll finally have a bigger meeting room."],["M","True, but the movers are coming on a Friday, so we'll have to pack everything up by Thursday afternoon."],["W","That's tight. Why don't we ask the facilities manager for some extra boxes today, so we can start early?"]],qs:[
+Q("What are the speakers mainly discussing?",["A department relocation","A new hire","A client meeting","A building renovation"],0,"« our department is moving to the fifth floor »",["« moving » = relocation.","Personne n'est embauché.","Pas de client.","Ils déménagent, l'immeuble n'est pas rénové."],"« mainly discussing » : la réponse est souvent un mot plus général que ceux entendus (moving → relocation)."),
+Q("What does the woman like about the change?",["A larger meeting room","A shorter commute","A better view","Newer computers"],0,"« We'll finally have a bigger meeting room. »",["bigger = larger.","Jamais mentionné.","Jamais mentionné.","Jamais mentionné."],"Synonymes fréquents : big / large, start / begin, buy / purchase, fix / repair."),
+Q("What does the woman suggest?",["Requesting boxes","Hiring movers","Postponing the move","Reading a memo"],0,"« Why don't we ask the facilities manager for some extra boxes »",["« Why don't we » = suggestion.","Les déménageurs sont déjà prévus.","Pas de report.","Elle l'a déjà lu."],"« suggest » dans la question → écoute Why don't we, How about, Let's, You should.")]},
+{title:"Une réservation au restaurant",lines:[["W","Good afternoon, Bella Vista restaurant. How can I help you?"],["M","Hi, I'd like to reserve a table for eight people this Friday at seven. It's a dinner with some clients."],["W","Let me check. I'm afraid we're fully booked at seven, but we could seat you at eight thirty, or I could put you in our private room at seven for a small additional fee."],["M","The private room would actually be better for a business dinner. Could you also send me the set menu options by e-mail so I can choose in advance?"]],qs:[
+Q("Who most likely is the woman?",["A restaurant employee","A client","A travel agent","A chef"],0,"« Good afternoon, Bella Vista restaurant. »",["Elle répond au téléphone du restaurant.","Les clients sont ceux de l'homme.","Pas d'agence de voyage.","Rien n'indique qu'elle cuisine."],"Pour « Who is the man / woman? », la première phrase donne souvent le lieu ou le métier."),
+Q("What problem does the woman mention?",["The requested time is not available","The restaurant is closed on Friday","The private room is under renovation","The menu has changed"],0,"« we're fully booked at seven »",["« fully booked » = pas de place à 19 h.","Il est ouvert.","La salle est disponible.","Pas mentionné."],"« I'm afraid… » annonce souvent le problème."),
+Q("What does the man ask the woman to do?",["E-mail some menu options","Call his clients","Lower the price","Change the date"],0,"« Could you also send me the set menu options by e-mail »",["Demande explicite.","Pas demandé.","Il accepte le supplément.","Même date."],"Les demandes arrivent souvent à la fin : Could you…, Would you mind…, Please…")]},
+{title:"Un entretien d'embauche",lines:[["M","Hi, Ms. Duarte, this is Kevin Wu from Hartley Consulting. We reviewed your application for the analyst position, and we'd like to invite you for an interview."],["W","Oh, that's wonderful news! When would you like me to come in?"],["M","We're holding interviews next Tuesday and Wednesday. Would Wednesday at ten work for you?"],["W","Wednesday morning I have a training session I can't miss. Would Tuesday afternoon be possible?"],["M","Certainly. Let's say Tuesday at two. Please bring a copy of your portfolio."]],qs:[
+Q("Why is the man calling?",["To schedule an interview","To offer a training","To confirm a job offer","To ask for a reference"],0,"« we'd like to invite you for an interview »",["Objet de l'appel.","La formation concerne la femme, ailleurs.","Pas encore d'offre.","Pas de référence demandée."],"Piège classique : une réponse reprend un mot entendu (training) mais pas l'idée."),
+Q("Why can't the woman come on Wednesday?",["She has a training session","She is traveling","She has another interview","She is sick"],0,"« Wednesday morning I have a training session I can't miss »",["Raison donnée.","Pas mentionné.","Pas mentionné.","Pas mentionné."],"Lis les questions avant l'audio : tu sais qu'il faut écouter « Wednesday »."),
+Q("What should the woman bring?",["A portfolio","A résumé","An ID card","A reference letter"],0,"« Please bring a copy of your portfolio. »",["Dit explicitement.","Elle l'a déjà envoyé avec sa candidature.","Pas mentionné.","Pas mentionné."],"La dernière question porte souvent sur la dernière phrase.")]},
+{title:"Choisir un logiciel",lines:[["W","Have you had a chance to look at the quotes for the new accounting software?"],["M","I have. The one from Datasoft is the cheapest, but it doesn't include training for our staff."],["W","Hmm, that could cost us more in the long run. What about the other one?"],["M","Novatech is about ten percent more expensive, but training and one year of technical support are included."],["W","Then let's go with Novatech. I'll get the director's approval this afternoon."]],qs:[
+Q("What are the speakers mainly discussing?",["Choosing a software supplier","Training new accountants","Hiring a director","Reducing office costs"],0,"« the quotes for the new accounting software »",["Ils comparent deux offres.","La formation est un détail.","Le directeur doit seulement approuver.","Ils choisissent l'option la plus chère."],"« quote » = devis : mot très fréquent au TOEIC."),
+Q("What does the woman imply when she says, « that could cost us more in the long run »?",["Paying for training separately may be expensive","The software is too slow","The price will increase next year","The staff do not need training"],0,"Elle réagit à « it doesn't include training ».",["Sans formation incluse, il faudra la payer à part.","Pas de vitesse mentionnée.","Ce n'est pas une hausse de prix.","Contraire de son idée."],"Questions « What does … imply / mean when … says » : relis la phrase AVANT la citation, elle donne le sens."),
+Q("What will the woman do this afternoon?",["Get approval from the director","Call Datasoft","Train the staff","Install the software"],0,"« I'll get the director's approval this afternoon. »",["Dit explicitement.","Ils choisissent l'autre.","Pas elle.","Pas mentionné."],"« I'll… » à la fin = ce que la personne va faire ensuite.")]},
+{title:"Un vol annulé",lines:[["M","Hi Sarah, I just got an e-mail from the airline. Our flight to Berlin tomorrow has been cancelled."],["W","Oh no. The conference starts at nine on Thursday. Are there any other flights?"],["M","There's one tonight at eleven, but it's quite expensive. There's also a train that leaves tomorrow morning and arrives in the evening."],["W","The train will give us time to prepare our presentation on the way. Let's book that."]],qs:[
+Q("What problem does the man report?",["A flight was cancelled","A hotel is full","A conference was postponed","A presentation was lost"],0,"« Our flight to Berlin tomorrow has been cancelled. »",["Dit explicitement.","Pas d'hôtel.","La conférence est maintenue.","Pas perdue."],"Le problème est annoncé tôt : I just got…, Unfortunately…, I'm afraid…"),
+Q("Why are the speakers going to Berlin?",["To attend a conference","To meet a client","To give a training","To go on vacation"],0,"« The conference starts at nine on Thursday. »",["Ils vont à une conférence.","Pas de client.","Pas de formation.","Voyage professionnel."],"Note mentalement le lieu et la raison du voyage dès le début."),
+Q("Why does the woman prefer the train?",["They can work on their presentation","It is cheaper","It is faster","It leaves tonight"],0,"« The train will give us time to prepare our presentation on the way. »",["Raison donnée.","Piège : c'est le vol qui est cher, elle ne donne pas le prix comme raison.","Il arrive le soir : pas plus rapide.","C'est le vol qui part ce soir."],"Choisis la raison DONNÉE par la personne, pas une raison que tu déduis.")]}
+];
+
+/* ---------- Part 4 : exposés ---------- */
+const TALKS=[
+{title:"Annonce à l'aéroport",kind:"Annonce",lines:[["M","Attention, passengers on Flight 307 to Chicago. Due to a mechanical inspection, boarding has been delayed by approximately forty-five minutes. The new departure gate is B12. Passengers who need to make connecting flights in Chicago are asked to speak with an agent at the service desk near Gate B10. We apologize for the inconvenience and thank you for your patience."]],qs:[
+Q("Why is the flight delayed?",["Because of a mechanical inspection","Because of bad weather","Because the crew is late","Because the gate is closed"],0,"« Due to a mechanical inspection »",["Dit explicitement.","Pas mentionné.","Pas mentionné.","La porte a changé, elle n'est pas fermée."],"Annonces d'aéroport : retenir la raison, le nouvel horaire, la nouvelle porte."),
+Q("What has changed?",["The departure gate","The destination","The airline","The flight number"],0,"« The new departure gate is B12. »",["Nouvelle porte.","Toujours Chicago.","Pas mentionné.","Toujours le 307."],"« new » dans le texte signale souvent la réponse à « What has changed? »."),
+Q("Who should go to the service desk?",["Passengers with connecting flights","All passengers","Passengers without tickets","Airline staff"],0,"« Passengers who need to make connecting flights… are asked to speak with an agent »",["Correspondances.","Seulement certains.","Pas mentionné.","Ce sont les agents qui sont au comptoir."],"Les questions « Who should… » visent un groupe précis : écoute la relative « who… »." )]},
+{title:"Message vocal d'un fournisseur",kind:"Message téléphonique",lines:[["M","Hi, this is Daniel Ross from Ross Office Supplies. I'm calling about the order for forty desk chairs your company placed on Monday. Unfortunately, the model you selected is out of stock until next month. We do have a similar model in black instead of gray, at the same price, which we could deliver this Friday. Please call me back at 555-0147 by tomorrow afternoon to let me know which option you prefer."]],qs:[
+Q("What is the purpose of the message?",["To discuss a problem with an order","To confirm a delivery date","To request a payment","To advertise a sale"],0,"« Unfortunately, the model you selected is out of stock »",["Problème de stock sur la commande.","Rien n'est confirmé.","Pas de paiement.","Ce n'est pas une publicité."],"Messages : qui appelle, pourquoi, et ce qu'il faut faire. Trois questions, presque toujours."),
+Q("What is different about the alternative model?",["Its color","Its price","Its size","Its brand"],0,"« in black instead of gray, at the same price »",["Noir au lieu de gris.","Piège : même prix.","Pas mentionné.","Pas mentionné."],"« instead of » signale la différence."),
+Q("What does the speaker ask the listener to do?",["Call back by tomorrow afternoon","Visit the store","Send an e-mail","Cancel the order"],0,"« Please call me back … by tomorrow afternoon »",["Demande explicite.","Pas demandé.","Pas demandé.","Pas demandé."],"La demande finale commence souvent par « Please… ».")]},
+{title:"Réunion d'équipe",kind:"Réunion",lines:[["W","Good morning, everyone. Before we start, I'd like to welcome Priya Shah, who joins our customer service team today. Priya has five years of experience in the hotel industry, so she'll be a great help with our hospitality clients. Now, as you know, our customer satisfaction scores dropped slightly last quarter. Most of the complaints were about long waiting times on the phone. So starting next week, we'll be testing a new online chat service to answer simple questions faster."]],qs:[
+Q("Who is Priya Shah?",["A new employee","A hotel client","A manager","A trainer"],0,"« who joins our customer service team today »",["Elle rejoint l'équipe.","Elle a travaillé dans l'hôtellerie, ce n'est pas une cliente.","Pas indiqué.","Pas indiqué."],"« joins our team », « welcome » = nouvel employé."),
+Q("What problem does the speaker mention?",["Long waiting times on the phone","A drop in sales","Late deliveries","A broken website"],0,"« Most of the complaints were about long waiting times on the phone. »",["Dit explicitement.","Piège : c'est la satisfaction qui baisse, pas les ventes.","Pas mentionné.","Pas mentionné."],"Attention aux mots proches : « scores dropped » ≠ « sales dropped »."),
+Q("What will happen next week?",["A new chat service will be tested","Priya will start working","Phone lines will close","A survey will be sent"],0,"« starting next week, we'll be testing a new online chat service »",["Dit explicitement.","Elle commence aujourd'hui.","Pas mentionné.","Pas mentionné."],"Repère les marqueurs de temps (next week, tomorrow) qui correspondent à la question.")]},
+{title:"Publicité",kind:"Publicité",lines:[["W","Are you tired of spending your lunch break waiting in line? Try FreshBox, the city's fastest meal delivery service for offices. Order before 11 A.M. on our app, and your lunch will arrive at your desk by noon, guaranteed. This month only, new customers get their first three deliveries free. Download the FreshBox app today and use the code WELCOME."]],qs:[
+Q("What is being advertised?",["A meal delivery service","A restaurant opening","A cooking class","An office supply store"],0,"« the city's fastest meal delivery service for offices »",["Dit explicitement.","Pas d'ouverture.","Pas de cours.","Ils livrent dans les bureaux, ils n'en vendent pas les fournitures."],"Publicité : que vend-on, quel avantage, quelle offre spéciale."),
+Q("What does the company guarantee?",["Delivery by noon","The lowest prices","Organic food","Free drinks"],0,"« your lunch will arrive at your desk by noon, guaranteed »",["Dit explicitement.","Pas mentionné.","Pas mentionné.","Pas mentionné."],"« guaranteed » est le mot-clé de la question : écoute ce qui l'entoure."),
+Q("What do new customers receive?",["Three free deliveries","A discount on all meals","A free lunch box","A gift card"],0,"« new customers get their first three deliveries free »",["Dit explicitement.","Pas de réduction générale.","Pas mentionné.","Pas mentionné."],"Les offres spéciales sont souvent à la fin : This month only, For a limited time.")]},
+{title:"Visite d'une usine",kind:"Visite guidée",lines:[["M","Welcome to the Halden Glass Factory. My name is Marco, and I'll be your guide this morning. Our tour will last about an hour. We'll start in the furnace room, where you'll see our artisans shape glass at more than one thousand degrees. For your safety, please stay behind the yellow line at all times. Photography is allowed, but please turn off your flash. At the end of the tour, you'll receive a ten percent discount voucher for our gift shop."]],qs:[
+Q("Who is the speaker?",["A tour guide","A factory worker","A shop owner","A safety inspector"],0,"« I'll be your guide this morning »",["Dit explicitement.","Ce sont les artisans qui travaillent.","Pas indiqué.","Pas indiqué."],"« My name is… and I'll be your… » donne le métier."),
+Q("What are listeners asked to do?",["Stay behind a line","Turn off their phones","Wear protective glasses","Stay silent"],0,"« please stay behind the yellow line at all times »",["Dit explicitement.","Piège : c'est le flash, pas le téléphone.","Pas mentionné.","Pas mentionné."],"Piège fréquent : un détail proche (flash / phone) mais différent."),
+Q("What will listeners receive at the end?",["A discount voucher","A free glass","A photo","A brochure"],0,"« you'll receive a ten percent discount voucher »",["voucher = bon.","Pas mentionné.","Pas mentionné.","Pas mentionné."],"voucher = coupon = bon de réduction.")]}
+];
+
+/* ---------- Part 6 : textes à compléter ---------- */
+const TEXTS=[
+{title:"E-mail interne : parking",text:"To: All staff\nSubject: Parking lot repairs\n\nPlease be aware that the north parking lot will be closed from March 3 to March 7 {1} repaving work. During this period, employees {2} to use the south lot or the public garage on Elm Street. {3} We apologize for any inconvenience and appreciate your {4}.",qs:[
+Q("(1)",["due to","because","although","so that"],0,"« ___ repaving work » : un nom suit.",["due to + nom.","because + phrase.","although + phrase, et opposition.","so that + phrase, et but."],"En Part 6, les questions de grammaire se traitent comme en Part 5 : regarde ce qui suit."),
+Q("(2)",["encourage","are encouraged","encouraging","have encouraged"],1,"Les employés REÇOIVENT l'encouragement.",["Actif : les employés encourageraient.","Passif : be encouraged to.","Pas de verbe conjugué.","Actif : sens faux."],"be encouraged / asked / required to + verbe : très fréquent dans les e-mails internes."),
+Q("(3) Quelle phrase va dans le trou ?",["Parking fees at the garage will be reimbursed upon presentation of a receipt.","The new cafeteria will open next month.","Please submit your timesheets by Friday.","The north lot has 200 spaces."],0,"La phrase précédente parle du garage public : la suite logique concerne ce garage.",["Continue l'idée du garage public.","Hors sujet.","Hors sujet.","Information inutile à cet endroit."],"Phrase à insérer : lis la phrase d'avant ET celle d'après. La bonne fait le lien entre les deux."),
+Q("(4)",["understand","understanding","understood","understandable"],1,"« your ___ » : après un possessif.",["Verbe.","Nom : « votre compréhension ».","Participe.","Adjectif."],"Formule fixe de fin d'e-mail : « We appreciate your understanding / cooperation / patience ».")]},
+{title:"Offre d'emploi",text:"Kensington Hotel is seeking an experienced front desk manager. The successful candidate will {1} a team of twelve receptionists and handle guest complaints. Applicants must have at least three years of experience in the hospitality industry. Fluency in a second language is {2} but not required. {3} To apply, send your résumé and cover letter to hr@kensington.com {4} April 30.",qs:[
+Q("(1)",["supervise","supervision","supervisor","supervising"],0,"« will ___ a team » : après will.",["Base verbale après will.","Nom.","Nom de personne.","-ing après will : impossible."],"Après un modal : base verbale. Tu peux répondre en 3 secondes."),
+Q("(2)",["prefer","preference","preferable","preferably"],2,"« is ___ but not required » : parallèle avec « required » (adjectif).",["Verbe.","Nom.","Adjectif : « souhaitable ».","Adverbe."],"« X but not Y » : X et Y ont la même nature (ici deux adjectifs)."),
+Q("(3) Quelle phrase va dans le trou ?",["We offer a competitive salary and full health benefits.","Guests must check out by 11 A.M.","The hotel restaurant is closed on Mondays.","Our receptionists speak three languages."],0,"Après les exigences, une offre d'emploi présente ce que propose l'employeur.",["Suite logique d'une annonce.","S'adresse aux clients, pas aux candidats.","Hors sujet.","Information sans lien avec les candidats."],"Respecte le type de document : une offre d'emploi parle aux candidats, pas aux clients."),
+Q("(4)",["no later than","until","since","during"],0,"« send … ___ April 30 » : une échéance.",["Au plus tard le 30 avril.","until : action qui dure.","since : point de départ.","during + période."],"Échéance → by / no later than.")]},
+{title:"Lettre à un client",text:"Dear Mr. Alvarez,\n\nThank you for your recent purchase from Lumen Electronics. We are writing to inform you that the model of headphones you bought is {1} by a voluntary recall. A small number of units may overheat when charged for long periods. {2} no injuries have been reported, we are taking this step as a precaution. {3} You may return the headphones to any of our stores for a full refund or a free {4}.",qs:[
+Q("(1)",["affected","effected","affecting","effect"],0,"« is ___ by a recall » : passif, sens « concerné ».",["Passif de affect = concerné par.","effect (verbe) = réaliser : sens faux.","Actif.","Nom."],"affect = toucher, concerner. effect = effet (nom)."),
+Q("(2)",["Although","Despite","However","Because"],0,"« ___ no injuries have been reported, we are taking this step » : opposition + phrase.",["Bien que + phrase.","Despite + nom.","However ne relie pas deux propositions dans une phrase.","Cause : sens faux."],"Cherche la logique : aucun blessé, MAIS on agit quand même → opposition."),
+Q("(3) Quelle phrase va dans le trou ?",["We recommend that you stop using the product immediately.","Our stores are open from 9 A.M. to 6 P.M.","We have opened a new store downtown.","Thank you for your feedback on our website."],0,"Après un rappel de produit, on donne une consigne de sécurité, puis la solution.",["Consigne logique avant la solution.","Information secondaire.","Hors sujet.","Hors sujet."],"La phrase à insérer doit garder le ton et le sujet du paragraphe."),
+Q("(4)",["replace","replacement","replaced","replaceable"],1,"« a free ___ » : après un adjectif.",["Verbe.","Nom : un remplacement.","Participe.","Adjectif."],"Article + adjectif + ___ → nom.")]},
+{title:"Article : nouveau centre logistique",text:"Greenfield Foods announced on Monday that it will open a new distribution center in Lakeside next spring. The facility, {1} will cover 20,000 square meters, is expected to create about 150 jobs. Company president Ana Ruiz said the location was chosen {2} its proximity to major highways. {3} Construction will begin in June, and the company {4} to begin hiring in January.",qs:[
+Q("(1)",["which","that","who","what"],0,"Entre virgules, pour une chose.",["which entre virgules.","that : jamais entre virgules.","who : personne.","what : ne reprend pas un nom."],"Virgule avant le trou = jamais « that »."),
+Q("(2)",["because of","because","so that","in order to"],0,"« ___ its proximity » : un nom.",["because of + nom.","because + phrase.","so that + phrase.","in order to + verbe."],"Cause + nom → because of / due to / owing to."),
+Q("(3) Quelle phrase va dans le trou ?",["This will allow the company to deliver products to stores more quickly.","Greenfield Foods was founded in 1985 by two brothers.","The weather in Lakeside is usually mild.","Ms. Ruiz will retire next year."],0,"« This » reprend l'idée d'avant : la proximité des autoroutes.",["« This » renvoie aux autoroutes : conséquence logique.","Historique sans lien ici.","Hors sujet.","Hors sujet."],"Un « This / These / Such » en début de phrase doit renvoyer à quelque chose juste avant."),
+Q("(4)",["plans","planning","planned to be","plan"],0,"« the company ___ to begin » : sujet singulier, présent.",["Présent, 3ᵉ personne : -s.","Pas de verbe conjugué.","Passif : sens faux.","Il manque le -s."],"the company = it → verbe avec -s au présent.")]}
+];
+
+/* ---------- Part 7 : compréhension écrite ---------- */
+const READS=[
+{title:"E-mail : réunion déplacée",docs:[{h:"From: Rachel Moore\nTo: Tom Becker\nSubject: Quarterly meeting",b:"Hi Tom,\n\nI wanted to let you know that the quarterly sales meeting has been moved from Thursday to Friday, June 14, at 10 A.M., because several regional managers will be traveling on Thursday. The meeting will still take place in Conference Room B.\n\nCould you please update the sales figures for the Northeast region before then? The figures in last week's report did not include the new Boston store.\n\nAlso, lunch will be provided, so please let me know by Wednesday if you have any dietary restrictions.\n\nThanks,\nRachel"}],qs:[
+Q("Why was the meeting rescheduled?",["Some managers will be traveling","The conference room is unavailable","The sales report is late","Rachel is on vacation"],0,"« because several regional managers will be traveling on Thursday »",["Dit explicitement.","Piège : la salle reste la même.","Pas mentionné.","Pas mentionné."],"Lis la question d'abord, puis cherche le mot-clé (rescheduled → moved) dans le texte."),
+Q("What is Tom asked to do?",["Update some sales figures","Book a conference room","Order lunch","Visit the Boston store"],0,"« Could you please update the sales figures »",["Demande explicite.","Déjà réservée.","Le déjeuner est fourni.","Piège : Boston est mentionné, pas de visite."],"« Could you please… » = ce qu'on demande."),
+Q("What is suggested about last week's report?",["It was incomplete","It was sent late","It contained no figures","It covered only Boston"],0,"« did not include the new Boston store »",["Il manquait un magasin.","Pas mentionné.","Il y avait des chiffres.","Contraire : Boston manquait."],"« suggested / implied » = ce n'est pas écrit mot pour mot, il faut déduire."),
+Q("What should Tom do by Wednesday?",["Tell Rachel about any dietary needs","Send the updated figures","Confirm his travel plans","Reserve a room"],0,"« please let me know by Wednesday if you have any dietary restrictions »",["Dit explicitement.","Piège : les chiffres sont pour la réunion (vendredi).","Pas mentionné.","Pas mentionné."],"Associe chaque date du texte à son action : c'est un piège fréquent.")]},
+{title:"Annonce : ateliers de la bibliothèque",docs:[{h:"CITY LIBRARY · WINTER WORKSHOPS",b:"Free for library card holders · $10 per session for non-members\n\n• Résumé Writing · Tuesdays, 6–7:30 P.M.\nLearn how to present your experience clearly. Bring a printed copy of your current résumé.\n\n• Introduction to Spreadsheets · Saturdays, 10 A.M.–12 P.M.\nLaptops are provided. Limited to 12 participants.\n\n• Public Speaking · Thursdays, 7–8:30 P.M.\nPractice short presentations in a supportive group.\n\nRegistration is required for all workshops and opens on December 1 at the front desk or on our website. Library cards can be obtained free of charge by any city resident."}],qs:[
+Q("What is true about the workshops?",["They are free for library card holders","They all take place on weekends","They are only for city employees","They require a laptop"],0,"« Free for library card holders »",["Écrit en haut.","Seul l'atelier tableur est le samedi.","Ouverts aux non-membres pour 10 $.","Les ordinateurs sont fournis."],"« What is true » : vérifie chaque option dans le texte, élimine celles qui sont fausses."),
+Q("What should participants in the résumé workshop bring?",["A copy of their résumé","A laptop","A library card","A registration fee"],0,"« Bring a printed copy of your current résumé. »",["Dit explicitement.","Concerne l'atelier tableur, et ils sont fournis.","Pas demandé.","Pas demandé."],"Ne mélange pas les informations de deux paragraphes voisins."),
+Q("What is indicated about the spreadsheet workshop?",["The number of participants is limited","It is held in the evening","It costs $12","Participants must bring their own computers"],0,"« Limited to 12 participants. »",["Dit explicitement.","Il a lieu le matin.","Piège : 12 est le nombre de places.","Les ordinateurs sont fournis."],"Les chiffres sont des pièges classiques : vérifie à quoi chaque nombre se rapporte."),
+Q("What is NOT mentioned as a way to register?",["By telephone","At the front desk","On the website","In person at the library"],0,"« at the front desk or on our website »",["Jamais mentionné : c'est la bonne réponse.","Mentionné.","Mentionné.","Le front desk est à la bibliothèque."],"Questions NOT : trouve les 3 options présentes dans le texte, la 4ᵉ est la réponse. Garde-les pour la fin si tu manques de temps.")]},
+{title:"Messagerie : un contrat urgent",docs:[{h:"Text message chain",b:"Lisa Chang (9:12 A.M.)\nHi Omar, are you still at the office? The client from Weston just called. They want the revised contract today.\n\nOmar Haddad (9:14 A.M.)\nI'm on the train, I'll be there in 20 minutes. Is the legal team done reviewing it?\n\nLisa Chang (9:15 A.M.)\nAlmost. Julie said she needs to check one last clause about delivery dates.\n\nOmar Haddad (9:16 A.M.)\nOK. Can you print two copies once she's done? I'll sign them as soon as I arrive.\n\nLisa Chang (9:17 A.M.)\nWill do."}],qs:[
+Q("What does the client want?",["The revised contract today","A meeting with Omar","A new delivery date","A lower price"],0,"« They want the revised contract today. »",["Dit explicitement.","Pas mentionné.","Piège : les dates de livraison sont une clause vérifiée.","Pas mentionné."],"Dans les messageries, la demande principale arrive dans le premier message."),
+Q("Where most likely is Omar at 9:14 A.M.?",["On his way to work","At the client's office","In a meeting","At home"],0,"« I'm on the train, I'll be there in 20 minutes. »",["Il arrive au bureau.","Pas mentionné.","Pas mentionné.","Il est dans le train."],"« most likely » = déduction à partir d'indices clairs."),
+Q("At 9:17 A.M., what does Lisa mean when she writes, « Will do »?",["She will print the copies","She will sign the contract","She will call the client","She will review the clause"],0,"Elle répond à « Can you print two copies once she's done? »",["Réponse à la demande d'impression.","C'est Omar qui signe.","Pas demandé.","C'est Julie qui vérifie."],"Pour « What does X mean when she writes… », relis le message juste avant.")]},
+{title:"Double document : facture et e-mail",docs:[{h:"INVOICE · Bright Print Co. · Invoice #2291\nClient: Atlas Marketing",b:"500 business cards ............ $90\n200 color brochures .......... $340\n50 posters (A2) .................. $150\n\nTotal: $580\nPayment due within 30 days. A 5% discount applies to payments made within 10 days of the invoice date."},{h:"From: Ken Ito (Atlas Marketing)\nTo: Bright Print Co.\nSubject: Invoice #2291",b:"Hello,\n\nWe received our order yesterday, thank you. However, we ordered 100 posters, not 50, as stated in our purchase order. The posters are for our trade show booth next week, so we will need the remaining ones by Monday. Please send a corrected invoice. We plan to pay within the week to benefit from your early payment discount.\n\nBest regards,\nKen Ito"}],qs:[
+Q("What is the purpose of the e-mail?",["To report an error in an order","To cancel an order","To request a price quote","To complain about print quality"],0,"« we ordered 100 posters, not 50 »",["Erreur de quantité.","Il veut plus, pas moins.","Pas de devis.","La qualité n'est pas critiquée."],"Le but d'un e-mail se trouve souvent après « However »."),
+Q("According to the invoice, how much does one poster cost?",["$3","$1.50","$5","$6.80"],0,"50 posters = $150, donc 150 ÷ 50 = 3.",["Calcul juste.","Erreur de calcul (150 ÷ 100).","Pas dans le texte.","Pas dans le texte."],"Les petits calculs existent en Part 7 : prends 5 secondes pour vérifier."),
+Q("What will the posters be used for?",["A trade show","A store opening","A client meeting","A mail campaign"],0,"« The posters are for our trade show booth next week »",["Dit explicitement.","Pas mentionné.","Pas mentionné.","Pas mentionné."],"trade show = salon professionnel, mot très fréquent."),
+Q("What discount does Mr. Ito most likely expect?",["5%","10%","30%","No discount"],0,"Facture : 5 % si paiement sous 10 jours. E-mail : « We plan to pay within the week ».",["Il paiera sous 10 jours : 5 %.","Piège : 10 est le nombre de jours.","Piège : 30 est le délai de paiement.","Il veut justement la remise."],"Questions sur deux documents : la réponse combine une info de chaque texte. C'est le cœur du niveau 870+.")]},
+{title:"Article : un nouveau centre d'affaires",docs:[{h:"LAKESIDE BUSINESS NEWS",b:"After eighteen months of construction, the Riverside Business Center will officially open on September 2. The six-story building offers flexible office spaces that companies can rent by the month, as well as shared meeting rooms and a rooftop café.\n\n« Many small businesses can't commit to a five-year lease, » explained developer Hannah Price. « We wanted to give them a professional address without the long-term risk. »\n\nNearly 70 percent of the spaces have already been reserved, mostly by technology start-ups and design studios. The center is a five-minute walk from Central Station, and bicycle parking is available for tenants. An opening reception, open to the public, will be held on the rooftop on September 2 from 5 to 8 P.M."}],qs:[
+Q("What is the article mainly about?",["The opening of an office building","A new train station","A start-up competition","A change in rental laws"],0,"« the Riverside Business Center will officially open »",["Sujet principal.","La gare est un détail.","Les start-ups sont des locataires.","Pas de loi."],"« mainly about » : le premier paragraphe donne le sujet."),
+Q("According to Ms. Price, why was the center created?",["To offer flexible rental options to small companies","To attract large corporations","To replace an old train station","To host public events"],0,"« Many small businesses can't commit to a five-year lease »",["Location au mois pour les petites entreprises.","Contraire : petites entreprises.","Pas mentionné.","La réception est un détail."],"« According to X » : va directement à la citation de X."),
+Q("The word « commit » in paragraph 2 is closest in meaning to",["pledge","perform","refuse","transfer"],0,"« commit to a five-year lease » = s'engager sur un bail de cinq ans.",["pledge = s'engager.","perform = exécuter.","refuse = refuser.","transfer = transférer."],"Questions de synonymes : remplace le mot dans la phrase par chaque option et garde celle qui garde le sens."),
+Q("What is indicated about the opening reception?",["Anyone can attend","It requires a reservation","It takes place in the morning","It is for tenants only"],0,"« An opening reception, open to the public »",["open to the public = tout le monde.","Pas mentionné.","De 17 h à 20 h.","Contraire : ouverte au public."],"« open to the public », « free of charge », « by invitation only » : expressions à repérer.")]}
+];
+
+/* ================= PARTIES ================= */
+const PARTS={
+  p1:{n:"Part 1",t:"Photographies",sec:"L",bank:PHOTOS,set:false,per:6,min:"6 questions"},
+  p2:{n:"Part 2",t:"Questions-réponses",sec:"L",bank:LISTEN,set:false,per:10,min:"25 questions"},
+  p3:{n:"Part 3",t:"Conversations",sec:"L",bank:CONVS,set:true,per:2,min:"39 questions"},
+  p4:{n:"Part 4",t:"Exposés",sec:"L",bank:TALKS,set:true,per:2,min:"30 questions"},
+  p5:{n:"Part 5",t:"Phrases à compléter",sec:"R",bank:GRAMMAR,set:false,per:10,min:"30 questions"},
+  p6:{n:"Part 6",t:"Textes à compléter",sec:"R",bank:TEXTS,set:true,per:2,min:"16 questions"},
+  p7:{n:"Part 7",t:"Compréhension écrite",sec:"R",bank:READS,set:true,per:2,min:"54 questions"}
+};
+const LPARTS=["p1","p2","p3","p4"],RPARTS=["p5","p6","p7"],ALLP=LPARTS.concat(RPARTS);
+const EXAM=new Date(2026,10,19);
+const START=new Date(2026,10,2);
 const PLAN=[
- ["Diagnostic","2 séries Part 5 · 20 cartes · fiche « Structure de l'examen »"],
- ["Nature des mots","Fiche suffixes · 2 séries Part 5 · 20 cartes"],
- ["Écoute Part 2","2 séries Part 2 · fiche « Pièges Part 2 » · 20 cartes"],
- ["Prépositions","Fiche prépositions · 2 séries Part 5 · 20 cartes"],
- ["Temps & voix","Fiche temps · 2 séries Part 5 · 20 cartes"],
- ["Connecteurs","Fiche connecteurs · 2 séries Part 5 · 20 cartes"],
- ["Bilan semaine 1","Corrige toutes tes erreurs · série chrono"],
- ["Écoute Part 1–2","2 séries Part 2 · 15 min de podcast en anglais"],
- ["Faux amis","Thème « Faux amis » · 2 séries Part 5"],
- ["Lecture Part 7","Fiche Reading · un article en anglais en 10 min"],
- ["Pronoms & accords","2 séries Part 5 · fiche phrasal verbs"],
- ["Écoute Part 3–4","Fiche Part 3–4 · 2 séries Part 2"],
- ["Mix chrono","2 séries chrono Part 5 · 2 séries Part 2"],
- ["Bilan semaine 2","Corrige toutes tes erreurs · relis les fiches"],
- ["Examen blanc","Un test complet (2 h) en conditions réelles"],
- ["Analyse","Reprends les erreurs du test blanc · 2 séries Part 5"],
- ["Vocab intensif","40 cartes · 1 série Part 2 · 1 série Part 5"],
- ["Points faibles","Séries Part 5 sur tes catégories les plus faibles"],
- ["Veille d'examen","Révision légère, fiches. Dors bien, prépare ta pièce d'identité."]
+ ["Diagnostic","Fais une série de chaque partie pour repérer tes points faibles."],
+ ["Nature des mots + Part 1","Suffixes, adjectif ou adverbe. Fiche Part 1."],
+ ["Pièges de la Part 2","Questions en Wh-, sons proches, réponses indirectes."],
+ ["Prépositions + Part 6","Fiche prépositions. Phrases à insérer en Part 6."],
+ ["Conversations Part 3","Lis les questions avant d'écouter."],
+ ["Temps & voix + Part 7","Fiche temps. Lis la question avant le texte."],
+ ["Bilan semaine 1","Vide ton carnet d'erreurs, puis séries chrono."],
+ ["Exposés Part 4","Annonces, messages, publicités : qui, pourquoi, que faire."],
+ ["Connecteurs + Part 6","Nom ou phrase après le connecteur ?"],
+ ["Part 7 : doubles documents","Combine les informations de deux textes."],
+ ["Niveau 870+","Questions difficiles de Part 5 et Part 2 uniquement."],
+ ["Examen blanc officiel","Fais un test complet de 2 h en conditions réelles (test ETS ou manuel officiel)."],
+ ["Analyse du test blanc","Reprends chaque erreur du test et relis les fiches correspondantes."],
+ ["Écoute intensive","Parts 3 et 4 : sans afficher la transcription."],
+ ["Lecture chrono","Part 5 en chrono, Part 7 en 2 min par question maximum."],
+ ["Carnet d'erreurs + 870+","Toutes tes erreurs, puis questions difficiles."],
+ ["Veille d'examen","1 h légère : fiches, carnet d'erreurs. Dors tôt, prépare ta pièce d'identité."]
+];
+const GOALS=[ // bloc du programme de 2 h
+ {id:"rev",min:15,label:"Révision des erreurs",href:"#revision"},
+ {id:"v",min:20,label:"Vocabulaire · 40 cartes",href:"#vocab",n:40,keys:["v"]},
+ {id:"l12",min:20,label:"Écoute Part 1 et 2 · 20 questions",href:"#ecoute",n:20,keys:["p1","p2"]},
+ {id:"l34",min:25,label:"Écoute Part 3 et 4 · 12 questions",href:"#ecoute",n:12,keys:["p3","p4"]},
+ {id:"r56",min:20,label:"Lecture Part 5 et 6 · 24 questions",href:"#lecture",n:24,keys:["p5","p6"]},
+ {id:"r7",min:20,label:"Lecture Part 7 · 8 questions",href:"#lecture",n:8,keys:["p7"]}
 ];
 
 /* ================= ÉTAT & SAUVEGARDE ================= */
-const KEY="toeic-j19-v2";
-const blank=()=>({v:2,updated:0,cards:{},q:{},days:{},dir:"en",theme:"Tous"});
+const KEY="toeic-j19-v3";
+const blank=()=>({v:3,updated:0,cards:{},q:{},days:{},dir:"en",theme:"Tous"});
+function migrate(x){
+  if(!x) return blank();
+  const o=Object.assign(blank(),x);
+  if((x.v||0)<3){
+    const q={};Object.entries(x.q||{}).forEach(([k,r])=>{
+      if(/^g\d+$/.test(k)) q["p5:"+k.slice(1)]=r; else if(/^l\d+$/.test(k)) q["p2:"+k.slice(1)]=r; else q[k]=r;});
+    o.q=q;
+    const days={};Object.entries(x.days||{}).forEach(([d,y])=>{days[d]={v:y.v||0,vOk:y.vOk||0,p5:y.g||0,p5Ok:y.gOk||0,p2:y.l||0,p2Ok:y.lOk||0}});
+    o.days=days;o.v=3;
+  }
+  return o;
+}
 let S=blank();
 try{
   const raw=localStorage.getItem(KEY);
-  if(raw) S=Object.assign(blank(),JSON.parse(raw));
-  else{ // reprise de la version 1
-    const old=localStorage.getItem("toeic-j19-v1");
-    if(old){const o=JSON.parse(old);
-      Object.entries(o.cards||{}).forEach(([i,c])=>S.cards[i]={box:c.box,due:c.due,t:Date.now(),lap:0});
-      Object.entries(o.gram||{}).forEach(([i,r])=>S.q["g"+i]={ok:r.ok,ko:r.ko,need:r.ko>r.ok?2:0,due:0,t:Date.now()});
-      Object.entries(o.listen||{}).forEach(([i,r])=>S.q["l"+i]={ok:r.ok,ko:r.ko,need:r.ko>r.ok?2:0,due:0,t:Date.now()});
-      Object.entries(o.days||{}).forEach(([d,x])=>S.days[d]={v:x.v||0,vOk:0,g:x.g||0,gOk:0,l:x.l||0,lOk:0});
-      S.updated=Date.now();}
-  }
+  if(raw) S=migrate(JSON.parse(raw));
+  else{const old=localStorage.getItem("toeic-j19-v2");if(old) S=migrate(JSON.parse(old));}
 }catch(e){}
 function saveLocal(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 
@@ -564,13 +875,12 @@ function setSync(st){syncState=st;const el=document.getElementById("sync");if(!e
   el.innerHTML=`<i class="dot ${m[0]}"></i>${m[1]}`;
   el.title=st==="ok"?"Ta progression est enregistrée sur ton compte : tu la retrouves sur ton téléphone et ton ordinateur.":st==="local"?"Ta progression est enregistrée dans ce navigateur.":"";
 }
-function ref(){return db.doc("data/users/"+uid+"/toeic")}
+const ref=()=>db.doc("data/users/"+uid+"/toeic");
 function save(){S.updated=Date.now();saveLocal();if(db){setSync("saving");clearTimeout(pushT);pushT=setTimeout(push,1200)}}
 async function push(){
   if(!db)return; if(saving){again=true;return}
   saving=true;
-  try{await ref().set(JSON.parse(JSON.stringify(S)));setSync("ok")}
-  catch(e){setSync("err")}
+  try{await ref().set(JSON.parse(JSON.stringify(S)));setSync("ok")}catch(e){setSync("err")}
   saving=false; if(again){again=false;push()}
 }
 function merge(a,b){
@@ -578,22 +888,21 @@ function merge(a,b){
   const newer=(x,y)=>!x?y:!y?x:((y.t||0)>(x.t||0)?y:x);
   Object.keys(b.cards||{}).forEach(k=>out.cards[k]=newer(out.cards[k],b.cards[k]));
   Object.keys(b.q||{}).forEach(k=>out.q[k]=newer(out.q[k],b.q[k]));
-  Object.entries(b.days||{}).forEach(([d,x])=>{const y=out.days[d]||{};const z={};
-    ["v","vOk","g","gOk","l","lOk"].forEach(f=>z[f]=Math.max(x[f]||0,y[f]||0));out.days[d]=z});
+  Object.entries(b.days||{}).forEach(([d,x])=>{const y=out.days[d]||{};const z=Object.assign({},y);
+    Object.keys(x).forEach(f=>z[f]=Math.max(x[f]||0,y[f]||0));out.days[d]=z});
   if((b.updated||0)>(a.updated||0)){out.dir=b.dir||out.dir;out.theme=b.theme||out.theme}
-  out.updated=Math.max(a.updated||0,b.updated||0);
+  out.updated=Math.max(a.updated||0,b.updated||0);out.v=3;
   return out;
 }
 async function pull(){
   if(!db)return;
   try{
     const snap=await ref().get();
-    const remote=snap.exists?JSON.parse(JSON.stringify(snap.data())):null;
+    const remote=snap.exists?migrate(JSON.parse(JSON.stringify(snap.data()))):null;
     const before=JSON.stringify(S);
     if(remote) S=merge(S,remote);
     saveLocal();
-    const remoteStr=remote?JSON.stringify(remote):"";
-    if(JSON.stringify(S)!==remoteStr) await push(); else setSync("ok");
+    if(!remote||JSON.stringify(S)!==JSON.stringify(remote)) await push(); else setSync("ok");
     if(JSON.stringify(S)!==before) softRefresh();
   }catch(e){setSync("err")}
 }
@@ -609,7 +918,7 @@ async function initSync(){
   }catch(e){setSync("local")}
 }
 
-/* ================= DATES ================= */
+/* ================= DATES & STATS ================= */
 const DAY=86400000;
 const sod=d=>{const x=new Date(d);x.setHours(0,0,0,0);return x};
 const keyOf=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
@@ -617,52 +926,69 @@ const todayKey=()=>keyOf(new Date());
 const daysLeft=()=>Math.max(0,Math.round((sod(EXAM)-sod(new Date()))/DAY));
 const dayIndex=()=>Math.round((sod(new Date())-sod(START))/DAY);
 const tomorrow=()=>sod(new Date()).getTime()+DAY;
-function logDay(kind,ok){const k=todayKey();const d=S.days[k]=S.days[k]||{v:0,vOk:0,g:0,gOk:0,l:0,lOk:0};d[kind]++;if(ok)d[kind+"Ok"]++}
+function today(){return S.days[todayKey()]||{}}
+function logDay(k,ok,tot){const d=S.days[todayKey()]=S.days[todayKey()]||{};d[k]=(d[k]||0)+tot;d[k+"Ok"]=(d[k+"Ok"]||0)+ok}
+const dayTotal=x=>["v"].concat(ALLP).reduce((s,k)=>s+(x[k]||0),0);
+const dayOk=x=>["v"].concat(ALLP).reduce((s,k)=>s+(x[k+"Ok"]||0),0);
 function streak(){
-  const has=d=>{const x=S.days[keyOf(d)];return x&&(x.v+x.g+x.l)>0};
+  const has=d=>{const x=S.days[keyOf(d)];return x&&dayTotal(x)>0};
   let d=sod(new Date()),n=0; if(!has(d)) d=new Date(d.getTime()-DAY);
   while(has(d)){n++;d=new Date(d.getTime()-DAY)} return n;
 }
+function lastDays(n,parts){let ok=0,t=0;for(let j=0;j<n;j++){const x=S.days[keyOf(new Date(sod(new Date()).getTime()-j*DAY))]||{};parts.forEach(p=>{t+=x[p]||0;ok+=x[p+"Ok"]||0})}return {ok,t}}
+function estimate(parts){const {ok,t}=lastDays(7,parts);if(t<20)return {need:20-t};return {v:Math.max(5,Math.min(495,Math.round(ok/t*495/5)*5)),pct:Math.round(ok/t*100)}}
 
 /* ================= OUTILS ================= */
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 const L="ABCD";
-const bank=k=>k==="g"?GRAMMAR:LISTEN;
-function errorsOf(k,dueOnly){const now=Date.now();return bank(k).map((_,i)=>i).filter(i=>{const r=S.q[k+i];return r&&r.need>0&&(!dueOnly||r.due<=now)})}
+const pk=key=>key.split(":")[0], ix=key=>+key.split(":")[1];
+const itemOf=key=>PARTS[pk(key)].bank[ix(key)];
+function tipOf(part,i,item){
+  if(item.t) return item.t;
+  if(part==="p5"){const a=CAT_TIPS[item.c]||CAT_TIPS["Nature des mots"];return a[i%a.length]}
+  if(part==="p2") return P2_TIPS[i%P2_TIPS.length];
+  return "";
+}
+function errorsOf(parts,dueOnly){const now=Date.now();const out=[];
+  parts.forEach(p=>PARTS[p].bank.forEach((_,i)=>{const r=S.q[p+":"+i];if(r&&r.need>0&&(!dueOnly||r.due<=now))out.push(p+":"+i)}));return out}
 function hardWords(){return VOCAB.map((_,i)=>i).filter(i=>{const c=S.cards[i];return c&&c.lap>0&&c.box<2})}
 function dueWords(){const now=Date.now();return VOCAB.map((_,i)=>i).filter(i=>{const c=S.cards[i];return c&&c.box<5&&c.due<=now})}
-function accuracy(k){let ok=0,t=0;Object.entries(S.q).forEach(([key,r])=>{if(key[0]===k){ok+=r.ok;t+=r.ok+r.ko}});return t?Math.round(ok/t*100):null}
+function partStats(p){let ok=0,t=0,seen=0;PARTS[p].bank.forEach((_,i)=>{const r=S.q[p+":"+i];if(r){seen++;ok+=r.ok;t+=r.ok+r.ko}});return {acc:t?Math.round(ok/t*100):null,seen,total:PARTS[p].bank.length}}
 
 function renderHeader(){
   const d=daysLeft();$("#hdrDays").textContent=d>0?"J-"+d:"Jour J";
   const s=streak();$("#streak").textContent=s+(s>1?" jours":" jour")+" d'affilée";
   const set=(id,n)=>{const el=$(id);el.hidden=!n;el.textContent=n};
-  set("#bg",errorsOf("g",true).length);set("#bl",errorsOf("l",true).length);set("#bv",dueWords().length);
+  set("#bl",errorsOf(LPARTS,true).length);set("#br",errorsOf(RPARTS,true).length);set("#bv",dueWords().length);
 }
 
-/* ================= SPEECH ================= */
-let voice=null;
+/* ================= AUDIO ================= */
+let vW=null,vM=null;
 const canSpeak=()=>{try{return "speechSynthesis" in window}catch(e){return false}};
-function pickVoice(){try{const vs=speechSynthesis.getVoices();voice=vs.find(v=>/en[-_]US/i.test(v.lang)&&/Google|Samantha|Aria|Jenny|Natural/i.test(v.name))||vs.find(v=>/en[-_]US/i.test(v.lang))||vs.find(v=>/^en/i.test(v.lang))||null}catch(e){}}
-try{pickVoice();speechSynthesis.onvoiceschanged=pickVoice}catch(e){}
-function speak(text,onend){if(!canSpeak()){onend&&onend();return}
-  try{const u=new SpeechSynthesisUtterance(text);u.lang="en-US";u.rate=.92;if(voice)u.voice=voice;if(onend)u.onend=onend;speechSynthesis.speak(u)}catch(e){onend&&onend()}}
-function speakSeq(parts){try{speechSynthesis.cancel()}catch(e){} let i=0;const next=()=>{if(i<parts.length){speak(parts[i++],()=>setTimeout(next,450))}};next()}
+function pickVoices(){try{const vs=speechSynthesis.getVoices().filter(v=>/^en[-_]/i.test(v.lang));
+  const us=vs.filter(v=>/US/i.test(v.lang));const pool=us.length?us:vs;
+  vW=pool.find(v=>/Samantha|Aria|Jenny|Zira|Female|Victoria|Karen|Ava|Allison|Susan/i.test(v.name))||pool[0]||null;
+  vM=pool.find(v=>/Daniel|Guy|David|Alex|Male|Fred|Tom|Aaron|Mark/i.test(v.name)&&v!==vW)||vs.find(v=>v!==vW)||vW;}catch(e){}}
+try{pickVoices();speechSynthesis.onvoiceschanged=pickVoices}catch(e){}
+function speak(text,spk,onend){if(!canSpeak()){onend&&onend();return}
+  try{const u=new SpeechSynthesisUtterance(text);u.lang="en-US";u.rate=.93;const v=spk==="W"?vW:vM;if(v)u.voice=v;
+    if(vW===vM||!v)u.pitch=spk==="W"?1.25:.85;if(onend)u.onend=onend;speechSynthesis.speak(u)}catch(e){onend&&onend()}}
+function stopAudio(){try{speechSynthesis.cancel()}catch(e){}}
+function speakSeq(parts){stopAudio();let i=0;const next=()=>{if(i<parts.length){const p=parts[i++];speak(p[1],p[0],()=>setTimeout(next,420))}};next()}
 
 /* ================= VOCAB ================= */
 const INTERVALS=[0,1,2,4,7,14];
 let vq=null;
 function buildVocab(theme){
   const now=Date.now();let pool=VOCAB.map((_,i)=>i);
-  if(theme==="Mots ratés") pool=hardWords();
-  else if(theme!=="Tous") pool=pool.filter(i=>VOCAB[i][3]===theme);
+  if(theme==="Mots ratés") return {theme,list:shuffle(hardWords()).slice(0,20),i:0,shown:false,ok:0,ko:0,missed:[]};
+  if(theme!=="Tous") pool=pool.filter(i=>VOCAB[i][3]===theme);
   const due=shuffle(pool.filter(i=>{const c=S.cards[i];return c&&c.box<5&&c.due<=now}));
   const fresh=pool.filter(i=>!S.cards[i]);
   let list=due.slice(0,25);
   if(list.length<20) list=list.concat(fresh.slice(0,20-list.length));
-  if(theme==="Mots ratés") list=shuffle(pool).slice(0,20);
   return {theme,list,i:0,shown:false,ok:0,ko:0,missed:[]};
 }
 function vocabView(){
@@ -674,12 +1000,12 @@ function vocabView(){
   const cur=vq.list[vq.i];
   let h=`<div class="row between"><div><p class="eyebrow">Vocabulaire · répétition espacée</p><h2>${VOCAB.length} mots du TOEIC</h2></div>
   <div class="seg" role="group" aria-label="Sens"><button id="dirEn" aria-pressed="${S.dir==="en"}">EN → FR</button><button id="dirFr" aria-pressed="${S.dir==="fr"}">FR → EN</button></div></div>
-  <div class="row"><label for="theme" class="muted">Thème</label><select id="theme">${themes.map(t=>`<option ${t===theme?"selected":""}>${esc(t)}${t==="Mots ratés"?" ("+hardWords().length+")":""}</option>`).join("")}</select>
+  <div class="row"><label for="theme" class="muted">Thème</label><select id="theme">${themes.map(t=>`<option value="${esc(t)}" ${t===theme?"selected":""}>${esc(t)}${t==="Mots ratés"?" ("+hardWords().length+")":""}</option>`).join("")}</select>
   <span class="note">${dueWords().length} à revoir aujourd'hui · ${VOCAB.length-seen} jamais vus</span></div>`;
   if(cur===undefined){
     h+=`<div class="card stack pop" style="align-items:flex-start"><p class="eyebrow">Série terminée</p>
       <div class="result mono">${vq.ok} <span style="font-size:.45em;color:var(--ink-soft)">sus</span> · ${vq.ko} <span style="font-size:.45em;color:var(--ink-soft)">à revoir</span></div>
-      ${vq.missed.length?`<p>Les mots à retenir de cette série :</p><div class="recap">${[...new Set(vq.missed)].map(i=>`<div><b>${esc(VOCAB[i][0])}</b><span>${esc(VOCAB[i][1])}</span><span class="note"><i>${esc(VOCAB[i][2])}</i></span></div>`).join("")}</div>`:`<p>Aucune erreur. Ces mots reviendront dans quelques jours pour bien les ancrer.</p>`}
+      ${vq.missed.length?`<p>Les mots à retenir. Ils reviendront demain :</p><div class="recap">${[...new Set(vq.missed)].map(i=>`<div><b>${esc(VOCAB[i][0])}</b><span>${esc(VOCAB[i][1])}</span><span class="note"><i>${esc(VOCAB[i][2])}</i></span></div>`).join("")}</div>`:`<p>${vq.list.length?"Aucune erreur. Ces mots reviendront dans quelques jours pour bien les ancrer.":"Aucun mot à revoir dans ce thème pour aujourd'hui. Choisis un autre thème."}</p>`}
       <button class="btn" id="vRestart">Nouvelle série</button></div>`;
   } else {
     const v=VOCAB[cur];const front=S.dir==="en"?v[0]:v[1];const back=S.dir==="en"?v[1]:v[0];const c=S.cards[cur];
@@ -695,9 +1021,10 @@ function vocabView(){
     </div>`;
   }
   h+=`<div class="card stack"><p class="eyebrow">Tes boîtes · ${seen}/${VOCAB.length} mots vus</p><div class="boxes">${counts.map((n,b)=>`<div class="bx"><b>${n}</b>${b===5?"acquis":"boîte "+b}</div>`).join("")}</div>
-  <p class="note">« Je savais » : le mot monte d'une boîte et revient de plus en plus tard (1, 2, 4, 7 puis 14 jours). « Je ne savais pas » : retour en boîte 0, il revient à la fin de la série et encore demain.</p></div>`;
+  <p class="note">« Je savais » : le mot monte d'une boîte et revient de plus en plus tard (1, 2, 4, 7 puis 14 jours). « Je ne savais pas » : retour en boîte 0, il revient à la fin de la série puis demain.</p>
+  <div class="tipbox"><span class="eyebrow">Astuce TOEIC</span><span>Pour viser 870, travaille le thème « Niveau 870+ » : ces mots formels (pending, waive, expedite) apparaissent surtout en Part 7 et dans les questions difficiles de Part 5.</span></div></div>`;
   $("#main").innerHTML=`<section class="view">${h}</section>`;
-  $("#theme").onchange=e=>{S.theme=e.target.value.replace(/ \(\d+\)$/,"");save();vq=null;vocabView()};
+  $("#theme").onchange=e=>{S.theme=e.target.value;save();vq=null;vocabView()};
   $("#dirEn").onclick=()=>{S.dir="en";save();vocabView()};
   $("#dirFr").onclick=()=>{S.dir="fr";save();vocabView()};
   if(cur===undefined){$("#vRestart").onclick=()=>{vq=null;vocabView()};return}
@@ -705,295 +1032,355 @@ function vocabView(){
   $("#flash").onclick=()=>{if(!vq.shown)flip()};
   $("#flash").onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();if(!vq.shown)flip()}};
   if($("#vShow"))$("#vShow").onclick=flip;
-  $("#vSay").onclick=()=>speak(VOCAB[cur][0].replace(/^to /,""));
+  $("#vSay").onclick=()=>{stopAudio();speak(VOCAB[cur][0].replace(/^to /,""),"W")};
   const grade=ok=>{const c=S.cards[cur]||{box:0,due:0,lap:0};
     if(ok){c.box=Math.min(5,c.box+1);vq.ok++}
     else{c.box=0;c.lap=(c.lap||0)+1;vq.ko++;vq.missed.push(cur);if(vq.list.indexOf(cur,vq.i+1)<0)vq.list.push(cur)}
     c.due=sod(new Date()).getTime()+(ok?INTERVALS[c.box]*DAY:DAY);c.t=Date.now();S.cards[cur]=c;
-    logDay("v",ok);vq.i++;vq.shown=false;save();renderHeader();vocabView()};
+    logDay("v",ok?1:0,1);vq.i++;vq.shown=false;save();renderHeader();vocabView()};
   if($("#vOk")){$("#vOk").onclick=()=>grade(true);$("#vKo").onclick=()=>grade(false)}
 }
 
-/* ================= QUIZ (Part 5 & Part 2) ================= */
+/* ================= MOTEUR DE QUIZ ================= */
 let quiz=null;
-function buildSet(k,mode,cat){
-  const B=bank(k);let idx=B.map((_,i)=>i);
-  if(cat&&cat!=="Toutes") idx=idx.filter(i=>B[i].c===cat);
-  if(mode==="errors"){
-    const now=Date.now();
-    return errorsOf(k,false).filter(i=>idx.includes(i)).sort((a,b)=>(S.q[k+a].due>now)-(S.q[k+b].due>now)).slice(0,10);
-  }
-  const errs=shuffle(errorsOf(k,true).filter(i=>idx.includes(i))).slice(0,5);
-  const rest=idx.filter(i=>!errs.includes(i));
-  const unseen=shuffle(rest.filter(i=>!S.q[k+i]));
-  const seen=shuffle(rest.filter(i=>S.q[k+i])).sort((a,b)=>{const r=x=>{const q=S.q[k+x];return q.ok/(q.ok+q.ko||1)};return r(a)-r(b)});
-  return shuffle(errs.concat(unseen,seen).slice(0,10));
+function pool(p,opts){
+  let idx=PARTS[p].bank.map((_,i)=>i);
+  if(p==="p5"&&opts.cat&&opts.cat!=="Toutes") idx=idx.filter(i=>GRAMMAR[i].c===opts.cat);
+  if(opts.hard&&(p==="p5"||p==="p2")) idx=idx.filter(i=>PARTS[p].bank[i].h);
+  return idx;
 }
-function startQuiz(k,opts){
-  opts=opts||{};
-  const set=buildSet(k,opts.mode,opts.cat);
-  quiz={kind:k,set,base:set.length,i:0,ans:[],retry:new Set(),retried:[],chrono:!!opts.chrono,mode:opts.mode,cat:opts.cat,timer:null,reveal:k==="l"&&!canSpeak(),played:false};
+function buildUnits(p,opts){
+  const per=PARTS[p].per,idx=pool(p,opts),now=Date.now();
+  const due=shuffle(idx.filter(i=>{const r=S.q[p+":"+i];return r&&r.need>0&&r.due<=now})).slice(0,Math.ceil(per/2));
+  const rest=idx.filter(i=>!due.includes(i));
+  const unseen=shuffle(rest.filter(i=>!S.q[p+":"+i]));
+  const acc=i=>{const r=S.q[p+":"+i];return r.ok/((r.ok+r.ko)||1)};
+  const seen=shuffle(rest.filter(i=>S.q[p+":"+i])).sort((a,b)=>acc(a)-acc(b));
+  return shuffle(due.concat(unseen,seen).slice(0,per)).map(i=>p+":"+i);
+}
+function startQuiz(view,units,opts){
+  quiz={view,units,base:units.length,i:0,ans:[],perms:[],retryPos:new Set(),retried:new Set(),opts:opts||{},sel:{},reveal:false,showScript:false,played:false,timer:null};
 }
 function stopTimer(){if(quiz&&quiz.timer){clearInterval(quiz.timer);quiz.timer=null}}
+function permFor(i){
+  if(!quiz.perms[i]){const it=itemOf(quiz.units[i]);
+    quiz.perms[i]=PARTS[pk(quiz.units[i])].set?it.qs.map(s=>shuffle(s.o.map((_,j)=>j))):shuffle(it.o.map((_,j)=>j))}
+  return quiz.perms[i];
+}
+function record(key,nOk,nTot){
+  const r=S.q[key]||{ok:0,ko:0,need:0,due:0};
+  r.ok+=nOk;r.ko+=nTot-nOk;
+  if(nOk===nTot){if(r.need>0){r.need--;r.due=r.need>0?tomorrow():0}}
+  else{r.need=2;r.due=tomorrow()}
+  r.t=Date.now();S.q[key]=r;logDay(pk(key),nOk,nTot);
+}
+function afterAnswer(allOk){
+  const key=quiz.units[quiz.i];
+  if(!allOk&&quiz.i<quiz.base&&!quiz.retried.has(key)){quiz.retried.add(key);quiz.units.push(key);quiz.retryPos.add(quiz.units.length-1)}
+  save();renderHeader();renderQuiz();
+}
+const retryNote=(ok)=>ok?"":`<p class="note">${quiz.retryPos.has(quiz.i)?"Elle reste dans ton carnet d'erreurs et te sera reposée demain.":"Elle revient à la fin de cette série, puis demain, jusqu'à ce que tu la réussisses."}</p>`;
+function optionList(item,perm,chosen,answered,attr){
+  return perm.map((j,d)=>{let cls="";if(answered){if(j===item.a)cls="ok";else if(j===chosen)cls="ko";else cls="dim"}else if(j===chosen)cls="sel";
+    return `<button class="opt ${cls}" ${attr} data-j="${j}" ${answered?"disabled":""}><span class="bub">${L[d]}</span><span>${attr.includes("hide")&&!answered?`<span class="muted">Réponse ${L[d]}</span>`:esc(item.o[j])}</span></button>`}).join("");
+}
+function whyList(item,perm,chosen){
+  return `<ul class="whys">${perm.map((j,d)=>`<li class="${j===item.a?"ok":j===chosen?"ko":""}"><span class="bub">${L[d]}</span><span><b>${esc(item.o[j])}</b> : ${esc(item.w[j])}</span></li>`).join("")}</ul>`;
+}
+const tipBox=t=>t?`<div class="tipbox"><span class="eyebrow">Astuce TOEIC</span><span>${esc(t)}</span></div>`:"";
 
-function landing(k){
-  const isG=k==="g";const B=bank(k);
-  const errs=errorsOf(k,false),errsDue=errorsOf(k,true);
-  const acc=accuracy(k);
-  let byCat="";
-  if(isG){
-    const m={};B.forEach((g,i)=>{const r=S.q["g"+i];if(!r)return;m[g.c]=m[g.c]||{ok:0,t:0};m[g.c].ok+=r.ok;m[g.c].t+=r.ok+r.ko});
-    byCat=Object.keys(m).length?`<div class="stack">${Object.entries(m).sort((a,b)=>a[1].ok/a[1].t-b[1].ok/b[1].t).map(([c,v])=>{const p=Math.round(v.ok/v.t*100);
-      return `<div><div class="row between"><span>${esc(c)}</span><span class="mono">${p} %</span></div><div style="height:7px;border-radius:4px;background:var(--line);overflow:hidden"><i style="display:block;height:100%;width:${p}%;background:${p<60?"var(--bad)":p<80?"var(--marker)":"var(--good)"}"></i></div></div>`}).join("")}</div>`
-      :`<p class="muted">Fais une première série pour voir tes points forts et tes points faibles.</p>`;
-  }
-  const cats=["Toutes",...Array.from(new Set(GRAMMAR.map(g=>g.c)))];
-  $("#main").innerHTML=`<section class="view">
-    <div><p class="eyebrow">${isG?"Reading · Part 5 · Phrases à compléter":"Listening · Part 2 · Questions-réponses"}</p><h2>${isG?B.length+" questions de grammaire":"Entraîne ton oreille"}</h2></div>
-    <div class="errbox ${errs.length?"":"clear"}">
-      ${errs.length?`<div class="row between"><b>Ton carnet d'erreurs : ${errs.length} question${errs.length>1?"s":""} à corriger</b>${errsDue.length?`<span class="tag red">${errsDue.length} à refaire aujourd'hui</span>`:""}</div>
-      <p class="note">Une erreur est corrigée quand tu la réussis deux fois : une fois pendant la série, puis un autre jour. Jusque-là, elle revient dans tes séries.</p>
-      <div><button class="btn bad" id="goErr">Corriger mes erreurs</button></div>`
-      :`<b>Aucune erreur en attente</b><p class="note">Chaque question ratée sera ajoutée ici et te sera reposée jusqu'à ce que tu la réussisses.</p>`}
+function renderQuiz(){
+  stopTimer();
+  if(!quiz.units.length){$("#main").innerHTML=`<section class="view"><div class="card stack"><b>Rien à faire ici pour le moment.</b><p class="note">Aucune question ne correspond à ce choix aujourd'hui.</p><div><button class="btn ghost" id="back">Retour</button></div></div></section>`;$("#back").onclick=()=>{quiz=null;route()};return}
+  if(quiz.i>=quiz.units.length) return renderResult();
+  const key=quiz.units[quiz.i],p=pk(key);
+  const prog=`<div class="progress" aria-hidden="true">${quiz.units.map((u,j)=>{const a=quiz.ans[j];let c="";
+    if(a!==undefined){const it=itemOf(u);c=PARTS[pk(u)].set?(a.every((x,s)=>x===it.qs[s].a)?"ok":"ko"):(a===it.a?"ok":"ko")}else if(j===quiz.i)c="cur";return `<i class="${c}"></i>`}).join("")}</div>`;
+  const rec=S.q[key];const answered=quiz.ans[quiz.i]!==undefined;
+  const head=`<div class="row between"><p class="eyebrow">${PARTS[p].n} · ${PARTS[p].t} · ${quiz.i+1}/${quiz.units.length}</p>
+    <div class="row">${itemOf(key).h?`<span class="level">870+</span>`:""}${quiz.retryPos.has(quiz.i)?`<span class="retry">2ᵉ chance</span>`:!answered&&rec&&rec.need>0?`<span class="tag red">déjà ratée</span>`:""}${quiz.opts.chrono&&p==="p5"&&!answered?`<span class="timer" id="timer">20 s</span>`:""}</div></div>`;
+  const body=PARTS[p].set?renderSet(key,p,answered):renderSingle(key,p,answered);
+  $("#main").innerHTML=`<section class="view">${prog}<div class="card stack">${head}${body}</div></section>`;
+  bindQuiz(key,p,answered);
+}
+function renderSingle(key,p,answered){
+  const it=itemOf(key),perm=permFor(quiz.i),ch=quiz.ans[quiz.i];
+  let top="";const hide=(p==="p1"||p==="p2")&&!quiz.reveal;
+  if(p==="p5"){const s=it.s.split("___");top=`<p class="q">${esc(s[0])}<span class="gap"></span>${esc(s[1]||"")}</p>`}
+  if(p==="p1") top=`<div class="photo"><span class="cam">PHOTO</span><div class="stack" style="gap:4px"><span class="eyebrow">Ce que montre la photo</span><p>${esc(it.d)}</p></div></div>
+    <div class="row"><button class="btn" id="play">▶ Écouter les 4 phrases</button>${hide&&!answered?`<button class="btn ghost small" id="reveal">Afficher le texte</button>`:""}</div>`;
+  if(p==="p2") top=`<div class="row"><button class="btn" id="play">▶ Écouter</button>${hide&&!answered?`<button class="btn ghost small" id="reveal">Afficher le texte</button>`:""}</div>
+    ${!hide||answered?`<p class="q">${esc(it.q)}</p>`:`<p class="muted">Écoute la question et les trois réponses, puis choisis.</p>`}`;
+  let out=top+`<div class="opts">${optionList(it,perm,ch,answered,hide?"data-hide":"")}</div>`;
+  if(answered){
+    const ok=ch===it.a,dpos=d=>L[perm.indexOf(d)];
+    const tip=tipOf(p,ix(key),it);
+    const filled=p==="p5"?(()=>{const s=it.s.split("___");return `${esc(s[0])}<span class="fill">${esc(it.o[it.a])}</span>${esc(s[1]||"")}`})():p==="p2"?esc(it.q):esc(it.d);
+    out+=`<div class="verdict ${ok?"ok":"ko"} pop"><span class="ic">${ok?"✓":"✗"}</span>${ok?"Bonne réponse !":ch===-1?"Temps écoulé":"Pas tout à fait"}</div>
+    <div class="explain pop">
+      ${!ok&&ch>=0?`<div class="ex-row"><span>Ta réponse</span><div><span class="mono" style="color:var(--bad);font-weight:700">(${dpos(ch)})</span> ${esc(it.o[ch])} : ${esc(it.w[ch])}</div></div>`:""}
+      <div class="ex-row"><span>La bonne</span><div><span class="mono" style="color:var(--good);font-weight:700">(${dpos(it.a)})</span> <b>${esc(it.o[it.a])}</b></div></div>
+      ${p!=="p1"?`<div class="ex-row"><span>${p==="p5"?"Phrase":"Question"}</span><div class="q" style="font-size:1.02rem">${filled}</div></div>`:""}
+      ${it.fr?`<div class="ex-row"><span>Traduction</span><div><i>${esc(it.fr)}</i></div></div>`:""}
+      ${it.k?`<div class="ex-row"><span>L'indice</span><div>${esc(it.k)}</div></div>`:""}
+      ${it.r?`<div class="ex-row"><span>La règle</span><div class="rule">${esc(it.r)}</div></div>`:""}
+      <div class="ex-row"><span>Chaque option</span>${whyList(it,perm,ch)}</div>
+      ${tipBox(tip)}
+      ${retryNote(ok)}
     </div>
-    <div class="card stack">
-      ${isG?`<p>Séries de 10 questions. Tes erreurs à refaire passent en premier, puis les questions jamais vues. Le jour J, tu as <b>environ 20 secondes</b> par question.</p>
-        <div class="row"><label for="cat" class="muted">Catégorie</label><select id="cat">${cats.map(c=>`<option>${esc(c)}</option>`).join("")}</select></div>`
-      :`<p>Tu entends une question puis trois réponses (A), (B), (C). Choisis la réponse logique. Au vrai test, <b>rien n'est écrit</b> : essaie d'abord sans afficher le texte.</p>
-        ${canSpeak()?`<p class="note">Voix de synthèse de ton appareil. Monte le son et coupe le mode silencieux sur iPhone.</p>`:`<p class="note">Ton navigateur ne lit pas l'audio : le texte sera affiché.</p>`}`}
-      <div class="row"><button class="btn" id="go">Commencer une série</button>${isG?`<button class="btn ghost" id="goChrono">Série chrono · 20 s</button>`:""}</div>
-    </div>
-    <div class="card stack"><p class="eyebrow">${isG?"Réussite par catégorie":"Ta réussite"}${acc!==null?" · "+acc+" % au total":""}</p>
-      ${isG?byCat:`<p>Retiens le <span class="hl">premier mot</span> de la question (Where, When, Who, Why, How…) : il élimine souvent deux réponses. Méfie-toi des réponses qui <span class="hl">répètent un mot</span> de la question ou un son proche.</p>`}
-    </div></section>`;
-  const cat=()=>$("#cat")?$("#cat").value:"Toutes";
-  $("#go").onclick=()=>{startQuiz(k,{cat:cat()});renderQuestion()};
-  if($("#goChrono"))$("#goChrono").onclick=()=>{startQuiz(k,{cat:cat(),chrono:true});renderQuestion()};
-  if($("#goErr"))$("#goErr").onclick=()=>{startQuiz(k,{mode:"errors"});renderQuestion()};
+    <div class="row between"><button class="btn ghost small" id="quit">Arrêter</button><button class="btn" id="next">${quiz.i===quiz.units.length-1?"Voir le bilan":"Question suivante"}</button></div>`;
+  } else out+=`<div><button class="btn ghost small" id="quit">Arrêter la série</button></div>`;
+  return out;
 }
-function grammarView(){if(quiz&&quiz.kind==="g")renderQuestion();else landing("g")}
-function listenView(){if(quiz&&quiz.kind==="l")renderQuestion();else landing("l")}
-
-function explainBlock(item,k,chosen){
-  const isG=quiz.kind==="g";const ok=chosen===item.a;
-  const filled=isG?(()=>{const p=item.s.split("___");return `${esc(p[0])}<span class="fill">${esc(item.o[item.a])}</span>${esc(p[1]||"")}`})():esc(item.q);
-  return `<div class="verdict ${ok?"ok":"ko"} pop"><span class="ic">${ok?"✓":"✗"}</span>${ok?"Bonne réponse !":chosen===-1?"Temps écoulé":"Pas tout à fait"}</div>
-  <div class="explain pop">
-    ${!ok&&chosen>=0?`<div class="ex-row"><span>Ta réponse</span><div><span class="mono" style="color:var(--bad);font-weight:700">(${L[chosen]})</span> ${esc(item.o[chosen])} : ${esc(item.w[chosen])}</div></div>`:""}
-    <div class="ex-row"><span>La bonne</span><div><span class="mono" style="color:var(--good);font-weight:700">(${L[item.a]})</span> <b>${esc(item.o[item.a])}</b></div></div>
-    ${isG?`<div class="ex-row"><span>Phrase</span><div class="q" style="font-size:1.02rem">${filled}</div></div>`:`<div class="ex-row"><span>Question</span><div>${filled}</div></div>`}
-    <div class="ex-row"><span>Traduction</span><div><i>${esc(item.fr)}</i></div></div>
-    <div class="ex-row"><span>L'indice</span><div>${esc(item.k)}</div></div>
-    ${isG?`<div class="ex-row"><span>La règle</span><div class="rule">${esc(item.r)}</div></div>`:""}
-    <div class="ex-row"><span>Chaque option</span><ul class="whys">${item.o.map((o,j)=>`<li class="${j===item.a?"ok":j===chosen?"ko":""}"><span class="bub">${L[j]}</span><span><b>${esc(o)}</b> : ${esc(item.w[j])}</span></li>`).join("")}</ul></div>
-    ${!ok?`<p class="note">${quiz.retry.has(quiz.i)?"Elle reste dans ton carnet d'erreurs et reviendra demain.":"Cette question revient à la fin de la série, puis demain, jusqu'à ce que tu la réussisses."}</p>`:""}
-  </div>`;
+function renderSet(key,p,answered){
+  const it=itemOf(key),perms=permFor(quiz.i),ans=quiz.ans[quiz.i];
+  const sel=answered?ans:(quiz.sel[quiz.i]=quiz.sel[quiz.i]||[]);
+  let top=`<h3>${esc(it.title)}${it.kind?` <span class="tag">${esc(it.kind)}</span>`:""}</h3>`;
+  const script=`<div class="script">${it.lines?it.lines.map(l=>`<p><b>${l[0]==="W"?"Woman":"Man"}</b>${esc(l[1])}</p>`).join(""):""}</div>`;
+  if(p==="p3"||p==="p4"){
+    top+=`<div class="row"><button class="btn" id="play">▶ Écouter ${p==="p3"?"la conversation":"l'exposé"}</button>${!answered&&!quiz.showScript?`<button class="btn ghost small" id="script">Afficher la transcription</button>`:""}</div>
+    ${answered||quiz.showScript?`<div class="doc"><div class="dh">Transcription</div><div class="db">${script}</div></div>`:`<p class="note">Au vrai test, les questions et les réponses sont écrites dans le livret, mais pas la conversation. Lis les questions avant d'écouter.</p>`}`;
+  }
+  if(p==="p6"){
+    const txt=esc(it.text).replace(/\{(\d)\}/g,(m,n)=>{const s=+n-1;return answered?`<span class="slot done">(${n}) ${esc(it.qs[s].o[it.qs[s].a])}</span>`:`<span class="slot">(${n}) ______</span>`});
+    top+=`<div class="doc"><div class="db">${txt}</div></div>`;
+  }
+  if(p==="p7") top+=it.docs.map(d=>`<div class="doc"><div class="dh">${esc(d.h)}</div><div class="db">${esc(d.b)}</div></div>`).join("");
+  const qs=it.qs.map((q,s)=>{const perm=perms[s],ch=sel[s];
+    let h=`<div class="subq"><span class="qt">${esc(q.q)}</span><div class="opts">${optionList(q,perm,ch,answered,`data-s="${s}"`)}</div>`;
+    if(answered){const ok=ch===q.a,dpos=d=>L[perm.indexOf(d)];
+      h+=`<span class="mini ${ok?"ok":"ko"}">${ok?"✓ Bonne réponse":"✗ Ta réponse : ("+dpos(ch)+") · la bonne : ("+dpos(q.a)+") "+esc(q.o[q.a])}</span>
+      <div class="explain"><div class="ex-row"><span>${p==="p6"?"L'indice":"La preuve"}</span><div>${esc(q.k)}</div></div>
+      <div class="ex-row"><span>Chaque option</span>${whyList(q,perm,ch)}</div>${tipBox(q.t)}</div>`}
+    return h+`</div>`}).join("");
+  let out=top+`<div class="stack" style="gap:16px">${qs}</div>`;
+  if(answered){const allOk=ans.every((x,s)=>x===it.qs[s].a);
+    out+=retryNote(allOk)+`<div class="row between"><button class="btn ghost small" id="quit">Arrêter</button><button class="btn" id="next">${quiz.i===quiz.units.length-1?"Voir le bilan":"Suivant"}</button></div>`}
+  else{const n=sel.filter(x=>x!==undefined).length;
+    out+=`<div class="row between"><button class="btn ghost small" id="quit">Arrêter la série</button><button class="btn" id="validate" ${n<it.qs.length?"disabled":""}>Valider mes réponses (${n}/${it.qs.length})</button></div>`}
+  return out;
 }
-function renderQuestion(){
-  const k=quiz.kind,isG=k==="g",B=bank(k);
-  if(!quiz.set.length){$("#main").innerHTML=`<section class="view"><div class="card stack"><b>Aucune question pour ce choix.</b><button class="btn ghost" id="back">Retour</button></div></section>`;$("#back").onclick=()=>{quiz=null;route()};return}
-  if(quiz.i>=quiz.set.length) return renderResult();
-  const qi=quiz.set[quiz.i],item=B[qi],answered=quiz.ans[quiz.i]!==undefined,isRetry=quiz.i>=quiz.base;
-  const rec=S.q[k+qi];
-  const prog=`<div class="progress" aria-hidden="true">${quiz.set.map((x,j)=>{const a=quiz.ans[j];return `<i class="${a!==undefined?(a===B[x].a?"ok":"ko"):j===quiz.i?"cur":""}"></i>`}).join("")}</div>`;
-  let head=`<div class="row between"><p class="eyebrow">Question ${quiz.i+1}/${quiz.set.length}${isG?" · "+esc(item.c):""}</p>
-    <div class="row">${isRetry?`<span class="retry">2ᵉ chance</span>`:!answered&&rec&&rec.need>0?`<span class="tag red">déjà ratée</span>`:""}${quiz.chrono&&!answered?`<span class="timer" id="timer">20 s</span>`:""}</div></div>`;
-  let body;
-  if(isG){const p=item.s.split("___");body=`<p class="q">${esc(p[0])}<span class="gap"></span>${esc(p[1]||"")}</p>`}
-  else{const show=quiz.reveal||answered;
-    body=`<div class="row"><button class="btn" id="play">▶ Écouter</button>${show?"":`<button class="btn ghost small" id="reveal">Afficher le texte</button>`}</div>
-    ${show?`<p class="q">${esc(item.q)}</p>`:`<p class="muted">Écoute la question et les trois réponses, puis choisis.</p>`}`}
-  const opts=item.o.map((o,j)=>{let cls="";const ch=quiz.ans[quiz.i];
-    if(answered){if(j===item.a)cls="ok";else if(j===ch)cls="ko";else cls="dim"}
-    const label=isG||quiz.reveal||answered?esc(o):`<span class="muted">Réponse ${L[j]}</span>`;
-    return `<button class="opt ${cls}" data-j="${j}" ${answered?"disabled":""}><span class="bub">${L[j]}</span><span>${label}</span></button>`}).join("");
-  $("#main").innerHTML=`<section class="view">${prog}
-    <div class="card stack">${head}${body}<div class="opts">${opts}</div>
-    ${answered?explainBlock(item,k,quiz.ans[quiz.i])+`<div class="row between"><button class="btn ghost small" id="quit">Arrêter</button><button class="btn" id="next">${quiz.i===quiz.set.length-1?"Voir le bilan":"Question suivante"}</button></div>`
-      :`<div><button class="btn ghost small" id="quit">Arrêter la série</button></div>`}
-    </div></section>`;
-  document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>answer(+b.dataset.j));
-  $("#quit").onclick=()=>{stopTimer();quiz=null;route()};
-  if($("#next")){$("#next").onclick=()=>{quiz.i++;quiz.played=false;renderQuestion();window.scrollTo({top:0})};$("#next").focus({preventScroll:true})}
-  if(!isG){
-    const play=()=>speakSeq([item.q,...item.o.map((o,j)=>L[j]+". "+o)]);
-    $("#play").onclick=play;
-    if($("#reveal"))$("#reveal").onclick=()=>{quiz.reveal=true;renderQuestion()};
-    if(!answered&&!quiz.played){quiz.played=true;if(canSpeak())setTimeout(play,300)}
+function bindQuiz(key,p,answered){
+  const it=itemOf(key);
+  $("#quit").onclick=()=>{stopTimer();stopAudio();quiz=null;route()};
+  if($("#next")){$("#next").onclick=()=>{stopAudio();quiz.i++;quiz.played=false;quiz.reveal=false;quiz.showScript=false;renderQuiz();window.scrollTo({top:0})}}
+  if($("#reveal"))$("#reveal").onclick=()=>{quiz.reveal=true;renderQuiz()};
+  if($("#script"))$("#script").onclick=()=>{quiz.showScript=true;renderQuiz()};
+  if(PARTS[p].set){
+    document.querySelectorAll(".opt[data-s]").forEach(b=>b.onclick=()=>{quiz.sel[quiz.i][+b.dataset.s]=+b.dataset.j;const y=window.scrollY;renderQuiz();window.scrollTo({top:y})});
+    if($("#validate"))$("#validate").onclick=()=>{const sel=quiz.sel[quiz.i];quiz.ans[quiz.i]=sel.slice();
+      const nOk=sel.filter((x,s)=>x===it.qs[s].a).length;record(key,nOk,it.qs.length);stopAudio();afterAnswer(nOk===it.qs.length)};
+  } else {
+    document.querySelectorAll(".opt[data-j]").forEach(b=>b.onclick=()=>answerSingle(+b.dataset.j));
   }
-  if(isG&&quiz.chrono&&!answered){
-    stopTimer();let t=20;
-    quiz.timer=setInterval(()=>{t--;const el=$("#timer");if(el){el.textContent=t+" s";el.classList.toggle("low",t<=5)}if(t<=0){stopTimer();answer(-1)}},1000);
-  }
+  const perm=quiz.perms[quiz.i];
+  let seq=null;
+  if(p==="p2") seq=[["M",it.q]].concat(perm.map((j,d)=>["W",L[d]+". "+it.o[j]]));
+  if(p==="p1") seq=perm.map((j,d)=>["M",L[d]+". "+it.o[j]]);
+  if(p==="p3"||p==="p4") seq=it.lines;
+  if(seq&&$("#play")){$("#play").onclick=()=>speakSeq(seq);
+    if(!answered&&!quiz.played&&canSpeak()&&p!=="p3"&&p!=="p4"){quiz.played=true;setTimeout(()=>speakSeq(seq),300)}}
+  if(p==="p5"&&quiz.opts.chrono&&!answered){let t=20;
+    quiz.timer=setInterval(()=>{t--;const el=$("#timer");if(el){el.textContent=t+" s";el.classList.toggle("low",t<=5)}if(t<=0){stopTimer();answerSingle(-1)}},1000)}
 }
-function answer(j){
-  stopTimer();try{speechSynthesis.cancel()}catch(e){}
-  const k=quiz.kind,B=bank(k),qi=quiz.set[quiz.i],ok=j===B[qi].a;
-  quiz.ans[quiz.i]=j;
-  const r=S.q[k+qi]||{ok:0,ko:0,need:0,due:0};
-  if(ok){r.ok++;if(r.need>0){r.need--;r.due=r.need>0?tomorrow():0}}
-  else{r.ko++;r.need=2;r.due=0;
-    if(quiz.i<quiz.base&&!quiz.retried.includes(qi)){quiz.retried.push(qi);quiz.set.push(qi);quiz.retry.add(quiz.set.length-1)}
-    if(quiz.i>=quiz.base){r.due=tomorrow()}
-  }
-  r.t=Date.now();S.q[k+qi]=r;
-  logDay(k,ok);save();renderHeader();renderQuestion();
+function answerSingle(j){
+  stopTimer();stopAudio();
+  const key=quiz.units[quiz.i],it=itemOf(key),ok=j===it.a;
+  quiz.ans[quiz.i]=j;record(key,ok?1:0,1);afterAnswer(ok);
 }
 function renderResult(){
-  const k=quiz.kind,B=bank(k),isG=k==="g";
-  const first=quiz.set.slice(0,quiz.base);
-  const ok=first.filter((x,j)=>quiz.ans[j]===B[x].a).length;
-  const wrong=first.filter((x,j)=>quiz.ans[j]!==B[x].a);
-  const fixed=quiz.set.slice(quiz.base).filter((x,j)=>quiz.ans[quiz.base+j]===B[x].a).length;
-  const pct=Math.round(ok/quiz.base*100);
-  const msg=pct>=90?"Excellent. Tu maîtrises ces questions.":pct>=70?"Bon niveau. Relis bien les règles ci-dessous.":pct>=50?"C'est correct. Les règles ci-dessous sont celles à travailler.":"Pas grave : chaque erreur reviendra jusqu'à ce que tu la réussisses.";
+  const firstN=quiz.base;let ok=0,tot=0;const wrong=[];
+  for(let j=0;j<firstN;j++){const u=quiz.units[j],it=itemOf(u),a=quiz.ans[j];if(a===undefined)continue;
+    if(PARTS[pk(u)].set){it.qs.forEach((q,s)=>{tot++;if(a[s]===q.a)ok++;else wrong.push({u,q})})}
+    else{tot++;if(a===it.a)ok++;else wrong.push({u,it})}}
+  const pct=tot?Math.round(ok/tot*100):0;
+  const msg=pct>=90?"Niveau 870+ sur cette série. Continue comme ça.":pct>=75?"Bon niveau, mais pour 870 il faut viser 90 %. Relis bien ce qui suit.":pct>=50?"Les règles ci-dessous sont celles à travailler en priorité.":"Pas grave : chaque erreur te sera reposée demain jusqu'à ce que tu la réussisses.";
+  const dueTomorrow=errorsOf(ALLP,false).length;
   $("#main").innerHTML=`<section class="view"><div class="card stack pop">
-    <p class="eyebrow">${isG?"Part 5":"Part 2"} · bilan de la série</p>
-    <div class="row" style="align-items:baseline;gap:16px"><div class="result mono">${ok}/${quiz.base}</div><span class="mono muted">${pct} % du premier coup</span></div>
+    <p class="eyebrow">Bilan de la série</p>
+    <div class="row" style="align-items:baseline;gap:16px"><div class="result mono">${ok}/${tot}</div><span class="mono muted">${pct} % du premier coup</span></div>
     <p>${msg}</p>
-    ${wrong.length?`<p class="note">2ᵉ chance : ${fixed}/${wrong.length} réussie${fixed>1?"s":""}. Ces questions restent dans ton carnet d'erreurs et reviendront demain.</p>`:""}
-    <div class="row"><button class="btn" id="again">Nouvelle série</button>${errorsOf(k,false).length?`<button class="btn bad" id="errs">Corriger mes erreurs <span class="n">${errorsOf(k,false).length}</span></button>`:""}<button class="btn ghost" id="back">Retour</button></div></div>
-    ${wrong.length?`<div class="card stack"><p class="eyebrow">À retenir de cette série</p><div class="recap">${wrong.map(x=>{const it=B[x];
-      return `<div>${isG?`<span class="q" style="font-size:1rem">${(()=>{const p=it.s.split("___");return esc(p[0])+`<span class="fill">${esc(it.o[it.a])}</span>`+esc(p[1]||"")})()}</span><div class="rule" style="font-weight:400">${esc(it.r)}</div>`
-        :`<span><b>${esc(it.q)}</b></span><span>→ <span class="fill">${esc(it.o[it.a])}</span></span><span class="note">${esc(it.k)}</span>`}</div>`}).join("")}</div></div>`:""}
+    ${wrong.length?`<p class="note">Tes ${wrong.length} erreur${wrong.length>1?"s":""} sont dans ton carnet. Elles te seront reposées demain (${dueTomorrow} au total en attente).</p>`:""}
+    <div class="row"><button class="btn" id="again">Nouvelle série</button><button class="btn ghost" id="back">Retour</button></div></div>
+    ${wrong.length?`<div class="card stack"><p class="eyebrow">À retenir de cette série</p><div class="recap">${wrong.map(w=>{
+      if(w.it){const it=w.it,p=pk(w.u);
+        if(p==="p5"){const s=it.s.split("___");return `<div><span class="q" style="font-size:1rem">${esc(s[0])}<span class="fill">${esc(it.o[it.a])}</span>${esc(s[1]||"")}</span><div class="rule" style="font-weight:400">${esc(it.r)}</div></div>`}
+        return `<div><b>${esc(p==="p2"?it.q:it.d)}</b><span>→ <span class="fill">${esc(it.o[it.a])}</span></span><span class="note">${esc(it.k||tipOf(p,ix(w.u),it))}</span></div>`}
+      return `<div><b>${esc(itemOf(w.u).title)} · ${esc(w.q.q)}</b><span>→ <span class="fill">${esc(w.q.o[w.q.a])}</span></span><span class="note">${esc(w.q.k)}</span></div>`}).join("")}</div></div>`:""}
   </section>`;
-  const opts={chrono:quiz.chrono,cat:quiz.cat};
-  $("#again").onclick=()=>{startQuiz(k,opts);renderQuestion();window.scrollTo({top:0})};
-  if($("#errs"))$("#errs").onclick=()=>{startQuiz(k,{mode:"errors"});renderQuestion();window.scrollTo({top:0})};
+  const v=quiz.view,opts=quiz.opts;
+  $("#again").onclick=()=>{if(opts.part){startQuiz(v,buildUnits(opts.part,opts),opts)}else{startQuiz(v,reviewUnits(opts.parts||ALLP),opts)}renderQuiz();window.scrollTo({top:0})};
   $("#back").onclick=()=>{quiz=null;route()};
+}
+function reviewUnits(parts){const now=Date.now();
+  return errorsOf(parts,true).sort((a,b)=>ALLP.indexOf(pk(a))-ALLP.indexOf(pk(b))).slice(0,25)}
+
+/* ================= ÉCOUTE / LECTURE ================= */
+function sectionView(sec){
+  const view=sec==="L"?"ecoute":"lecture";
+  if(quiz&&quiz.view===view) return renderQuiz();
+  const parts=sec==="L"?LPARTS:RPARTS;
+  const due=errorsOf(parts,true).length,later=errorsOf(parts,false).length-due;
+  const cats=["Toutes",...Array.from(new Set(GRAMMAR.map(g=>g.c)))];
+  const est=estimate(parts);
+  $("#main").innerHTML=`<section class="view">
+    <div class="row between"><div><p class="eyebrow">${sec==="L"?"Listening · 45 min · 100 questions":"Reading · 75 min · 100 questions"}</p><h2>${sec==="L"?"Écoute":"Lecture"}</h2></div>
+    <div class="stack" style="gap:2px;align-items:flex-end"><span class="eyebrow">Score estimé</span><b class="mono" style="font-size:1.4rem">${est.v?est.v+" / 495":"–"}</b></div></div>
+    <div class="errbox ${due?"":"clear"}">
+      ${due?`<div class="row between"><b>${due} erreur${due>1?"s":""} à refaire aujourd'hui</b><button class="btn bad small" id="goErr">Corriger maintenant</button></div>`:`<b>Rien à corriger aujourd'hui</b>`}
+      <p class="note">${later?later+" erreur"+(later>1?"s":"")+" de cette section reviendr"+(later>1?"ont":"a")+" demain. ":""}Une erreur sort du carnet quand tu la réussis deux fois, à deux jours différents.</p>
+    </div>
+    <div class="parts">${parts.map(p=>{const st=partStats(p),P=PARTS[p];const e=errorsOf([p],true).length;
+      return `<div class="card part"><h3>${P.n} <span>${P.t}</span><span class="mono">${P.min} le jour J</span></h3>
+        <div class="meta"><span>Réussite <b>${st.acc!==null?st.acc+" %":"–"}</b></span><span>Vues <b>${st.seen}/${st.total}</b></span>${e?`<span style="color:var(--bad)">À refaire <b style="color:var(--bad)">${e}</b></span>`:""}</div>
+        ${p==="p5"?`<div class="row"><label for="cat" class="muted">Catégorie</label><select id="cat">${cats.map(c=>`<option>${esc(c)}</option>`).join("")}</select></div>`:""}
+        ${p==="p5"||p==="p2"?`<label class="toggle"><input type="checkbox" id="hard-${p}">Questions niveau 870+ uniquement</label>`:""}
+        <div class="row"><button class="btn" data-go="${p}">${P.set?"Commencer ("+P.per+" "+(p==="p7"?"documents":p==="p6"?"textes":p==="p3"?"conversations":"exposés")+")":"Commencer (série de "+P.per+")"}</button>${p==="p5"?`<button class="btn ghost" data-chrono="p5">Chrono 20 s</button>`:""}</div></div>`}).join("")}</div>
+    <div class="tipbox"><span class="eyebrow">Astuce TOEIC</span><span>${sec==="L"?"En Listening, la concentration baisse après 30 minutes. Entraîne-toi à enchaîner Part 3 et Part 4 sans pause : c'est là que se joue la différence entre 800 et 900.":"En Reading, le temps est l'ennemi principal. Vise 10 minutes pour la Part 5, 8 pour la Part 6 et garde 55 minutes pour la Part 7."}</span></div>
+  </section>`;
+  const opts=p=>({part:p,cat:p==="p5"&&$("#cat")?$("#cat").value:"Toutes",hard:$("#hard-"+p)?$("#hard-"+p).checked:false});
+  document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>{const o=opts(b.dataset.go);startQuiz(view,buildUnits(o.part,o),o);renderQuiz();window.scrollTo({top:0})});
+  document.querySelectorAll("[data-chrono]").forEach(b=>b.onclick=()=>{const o=Object.assign(opts("p5"),{chrono:true});startQuiz(view,buildUnits("p5",o),o);renderQuiz();window.scrollTo({top:0})});
+  if($("#goErr"))$("#goErr").onclick=()=>{startQuiz(view,reviewUnits(parts),{parts});renderQuiz();window.scrollTo({top:0})};
+}
+function revisionView(){
+  if(quiz&&quiz.view==="revision") return renderQuiz();
+  const due=errorsOf(ALLP,true),later=errorsOf(ALLP,false).length-due.length,hw=hardWords().length;
+  const by={};due.forEach(k=>{by[pk(k)]=(by[pk(k)]||0)+1});
+  $("#main").innerHTML=`<section class="view">
+    <div><p class="eyebrow">Révision du jour</p><h2>Ton carnet d'erreurs</h2></div>
+    <div class="card stack">
+      ${due.length?`<p>Tu as <b>${due.length}</b> question${due.length>1?"s":""} ratée${due.length>1?"s":""} à refaire aujourd'hui :</p>
+        <div class="row">${Object.entries(by).map(([p,n])=>`<span class="tag">${PARTS[p].n} · ${n}</span>`).join("")}</div>
+        <div><button class="btn bad" id="go">Commencer la révision</button></div>`
+      :`<p><b>Aucune erreur à refaire aujourd'hui.</b></p>`}
+      ${later?`<p class="note">${later} autre${later>1?"s":""} erreur${later>1?"s":""} reviendr${later>1?"ont":"a"} demain : c'est volontaire, revoir le lendemain ancre mieux la règle.</p>`:""}
+      ${hw?`<div><a class="btn ghost" href="#vocab" id="hw">Revoir mes ${hw} mots ratés</a></div>`:""}
+    </div>
+    <div class="tipbox"><span class="eyebrow">Pourquoi le lendemain ?</span><span>Retrouver une réponse après une nuit de sommeil force ton cerveau à la reconstruire : c'est ce qui la fait passer en mémoire durable. Revoir tout de suite donne l'impression de savoir, sans ancrer.</span></div>
+  </section>`;
+  if($("#go"))$("#go").onclick=()=>{startQuiz("revision",reviewUnits(ALLP),{parts:ALLP});renderQuiz();window.scrollTo({top:0})};
+  if($("#hw"))$("#hw").onclick=()=>{S.theme="Mots ratés";save();vq=null};
 }
 
 /* ================= ACCUEIL ================= */
 function ring(val,max){const r=26,c=2*Math.PI*r,p=Math.min(1,val/max);
   return `<svg class="ring ${p>=1?"done":""}" viewBox="0 0 64 64" aria-hidden="true"><circle class="bg" cx="32" cy="32" r="${r}"/><circle class="fg" cx="32" cy="32" r="${r}" stroke-dasharray="${c}" stroke-dashoffset="${c*(1-p)}"/><text x="32" y="37" text-anchor="middle">${p>=1?"✓":val}</text></svg>`}
 function homeView(){
-  const left=daysLeft(),di=dayIndex();
-  const t=S.days[todayKey()]||{v:0,vOk:0,g:0,gOk:0,l:0,lOk:0};
+  const left=daysLeft(),di=dayIndex(),t=today();
   const plan=PLAN[Math.min(Math.max(di,0),PLAN.length-1)];
   const examStr=EXAM.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});
-  const eg=errorsOf("g",false).length,el=errorsOf("l",false).length,hw=hardWords().length,totalErr=eg+el+hw;
-  // 7 derniers jours
-  const days=[];for(let j=6;j>=0;j--){const d=new Date(sod(new Date()).getTime()-j*DAY);const x=S.days[keyOf(d)]||{};
-    const n=(x.v||0)+(x.g||0)+(x.l||0),okn=(x.vOk||0)+(x.gOk||0)+(x.lOk||0);days.push({d,n,p:n?Math.round(okn/n*100):null,today:j===0})}
-  const maxN=Math.max(30,...days.map(d=>d.n));
-  const qa=(x)=>{const n=(x.g||0)+(x.l||0);return n?Math.round(((x.gOk||0)+(x.lOk||0))/n*100):null};
-  const yest=S.days[keyOf(new Date(sod(new Date()).getTime()-DAY))]||{};
-  const tq=qa(t),yq=qa(yest);
-  const seen=Object.keys(S.cards).length,mastered=Object.values(S.cards).filter(c=>c.box>=3).length;
-  const ga=accuracy("g"),la=accuracy("l");
+  const due=errorsOf(ALLP,true).length,later=errorsOf(ALLP,false).length-due;
+  const eL=estimate(LPARTS),eR=estimate(RPARTS);
+  const total=eL.v&&eR.v?eL.v+eR.v:null;
+  const blocks=GOALS.map(g=>{let done,cur,max,txt;
+    if(g.id==="rev"){max=Math.max(1,due+(t.rev||0));cur=due?0:1;done=!due;txt=due?due+" à refaire":"carnet à jour"}
+    else{cur=g.keys.reduce((s,k)=>s+(t[k]||0),0);max=g.n;done=cur>=max;txt=Math.min(cur,max)+"/"+max}
+    const pct=Math.min(100,Math.round(cur/max*100));
+    return `<div class="blk ${done?"done":""}"><span class="min">${g.min} min</span><div class="lbl"><b>${esc(g.label)}</b><div class="track"><i style="width:${g.id==="rev"?(done?100:0):pct}%"></i></div><span class="cnt">${done?"✓ fait · ":""}${txt}</span></div><a class="btn ${done?"ghost":""}" href="${g.href}">${done?"Encore":"Go"}</a></div>`}).join("");
+  const doneMin=GOALS.reduce((s,g)=>{if(g.id==="rev")return s+(due?0:g.min);const cur=g.keys.reduce((a,k)=>a+(t[k]||0),0);return s+Math.min(1,cur/g.n)*g.min},0);
+  const days=[];for(let j=6;j>=0;j--){const d=new Date(sod(new Date()).getTime()-j*DAY);const x=S.days[keyOf(d)]||{};const n=dayTotal(x);days.push({d,n,p:n?Math.round(dayOk(x)/n*100):null,today:j===0})}
+  const maxN=Math.max(60,...days.map(d=>d.n));
   const planGrid=PLAN.map((p,k)=>{const d=new Date(START.getTime()+k*DAY);const cls=k<di?"past":k===di?"now":"";
-    return `<div class="day ${cls}"><span class="d">${d.toLocaleDateString("fr-FR",{weekday:"short",day:"numeric"})} · J-${19-k}</span><b>${esc(p[0])}</b></div>`}).join("")+
-    `<div class="day exam"><span class="d">${EXAM.toLocaleDateString("fr-FR",{weekday:"short",day:"numeric"})} · J</span><b>Jour du TOEIC</b></div>`;
+    return `<div class="day ${cls}"><span class="d">${d.toLocaleDateString("fr-FR",{weekday:"short",day:"numeric"})} · J-${PLAN.length-k}</span><b>${esc(p[0])}</b></div>`}).join("")+
+    `<div class="day exam"><span class="d">${EXAM.toLocaleDateString("fr-FR",{weekday:"short",day:"numeric"})} · J</span><b>Examen TOEIC</b></div>`;
   $("#main").innerHTML=`<section class="view">
     <div class="hero">
       <div class="big mono"><small>J-</small>${left}</div>
       <div class="stack" style="gap:8px;min-width:0"><p class="eyebrow">Examen le ${esc(examStr)} · aujourd'hui : ${esc(plan[0])}</p>
         <p class="focus">${esc(plan[1])}</p></div>
     </div>
-    <div class="stack" style="gap:10px"><p class="eyebrow">Objectif du jour</p>
-      <div class="goals">
-        <a class="goal" href="#vocab">${ring(t.v,20)}<b>Vocab</b><span>${Math.min(t.v,20)}/20 cartes</span></a>
-        <a class="goal" href="#grammaire">${ring(t.g,20)}<b>Part 5</b><span>${Math.min(t.g,20)}/20 questions</span></a>
-        <a class="goal" href="#ecoute">${ring(t.l,10)}<b>Part 2</b><span>${Math.min(t.l,10)}/10 questions</span></a>
-      </div></div>
-    <div class="errbox ${totalErr?"":"clear"}">
-      ${totalErr?`<b>Carnet d'erreurs : ${totalErr} point${totalErr>1?"s":""} à corriger</b>
-      <p class="note">Commence ta séance par là : c'est ce qui fait monter le score le plus vite.</p>
-      <div class="row">${eg?`<a class="btn bad small" href="#grammaire">Part 5 <span class="n">${eg}</span></a>`:""}${el?`<a class="btn bad small" href="#ecoute">Part 2 <span class="n">${el}</span></a>`:""}${hw?`<button class="btn bad small" id="hardBtn">Mots ratés <span class="n">${hw}</span></button>`:""}</div>`
-      :`<b>Carnet d'erreurs vide</b><p class="note">Chaque erreur que tu feras sera notée ici et te sera reposée jusqu'à ce que tu la réussisses.</p>`}
+    <div class="card stack">
+      <div class="row between"><p class="eyebrow">Ton programme de 2 h aujourd'hui</p><span class="mono note">${Math.round(doneMin)} / 120 min</span></div>
+      <div class="prog">${blocks}</div>
+    </div>
+    <div class="card score">
+      <div class="row between"><p class="eyebrow">Score estimé · 7 derniers jours</p><span class="note">objectif 870</span></div>
+      <div class="nums"><span class="tot mono ${total>=870?"ok":""}">${total||"–"}</span>
+        <span class="mono">Listening <b>${eL.v||"–"}</b></span><span class="mono">Reading <b>${eR.v||"–"}</b></span></div>
+      <div class="sbar" style="margin-top:22px"><i style="width:${total?total/990*100:0}%"></i><span class="goal" style="left:${870/990*100}%"></span><span class="gl" style="left:${870/990*100}%">870</span></div>
+      <p class="note">${total?(total>=870?"Tu es au-dessus de ton objectif sur l'appli. Confirme-le avec un test blanc officiel.":"Il te manque "+(870-total)+" points. Pour 870, il faut environ 88 % de bonnes réponses dans chaque section."):"Encore "+[eL.need&&("Listening : "+eL.need+" réponses"),eR.need&&("Reading : "+eR.need+" réponses")].filter(Boolean).join(" · ")+" avant d'afficher une estimation."} Estimation indicative, calculée sur ton taux de réussite ; seul un test blanc officiel donne un vrai score.</p>
+    </div>
+    <div class="errbox ${due?"":"clear"}">
+      ${due?`<div class="row between"><b>Carnet d'erreurs : ${due} question${due>1?"s":""} d'hier à refaire</b><a class="btn bad small" href="#revision">Réviser</a></div><p class="note">Commence toujours ta séance par là.</p>`
+      :`<b>Carnet d'erreurs à jour pour aujourd'hui</b>`}
+      ${later?`<p class="note">${later} erreur${later>1?"s":""} d'aujourd'hui reviendr${later>1?"ont":"a"} demain.</p>`:""}
     </div>
     <div class="card stack">
-      <div class="row between"><p class="eyebrow">Tes 7 derniers jours</p><span class="note">nombre de réponses · % de réussite</span></div>
-      <div class="chart" role="img" aria-label="Activité des 7 derniers jours">${days.map(d=>`<div class="col"><span class="v">${d.n?d.n:""}</span><div class="bar ${d.n?"":"empty"} ${d.today&&d.n?"today":""}" style="height:${d.n?Math.max(6,d.n/maxN*100):3}%"></div><span class="d">${d.d.toLocaleDateString("fr-FR",{weekday:"narrow"})}${d.d.getDate()}</span><span class="d" style="color:var(--ink)">${d.p!==null?d.p+"%":"–"}</span></div>`).join("")}</div>
-      <div class="trend">
-        <div><span class="eyebrow">Quiz aujourd'hui</span><b>${tq!==null?tq+" %":"–"}</b></div>
-        <div><span class="eyebrow">Quiz hier</span><b>${yq!==null?yq+" %":"–"}</b></div>
-        <div><span class="eyebrow">Part 5 global</span><b>${ga!==null?ga+" %":"–"}</b></div>
-        <div><span class="eyebrow">Part 2 global</span><b>${la!==null?la+" %":"–"}</b></div>
-        <div><span class="eyebrow">Mots ancrés</span><b>${mastered}<span class="muted" style="font-size:.6em">/${seen}</span></b></div>
-      </div>
-      ${tq!==null&&yq!==null?`<p class="note">${tq>yq?"Tu progresses par rapport à hier. Continue comme ça.":tq===yq?"Même niveau qu'hier. Insiste sur ton carnet d'erreurs.":"Un peu moins bien qu'hier : normal si tu as travaillé tes erreurs."}</p>`:""}
+      <div class="row between"><p class="eyebrow">Tes 7 derniers jours</p><span class="note">réponses · % de réussite</span></div>
+      <div class="chart" role="img" aria-label="Activité des 7 derniers jours">${days.map(d=>`<div class="col"><span class="v">${d.n||""}</span><div class="bar ${d.n?"":"empty"} ${d.today&&d.n?"today":""}" style="height:${d.n?Math.max(6,d.n/maxN*100):3}%"></div><span class="d">${d.d.toLocaleDateString("fr-FR",{weekday:"narrow"})}${d.d.getDate()}</span><span class="d" style="color:var(--ink)">${d.p!==null?d.p+"%":"–"}</span></div>`).join("")}</div>
     </div>
-    <div class="stack" style="gap:10px"><p class="eyebrow">Ton plan sur 19 jours</p><div class="plan">${planGrid}</div></div>
-    <div class="card stack"><p class="eyebrow">Échelle du score</p>
-      <div style="height:10px;border-radius:5px;background:linear-gradient(90deg,var(--line),var(--blue))"></div>
-      <div class="row between mono note"><span>10</span><span>405</span><span>605</span><span>785</span><span>945</span><span>990</span></div>
-      <p class="note">Listening /495 + Reading /495. Repères usuels : 605 ≈ B1, 785 ≈ B2, 945 ≈ C1. Vérifie le score que demande ton école ou ton employeur.</p></div>
+    <div class="stack" style="gap:10px"><p class="eyebrow">Ton plan jusqu'au 19 novembre</p><div class="plan">${planGrid}</div></div>
   </section>`;
-  if($("#hardBtn"))$("#hardBtn").onclick=()=>{S.theme="Mots ratés";save();vq=null;location.hash="#vocab"};
 }
 
 /* ================= FICHES ================= */
 function fichesView(){
   const F=[
+  ["Objectif 870 : ce que ça veut dire",`<ul><li>870 sur 990 ≈ <b>88 % de bonnes réponses</b>. Tu peux te permettre environ 12 erreurs par section de 100.</li>
+   <li>La plupart des candidats perdent leurs points en <b>Part 3, 4 et 7</b> : ce sont elles qui ont le plus de questions.</li>
+   <li>Une mauvaise réponse ne retire pas de points : <span class="hl">ne laisse jamais de case vide</span>.</li>
+   <li>Fais au moins un <b>test blanc officiel complet</b> (2 h) avant le jour J pour vérifier ton score réel.</li></ul>`],
   ["Structure de l'examen",`<div class="tbl"><table><tr><th>Part</th><th>Contenu</th><th>Questions</th></tr>
    <tr><td>1</td><td>Photographies</td><td class="mono">6</td></tr><tr><td>2</td><td>Questions-réponses</td><td class="mono">25</td></tr>
-   <tr><td>3</td><td>Conversations courtes</td><td class="mono">39</td></tr><tr><td>4</td><td>Exposés courts (annonces, messages)</td><td class="mono">30</td></tr>
+   <tr><td>3</td><td>Conversations courtes</td><td class="mono">39</td></tr><tr><td>4</td><td>Exposés courts</td><td class="mono">30</td></tr>
    <tr><td>5</td><td>Phrases à compléter</td><td class="mono">30</td></tr><tr><td>6</td><td>Textes à compléter</td><td class="mono">16</td></tr>
    <tr><td>7</td><td>Compréhension écrite (1, 2 ou 3 textes)</td><td class="mono">54</td></tr></table></div>
-   <p>Listening : <b>45 min</b>, 100 questions. Reading : <b>75 min</b>, 100 questions. Une mauvaise réponse ne retire pas de points : <span class="hl">ne laisse jamais de case vide</span>.</p>`],
-  ["Suffixes : reconnaître la nature d'un mot",`<div class="tbl"><table><tr><th>Nature</th><th>Suffixes</th><th>Exemples</th></tr>
-   <tr><td>Nom</td><td>-tion, -ment, -ness, -ity, -ance/-ence, -er/-or, -ee, -ant</td><td>decision, payment, reliability, attendee</td></tr>
-   <tr><td>Adjectif</td><td>-ive, -able/-ible, -ful, -ous, -al, -ic, -ent/-ant</td><td>effective, reliable, careful, financial</td></tr>
-   <tr><td>Adverbe</td><td>-ly</td><td>quickly, recently, significantly</td></tr>
-   <tr><td>Verbe</td><td>-ize, -ify, -en, -ate</td><td>organize, clarify, widen, evaluate</td></tr></table></div>
-   <ul><li><b>article / possessif + ___ + nom</b> → adjectif (a <i>reliable</i> supplier)</li>
-   <li><b>the + ___ + of</b> → nom (the <i>approval</i> of)</li>
-   <li><b>___ + adjectif / verbe / participe</b> → adverbe (<i>highly</i> recommended)</li>
-   <li><b>modal / to + ___</b> → verbe à la base (will <i>expand</i>)</li>
-   <li><b>-ing</b> = qui provoque (boring) · <b>-ed</b> = qui ressent (bored)</li></ul>`],
-  ["Prépositions de temps et de lieu",`<ul><li><b>at</b> + heure (at 3 P.M.) · <b>on</b> + jour ou date (on Monday, on May 5) · <b>in</b> + mois, année, saison (in June)</li>
-   <li><b>by</b> = au plus tard (submit by Friday) · <b>until</b> = jusqu'à, l'action dure (open until 9)</li>
-   <li><b>for</b> + durée (for 3 years) · <b>since</b> + point de départ (since 2020)</li>
-   <li><b>during</b> + nom · <b>while</b> + sujet + verbe</li>
-   <li><b>within</b> = dans un délai de (within 30 days) · <b>from … to / through</b> = de … à</li>
-   <li><b>between</b> deux éléments · <b>among</b> trois ou plus</li>
-   <li><b>responsible for</b>, <b>interested in</b>, <b>familiar with</b>, <b>in charge of</b></li></ul>`],
-  ["Connecteurs : + nom ou + phrase ?",`<div class="tbl"><table><tr><th>Sens</th><th>+ nom / V-ing</th><th>+ phrase</th><th>Entre deux phrases</th></tr>
+   <p>Listening : <b>45 min</b>. Reading : <b>75 min</b>.</p>`],
+  ["Part 1 : photos",`<ul><li>Avant l'audio, regarde la photo et nomme dans ta tête : qui, quoi, où.</li>
+   <li>Personne sur la photo → méfie-toi de « is being + participe » (quelqu'un fait l'action). « has been + participe » décrit un état.</li>
+   <li>Un objet présent n'est pas forcément utilisé : vérifie le verbe.</li>
+   <li>Verbes à connaître : lean against, stack, pile, line up, hang, pour, sweep, board, unload.</li></ul>`],
+  ["Part 2 : pièges",`<ul><li>Une question en <b>Wh-</b> n'accepte jamais « Yes / No ».</li>
+   <li>Une réponse qui <b>répète un mot</b> ou un son proche est souvent fausse.</li>
+   <li>Les réponses indirectes sont souvent justes : « I'm not sure », « Let me check », « We haven't decided yet ».</li>
+   <li><b>Why don't we…?</b>, <b>Let's…</b>, <b>How about…?</b> sont des propositions.</li>
+   <li>Question à choix (A <b>or</b> B) : on choisit, ou « either is fine ».</li></ul>`],
+  ["Parts 3 et 4 : méthode",`<ul><li>Pendant les consignes et entre deux conversations, <b>lis les 3 questions</b> suivantes.</li>
+   <li>Les réponses arrivent dans l'ordre des questions.</li>
+   <li>Question 1 = sujet ou but (début). Question 3 = action suivante (fin).</li>
+   <li>Les bonnes réponses <b>reformulent</b> (at no extra charge → for free).</li>
+   <li>Questions « What does the man mean when he says… » : écoute la phrase d'avant.</li>
+   <li>Questions avec graphique : regarde le graphique AVANT l'audio.</li></ul>`],
+  ["Suffixes : nature des mots",`<div class="tbl"><table><tr><th>Nature</th><th>Suffixes</th><th>Exemples</th></tr>
+   <tr><td>Nom</td><td>-tion, -ment, -ness, -ity, -ance/-ence, -er/-or, -ee</td><td>decision, payment, attendee</td></tr>
+   <tr><td>Adjectif</td><td>-ive, -able/-ible, -ful, -ous, -al, -ic</td><td>effective, reliable, careful</td></tr>
+   <tr><td>Adverbe</td><td>-ly</td><td>quickly, significantly</td></tr>
+   <tr><td>Verbe</td><td>-ize, -ify, -en, -ate</td><td>organize, clarify, widen</td></tr></table></div>
+   <ul><li>article / possessif + ___ + nom → adjectif · the + ___ + of → nom</li>
+   <li>___ + adjectif / participe / comparatif → adverbe · modal + ___ → base verbale</li>
+   <li>feel, seem, look, become, remain + <b>adjectif</b></li></ul>`],
+  ["Prépositions et expressions",`<ul><li><b>at</b> + heure · <b>on</b> + jour / date · <b>in</b> + mois / année</li>
+   <li><b>by</b> = au plus tard · <b>until</b> = jusqu'à · <b>for</b> + durée · <b>since</b> + point de départ</li>
+   <li>increase <b>by</b> 15 % (écart) · <b>to</b> 15 % (nouveau niveau)</li>
+   <li>in accordance with · in compliance with · on behalf of · in light of · prior to · no later than</li>
+   <li>responsible for · eligible for · entitled to · adhere to · comply with · account for</li></ul>`],
+  ["Connecteurs : + nom ou + phrase ?",`<div class="tbl"><table><tr><th>Sens</th><th>+ nom</th><th>+ phrase</th><th>Entre 2 phrases</th></tr>
    <tr><td>Cause</td><td>because of, due to, owing to</td><td>because, since, as</td><td>therefore, consequently</td></tr>
    <tr><td>Opposition</td><td>despite, in spite of</td><td>although, even though, whereas</td><td>however, nevertheless</td></tr>
-   <tr><td>Ajout</td><td>in addition to, as well as</td><td>—</td><td>moreover, furthermore</td></tr>
-   <tr><td>Condition</td><td>in case of</td><td>if, unless, provided that</td><td>otherwise</td></tr></table></div>
-   <p>Paires fixes : <b>both … and</b>, <b>either … or</b>, <b>neither … nor</b>, <b>not only … but also</b>.</p>`],
-  ["Les temps qui tombent le plus",`<ul><li><b>Present perfect</b> (have + participe) : since, for, already, yet, recently, so far</li>
-   <li><b>Prétérit</b> : yesterday, last week, ago, in 2019</li>
-   <li><b>Futur</b> : next, tomorrow, soon, upcoming</li>
-   <li><b>Futur antérieur</b> (will have + participe) : by the end of, by next year</li>
-   <li>Après <b>if / when / as soon as / before</b>, pour parler du futur : présent simple</li>
-   <li><b>Passif</b> : le sujet subit l'action → be + participe passé</li>
-   <li><b>+ V-ing</b> : suggest, recommend, avoid, consider, enjoy, finish, look forward to</li>
-   <li><b>+ to + verbe</b> : plan, decide, hope, agree, need, be required to, be asked to</li></ul>`],
-  ["Pièges de la Part 2",`<ul><li>Une question en <b>Wh-</b> n'accepte jamais « Yes / No ».</li>
-   <li>Une réponse qui <b>répète un mot</b> de la question est souvent fausse.</li>
-   <li>Attention aux <b>sons proches</b> : copy / coffee, meet / meeting, break / brake.</li>
-   <li>Les réponses indirectes sont souvent justes : « I'm not sure », « Let me check », « We haven't decided yet ».</li>
-   <li><b>Why don't we…?</b>, <b>Let's…</b> et <b>Would you like…?</b> sont des propositions.</li>
-   <li>Question à choix (A <b>or</b> B) : on choisit, ou on dit « either is fine ».</li></ul>`],
-  ["Stratégie Part 3 et 4",`<ul><li>Pendant les consignes, <b>lis les 3 questions</b> suivantes.</li>
-   <li>Repère les mots-clés : <i>Who</i> is the man? <i>Where</i>? <i>What will</i> the woman do <i>next</i>?</li>
-   <li>Les réponses arrivent dans l'ordre des questions.</li>
-   <li>« What will … do next? » se joue souvent dans la dernière phrase.</li>
-   <li>Les bonnes réponses <b>reformulent</b> avec des synonymes au lieu de répéter les mots entendus.</li>
-   <li>Si tu rates une question, lâche-la et prépare la suivante.</li></ul>`],
-  ["Stratégie Reading : gérer les 75 minutes",`<ul><li>Part 5 : <b>environ 10 min</b> (20 s par question). Regarde d'abord les 4 options : si ce sont des formes du même mot, c'est de la grammaire et tu n'as pas besoin de lire toute la phrase.</li>
-   <li>Part 6 : <b>environ 8 min</b>. Pour « insérer une phrase », lis la phrase d'avant et celle d'après.</li>
-   <li>Part 7 : <b>environ 55 min</b>. Lis la question d'abord, puis cherche l'information dans le texte.</li>
-   <li>Garde 1 minute à la fin pour <b>remplir toutes les cases vides</b>.</li></ul>`],
-  ["Phrasal verbs fréquents",`<div class="tbl"><table><tr><th>Verbe</th><th>Sens</th></tr>
-   <tr><td>call off</td><td>annuler</td></tr><tr><td>put off</td><td>reporter</td></tr><tr><td>set up</td><td>installer, organiser</td></tr>
-   <tr><td>take over</td><td>reprendre (la direction)</td></tr><tr><td>fill out / fill in</td><td>remplir (un formulaire)</td></tr>
-   <tr><td>look into</td><td>examiner, étudier</td></tr><tr><td>turn down</td><td>refuser</td></tr><tr><td>carry out</td><td>effectuer, mener</td></tr>
-   <tr><td>run out of</td><td>être à court de</td></tr><tr><td>pick up</td><td>aller chercher</td></tr><tr><td>drop off</td><td>déposer</td></tr>
-   <tr><td>hand in</td><td>remettre (un document)</td></tr><tr><td>go over</td><td>passer en revue</td></tr><tr><td>figure out</td><td>comprendre, trouver</td></tr></table></div>`],
+   <tr><td>Condition</td><td>in case of</td><td>if, unless, in case, provided that</td><td>otherwise</td></tr>
+   <tr><td>But</td><td>—</td><td>so that</td><td>(in order to + verbe)</td></tr></table></div>`],
+  ["Grammaire niveau 870+",`<ul><li><b>Subjonctif</b> : recommend / suggest / insist / require that + base verbale (that he <i>be</i>, that she <i>submit</i>).</li>
+   <li><b>Inversion</b> : Not only / Rarely / Never / Hardly en tête → auxiliaire + sujet (Rarely <i>have we</i> seen).</li>
+   <li><b>Condition inversée</b> : Had we known = If we had known · Should you need = If you need.</li>
+   <li><b>Having + participe</b> = après avoir… · nom + participe passé = sens passif (the items listed).</li>
+   <li><b>Accord</b> : together with / as well as ne changent pas le sujet · neither … nor → sujet le plus proche.</li>
+   <li><b>so</b> + adjectif + that · <b>such (a)</b> + adjectif + nom + that.</li>
+   <li><b>Paires de vocabulaire</b> : affect / effect, rise / raise, sensible / sensitive, adopt / adapt.</li></ul>`],
+  ["Part 6 et 7 : méthode",`<ul><li>Part 6 : pour une phrase à insérer, lis la phrase d'avant ET d'après. Un « This » ou « These » doit renvoyer à ce qui précède.</li>
+   <li>Part 7 : lis la question, repère le mot-clé, puis cherche-le dans le texte (et ses synonymes).</li>
+   <li>Questions NOT : trouve les 3 réponses présentes, la 4ᵉ est la bonne.</li>
+   <li>Doubles et triples documents : une question sur deux combine deux textes (une date dans l'un, une condition dans l'autre).</li>
+   <li>Vise <b>1 minute par question</b> en moyenne. Si tu bloques, réponds au hasard et reviens à la fin.</li></ul>`],
   ["Le jour J",`<ul><li>Pièce d'identité valide et convocation. Arrive <b>30 minutes</b> en avance.</li>
-   <li>Part 1 : élimine les réponses qui décrivent une action que personne ne fait sur la photo.</li>
    <li>Ne bloque jamais plus de 30 secondes sur une question.</li>
-   <li>Dors bien la veille : le cerveau consolide le vocabulaire pendant le sommeil.</li></ul>`]
+   <li>Garde 1 minute à la fin pour remplir toutes les cases vides.</li>
+   <li>La veille : révision légère et sommeil. Le cerveau consolide pendant la nuit.</li></ul>`]
   ];
   $("#main").innerHTML=`<section class="view"><div><p class="eyebrow">Fiches de révision</p><h2>L'essentiel à relire</h2></div>
   ${F.map((f,k)=>`<details class="fiche" ${k===0?"open":""}><summary>${esc(f[0])}</summary><div class="fiche-body">${f[1]}</div></details>`).join("")}
   <div class="card stack"><p class="eyebrow">Ta sauvegarde</p>
-    <p class="note">${syncState==="ok"||syncState==="saving"?"Ta progression est enregistrée sur ton compte. Tu la retrouves demain, sur ton téléphone comme sur ton ordinateur.":"Ta progression est enregistrée dans ce navigateur. Utilise toujours le même appareil et le même lien."}</p>
+    <p class="note">${syncState==="ok"||syncState==="saving"?"Ta progression est enregistrée sur ton compte. Tu la retrouves le lendemain, sur ton téléphone comme sur ton ordinateur.":"Ta progression est enregistrée dans ce navigateur. Utilise toujours le même appareil et le même lien."}</p>
     <div class="row"><button class="btn ghost small" id="reset">Effacer ma progression</button><span id="resetMsg" class="note"></span></div></div></section>`;
   let armed=false;
   $("#reset").onclick=()=>{if(!armed){armed=true;$("#reset").textContent="Confirmer l'effacement";$("#resetMsg").textContent="Cartes, scores et carnet d'erreurs seront supprimés partout.";return}
@@ -1001,14 +1388,16 @@ function fichesView(){
 }
 
 /* ================= NAVIGATION ================= */
-const VIEWS={accueil:homeView,vocab:vocabView,grammaire:grammarView,ecoute:listenView,fiches:fichesView};
+const VIEWS={accueil:homeView,vocab:vocabView,ecoute:()=>sectionView("L"),lecture:()=>sectionView("R"),revision:revisionView,fiches:fichesView};
 let current="accueil";
 function route(){
-  const v=(location.hash||"#accueil").slice(1);const name=VIEWS[v]?v:"accueil";current=name;
-  if(quiz&&!((name==="grammaire"&&quiz.kind==="g")||(name==="ecoute"&&quiz.kind==="l"))){stopTimer();quiz=null}
-  try{speechSynthesis.cancel()}catch(e){}
-  document.querySelectorAll("nav.tabs a").forEach(a=>a.setAttribute("aria-current",a.dataset.v===name?"page":"false"));
-  renderHeader();VIEWS[name]();
+  let v=(location.hash||"#accueil").slice(1);
+  if(v==="grammaire")v="lecture"; if(v==="ecoute"||v==="lecture"||VIEWS[v]){} else v="accueil";
+  current=v;
+  if(quiz&&quiz.view!==v){stopTimer();quiz=null}
+  stopAudio();
+  document.querySelectorAll("nav.tabs a").forEach(a=>a.setAttribute("aria-current",a.dataset.v===v||(v==="revision"&&a.dataset.v==="accueil")?"page":"false"));
+  renderHeader();VIEWS[v]();
 }
 function softRefresh(){renderHeader();if(!quiz&&(current!=="vocab"||!vq||vq.i===0)){vq=null;VIEWS[current]()}}
 window.addEventListener("hashchange",()=>{route();window.scrollTo({top:0})});
