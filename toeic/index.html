@@ -1,0 +1,806 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2346c8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}</style>
+<title>TOEIC J-19</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: a single answer-sheet column; bubbles (A)(B)(C)(D) are the core motif, tabs at the thumb on phone, on top on desktop */
+:root{
+  --paper:#f5f7fb;
+  --sheet:#ffffff;
+  --ink:#16213d;
+  --ink-soft:#56607a;
+  --line:#d9deea;
+  --blue:#2346c8;
+  --blue-wash:#e6ebfb;
+  --marker:#ffd84d;
+  --marker-ink:#3b2f00;
+  --good:#16834f;
+  --good-wash:#e1f4ea;
+  --bad:#c23a2b;
+  --bad-wash:#fbe7e4;
+  --shadow:0 1px 2px rgba(22,33,61,.06),0 6px 24px rgba(22,33,61,.06);
+  --f-display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0e1324;--sheet:#161d33;--ink:#e8ecf7;--ink-soft:#9aa4c0;--line:#2a3352;
+    --blue:#8ea6ff;--blue-wash:#1f2a52;--marker:#ffd84d;--marker-ink:#2a2100;
+    --good:#4cc98a;--good-wash:#123526;--bad:#ff8273;--bad-wash:#3d1a17;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 24px rgba(0,0,0,.25);color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0e1324;--sheet:#161d33;--ink:#e8ecf7;--ink-soft:#9aa4c0;--line:#2a3352;
+  --blue:#8ea6ff;--blue-wash:#1f2a52;--marker:#ffd84d;--marker-ink:#2a2100;
+  --good:#4cc98a;--good-wash:#123526;--bad:#ff8273;--bad-wash:#3d1a17;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 24px rgba(0,0,0,.25);color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:0 96px;-webkit-tap-highlight-color:transparent}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+.wrap{max-width:720px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.1}
+h2{font-size:1.6rem;font-weight:800;letter-spacing:-.01em}
+h3{font-size:1.1rem;font-weight:700}
+p{margin:0}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:6px}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.eyebrow{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+.muted{color:var(--ink-soft)}
+.hl{background:linear-gradient(transparent 55%,var(--marker) 55%);color:inherit;padding:0 .1em}
+
+/* header */
+header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:18px 10px}
+.brand{display:flex;align-items:baseline;gap:10px}
+.brand b{font-family:var(--f-display);font-weight:800;font-size:1.25rem;letter-spacing:-.02em}
+.brand span{font-family:var(--f-mono);font-size:.75rem;color:var(--ink-soft)}
+.streak{font-family:var(--f-mono);font-size:.8rem;background:var(--sheet);border:1px solid var(--line);border-radius:999px;padding:4px 10px;white-space:nowrap}
+
+/* nav */
+nav.tabs{display:flex;gap:4px;position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);padding-block:6px 10px;border-bottom:1px solid var(--line);margin-bottom:20px}
+nav.tabs a{flex:1;text-align:center;text-decoration:none;color:var(--ink-soft);font-weight:700;font-size:.9rem;padding:8px 4px;border-radius:10px;display:flex;flex-direction:column;align-items:center;gap:2px}
+nav.tabs a .ico{font-family:var(--f-mono);font-size:.8rem;width:26px;height:26px;border-radius:50%;border:1.5px solid currentColor;display:grid;place-items:center}
+nav.tabs a[aria-current="page"]{color:var(--blue);background:var(--blue-wash)}
+nav.tabs a[aria-current="page"] .ico{background:var(--blue);color:var(--sheet);border-color:var(--blue)}
+@media (max-width:640px){
+  nav.tabs{position:fixed;top:auto;bottom:0;left:0;right:0;margin:0;border-bottom:0;border-top:1px solid var(--line);background:var(--sheet);
+    padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px))}
+  nav.tabs a{font-size:.72rem}
+}
+
+.view{display:flex;flex-direction:column;gap:20px}
+.card{background:var(--sheet);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:var(--shadow)}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.btn{border:0;border-radius:12px;padding:12px 18px;font-weight:700;cursor:pointer;background:var(--blue);color:var(--sheet);font-size:1rem}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn.good{background:var(--good);color:var(--sheet)}
+.btn.bad{background:var(--bad);color:var(--sheet)}
+.btn:disabled{opacity:.45;cursor:default}
+.btn.small{padding:8px 12px;font-size:.88rem}
+
+/* home */
+.count{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center}
+.count .big{font-family:var(--f-display);font-weight:800;font-size:clamp(4rem,18vw,6.5rem);line-height:.85;letter-spacing:-.04em;color:var(--blue)}
+.count .big small{font-size:.35em;letter-spacing:0;vertical-align:top;margin-right:2px;color:var(--ink-soft)}
+.count p{max-width:34ch}
+.today{display:flex;flex-direction:column;gap:12px}
+.today .focus{font-family:var(--f-display);font-size:1.35rem;font-weight:700}
+.tasks{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none}
+.tasks li{display:flex;gap:10px;align-items:flex-start}
+.tasks .b{flex:none;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--ink-soft);margin-top:1px}
+.tasks .b.done{background:var(--ink);border-color:var(--ink)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.stat{display:flex;flex-direction:column;gap:2px}
+.stat .n{font-family:var(--f-mono);font-weight:700;font-size:1.5rem;font-variant-numeric:tabular-nums}
+.bar{height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--blue)}
+.plan{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.day{border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:.85rem;display:flex;flex-direction:column;gap:2px;background:var(--sheet)}
+.day .d{font-family:var(--f-mono);font-size:.72rem;color:var(--ink-soft)}
+.day.past{opacity:.5}
+.day.now{border-color:var(--blue);box-shadow:inset 0 0 0 1px var(--blue);background:var(--blue-wash)}
+.day.exam{background:var(--marker);color:var(--marker-ink);border-color:var(--marker)}
+.day.exam .d{color:var(--marker-ink)}
+.scale{display:flex;flex-direction:column;gap:6px}
+.scale .track{position:relative;height:10px;border-radius:5px;background:linear-gradient(90deg,var(--line),var(--blue))}
+.scale .ticks{display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:.72rem;color:var(--ink-soft)}
+
+/* flashcards */
+.flash{min-height:260px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:14px;cursor:pointer;user-select:none}
+.flash .word{font-family:var(--f-display);font-weight:800;font-size:clamp(2rem,9vw,2.8rem);letter-spacing:-.02em;overflow-wrap:anywhere}
+.flash .tr{font-size:1.3rem;font-weight:700;color:var(--blue)}
+.flash .ex{font-style:italic;color:var(--ink-soft);max-width:44ch}
+.tag{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--line);border-radius:999px;padding:3px 9px;color:var(--ink-soft)}
+.boxes{display:flex;gap:6px;flex-wrap:wrap}
+.boxes .bx{flex:1;min-width:52px;text-align:center;border:1px solid var(--line);border-radius:10px;padding:6px 4px;font-size:.75rem;background:var(--sheet)}
+.boxes .bx b{display:block;font-family:var(--f-mono);font-size:1.1rem}
+.seg{display:inline-flex;border:1.5px solid var(--line);border-radius:12px;padding:3px;gap:3px;flex-wrap:wrap}
+.seg button{border:0;background:transparent;padding:7px 12px;border-radius:9px;font-weight:700;font-size:.85rem;cursor:pointer;color:var(--ink-soft)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--sheet)}
+select{font:inherit;padding:8px 10px;border-radius:10px;border:1.5px solid var(--line);background:var(--sheet);color:var(--ink);max-width:100%}
+
+/* quiz */
+.q{font-size:1.2rem;line-height:1.5}
+.q .gap{display:inline-block;min-width:4.5em;border-bottom:2px solid var(--ink);margin:0 .15em}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:10px 12px;border:1.5px solid var(--line);border-radius:12px;background:var(--sheet);cursor:pointer;font-size:1.02rem}
+.opt .bub{flex:none;width:30px;height:30px;border-radius:50%;border:1.5px solid var(--ink-soft);display:grid;place-items:center;font-family:var(--f-mono);font-weight:700;font-size:.85rem;color:var(--ink-soft)}
+.opt:hover:not(:disabled){border-color:var(--blue)}
+.opt:disabled{cursor:default}
+.opt.ok{border-color:var(--good);background:var(--good-wash)}
+.opt.ok .bub{background:var(--good);border-color:var(--good);color:var(--sheet)}
+.opt.ko{border-color:var(--bad);background:var(--bad-wash)}
+.opt.ko .bub{background:var(--bad);border-color:var(--bad);color:var(--sheet)}
+.expl{border-left:4px solid var(--marker);padding:10px 14px;background:var(--paper);border-radius:0 10px 10px 0}
+.progress{display:flex;gap:4px}
+.progress i{flex:1;height:6px;border-radius:3px;background:var(--line)}
+.progress i.ok{background:var(--good)}.progress i.ko{background:var(--bad)}.progress i.cur{background:var(--blue)}
+.timer{font-family:var(--f-mono);font-weight:700}
+.timer.low{color:var(--bad)}
+.result{font-family:var(--f-display);font-weight:800;font-size:3.2rem;color:var(--blue);line-height:1}
+
+/* fiches */
+details.fiche{background:var(--sheet);border:1px solid var(--line);border-radius:14px;padding:4px 18px}
+details.fiche summary{cursor:pointer;padding:14px 0;font-family:var(--f-display);font-weight:700;font-size:1.1rem;list-style:none;display:flex;justify-content:space-between;gap:12px}
+details.fiche summary::-webkit-details-marker{display:none}
+details.fiche summary::after{content:"+";font-family:var(--f-mono);color:var(--ink-soft)}
+details.fiche[open] summary::after{content:"–"}
+.fiche-body{padding-bottom:16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.fiche-body ul{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+.tbl{overflow-x:auto}
+.tbl table{border-collapse:collapse;width:100%;font-size:.92rem}
+.tbl th,.tbl td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl th{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
+.note{font-size:.85rem;color:var(--ink-soft)}
+@media (prefers-reduced-motion:no-preference){
+  .flash,.opt{transition:background .15s,border-color .15s}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><b>TOEIC J-<span id="hdrDays" class="mono" style="font-size:inherit;color:inherit">19</span></b><span>L&amp;R · 10–990</span></div>
+    <div class="streak" id="streak">0 jour d'affilée</div>
+  </header>
+  <nav class="tabs" aria-label="Sections">
+    <a href="#accueil" data-v="accueil"><span class="ico">⌂</span>Plan</a>
+    <a href="#vocab" data-v="vocab"><span class="ico">A</span>Vocab</a>
+    <a href="#grammaire" data-v="grammaire"><span class="ico">B</span>Part 5</a>
+    <a href="#ecoute" data-v="ecoute"><span class="ico">C</span>Part 2</a>
+    <a href="#fiches" data-v="fiches"><span class="ico">D</span>Fiches</a>
+  </nav>
+  <main id="main"></main>
+</div>
+
+<script>
+(function(){
+"use strict";
+/* ============ DATA ============ */
+const EXAM = new Date(2026,10,21); // 21 novembre 2026
+const START = new Date(2026,10,2);
+
+const VOCAB = [
+// [anglais, français, exemple, thème]
+["deadline","date limite","The deadline for submitting the budget is Friday.","Bureau"],
+["to postpone","reporter (à plus tard)","The board meeting has been postponed until next month.","Bureau"],
+["to reschedule","reprogrammer","Could we reschedule the interview for Tuesday?","Bureau"],
+["agenda","ordre du jour","The first item on the agenda is the new pricing policy.","Bureau"],
+["minutes","compte rendu (de réunion)","Ms. Lee will take the minutes of the meeting.","Bureau"],
+["attendee","participant(e)","All attendees must register at the front desk.","Bureau"],
+["to delegate","déléguer","A good manager knows how to delegate tasks.","Bureau"],
+["memo","note de service","Please read the memo about the new parking rules.","Bureau"],
+["supervisor","responsable, superviseur","Report any problem to your supervisor.","Bureau"],
+["to oversee","superviser","She oversees the marketing department.","Bureau"],
+["workload","charge de travail","The workload increases at the end of the quarter.","Bureau"],
+["to be in charge of","être responsable de","Mr. Ortiz is in charge of the renovation project.","Bureau"],
+["stationery","fournitures de bureau","Stationery is stored in the cabinet next to the printer.","Bureau"],
+["photocopier","photocopieuse","The photocopier on the third floor is out of order.","Bureau"],
+["out of order","en panne","The elevator is out of order today.","Bureau"],
+["to file","classer (des documents)","Please file these invoices by date.","Bureau"],
+["extension","poste (téléphonique) / prolongation","You can reach me at extension 204.","Bureau"],
+["to hire","embaucher","The company plans to hire twenty new employees.","RH"],
+["applicant","candidat(e)","Applicants must have three years of experience.","RH"],
+["résumé","CV","Please send your résumé and a cover letter.","RH"],
+["job opening","poste vacant","There is a job opening in the accounting department.","RH"],
+["qualified","qualifié(e)","She is highly qualified for the position.","RH"],
+["to promote","promouvoir","He was promoted to regional manager.","RH"],
+["promotion","promotion (poste) / promotion (vente)","Her promotion was announced on Monday.","RH"],
+["to resign","démissionner","The director resigned after ten years.","RH"],
+["to retire","prendre sa retraite","Mr. Kim will retire at the end of the year.","RH"],
+["benefits","avantages sociaux","The benefits include health insurance and paid leave.","RH"],
+["payroll","service de la paie / masse salariale","Payroll processes salaries on the 25th.","RH"],
+["wage","salaire (horaire)","The minimum wage increased this year.","RH"],
+["salary","salaire (mensuel/annuel)","The salary is negotiable.","RH"],
+["probation period","période d'essai","New staff have a three-month probation period.","RH"],
+["performance review","entretien d'évaluation","Performance reviews take place in December.","RH"],
+["workshop","atelier, séminaire","The training workshop starts at 9 A.M.","RH"],
+["to train","former","All staff will be trained on the new software.","RH"],
+["personnel","personnel","Only authorized personnel may enter.","RH"],
+["revenue","chiffre d'affaires, recettes","Revenue rose by 12% last quarter.","Finance"],
+["profit","bénéfice","The company made a record profit.","Finance"],
+["budget","budget","We are over budget on this project.","Finance"],
+["invoice","facture","The invoice must be paid within 30 days.","Finance"],
+["receipt","reçu, ticket de caisse","Keep your receipt for any refund.","Finance"],
+["refund","remboursement","Customers can request a full refund.","Finance"],
+["to reimburse","rembourser (des frais)","Travel expenses will be reimbursed.","Finance"],
+["expenses","dépenses, frais","Submit your expense report by Friday.","Finance"],
+["quarter","trimestre","Sales were strong in the second quarter.","Finance"],
+["fiscal year","exercice fiscal","The fiscal year ends in March.","Finance"],
+["shareholder","actionnaire","Shareholders will vote on the merger.","Finance"],
+["merger","fusion","The merger of the two banks was approved.","Finance"],
+["acquisition","acquisition, rachat","The acquisition will be completed next year.","Finance"],
+["estimate","devis, estimation","We received an estimate for the repairs.","Finance"],
+["quote","devis","Ask the supplier for a quote.","Finance"],
+["account","compte","Your account has been credited.","Finance"],
+["balance","solde","Please pay the outstanding balance.","Finance"],
+["outstanding","impayé / remarquable","There is an outstanding invoice from June.","Finance"],
+["to afford","avoir les moyens de","We can't afford a new office right now.","Finance"],
+["affordable","abordable","They offer affordable prices.","Finance"],
+["customer","client(e)","Customer satisfaction is our priority.","Commerce"],
+["client","client (de services)","The lawyer met with a new client.","Commerce"],
+["supplier","fournisseur","We changed suppliers last year.","Commerce"],
+["vendor","vendeur, fournisseur","Food vendors will be at the festival.","Commerce"],
+["merchandise","marchandise","The merchandise arrived damaged.","Commerce"],
+["inventory","inventaire, stock","We take inventory every month.","Commerce"],
+["in stock","en stock","The item is currently not in stock.","Commerce"],
+["out of stock","en rupture de stock","That model is out of stock.","Commerce"],
+["warehouse","entrepôt","The goods are kept in a warehouse.","Commerce"],
+["shipment","livraison, envoi","The shipment will arrive on Thursday.","Commerce"],
+["to ship","expédier","Orders are shipped within 48 hours.","Commerce"],
+["delivery","livraison","Delivery is free for orders over $50.","Commerce"],
+["order","commande","Your order has been confirmed.","Commerce"],
+["discount","remise, réduction","Members get a 10% discount.","Commerce"],
+["warranty","garantie","The printer comes with a two-year warranty.","Commerce"],
+["complaint","plainte, réclamation","We received a complaint about the noise.","Commerce"],
+["to launch","lancer (un produit)","The new phone will be launched in May.","Marketing"],
+["advertisement","publicité","The advertisement appeared in the newspaper.","Marketing"],
+["survey","enquête, sondage","Please fill out our customer survey.","Marketing"],
+["competitor","concurrent","Our competitors lowered their prices.","Marketing"],
+["market share","part de marché","They increased their market share.","Marketing"],
+["brochure","brochure","The brochure lists all our services.","Marketing"],
+["trade show","salon professionnel","We'll present our product at the trade show.","Marketing"],
+["sample","échantillon","Free samples are available at the entrance.","Marketing"],
+["feedback","retour, avis","Thank you for your feedback.","Marketing"],
+["to boost","stimuler, augmenter","The campaign boosted sales.","Marketing"],
+["itinerary","itinéraire, programme de voyage","Your itinerary is attached to this e-mail.","Voyage"],
+["boarding pass","carte d'embarquement","Show your boarding pass at the gate.","Voyage"],
+["to board","embarquer","Passengers may now board the plane.","Voyage"],
+["layover","escale","We have a two-hour layover in Dubai.","Voyage"],
+["delayed","retardé","The flight has been delayed by an hour.","Voyage"],
+["fare","tarif (transport)","Bus fares will increase next month.","Voyage"],
+["to book","réserver","I booked a room for three nights.","Voyage"],
+["reservation","réservation","I'd like to confirm my reservation.","Voyage"],
+["accommodation","hébergement","Accommodation is included in the price.","Voyage"],
+["luggage","bagages","Please don't leave your luggage unattended.","Voyage"],
+["baggage claim","retrait des bagages","Meet me at the baggage claim area.","Voyage"],
+["round-trip ticket","billet aller-retour","A round-trip ticket costs $300.","Voyage"],
+["commute","trajet domicile-travail","My commute takes forty minutes.","Voyage"],
+["to commute","faire la navette","She commutes by train every day.","Voyage"],
+["venue","lieu (d'un événement)","The venue for the conference has changed.","Événements"],
+["banquet","banquet","The awards banquet will be held at the Grand Hotel.","Événements"],
+["keynote speaker","orateur principal","The keynote speaker is a famous economist.","Événements"],
+["to register","s'inscrire","Register online before May 1.","Événements"],
+["registration fee","frais d'inscription","The registration fee includes lunch.","Événements"],
+["to cater","fournir le repas (traiteur)","The event will be catered by a local restaurant.","Événements"],
+["renovation","rénovation","The lobby is closed for renovation.","Bâtiment"],
+["maintenance","entretien, maintenance","Maintenance work is scheduled for Saturday.","Bâtiment"],
+["premises","locaux","Smoking is not allowed on the premises.","Bâtiment"],
+["facility","installation, site","The new facility will open in June.","Bâtiment"],
+["tenant","locataire","Tenants must pay rent by the 5th.","Bâtiment"],
+["landlord","propriétaire (bailleur)","The landlord fixed the heater.","Bâtiment"],
+["lease","bail","We signed a five-year lease.","Bâtiment"],
+["to relocate","déménager, délocaliser","The headquarters will relocate to Chicago.","Bâtiment"],
+["headquarters","siège social","Our headquarters are in Paris.","Bâtiment"],
+["branch","succursale, agence","The bank opened a new branch downtown.","Bâtiment"],
+["contract","contrat","Please sign the contract by Monday.","Juridique"],
+["terms and conditions","conditions générales","Read the terms and conditions carefully.","Juridique"],
+["to comply with","se conformer à","All products comply with safety standards.","Juridique"],
+["regulation","réglementation","New regulations take effect in January.","Juridique"],
+["policy","politique, règlement","Our return policy allows 30 days.","Juridique"],
+["to expire","expirer","Your subscription expires on June 30.","Juridique"],
+["to renew","renouveler","Don't forget to renew your passport.","Juridique"],
+["to ensure","garantir, s'assurer","Please ensure that all doors are locked.","Verbes clés"],
+["to implement","mettre en œuvre","The new system will be implemented next week.","Verbes clés"],
+["to submit","soumettre, remettre","Submit your application by March 15.","Verbes clés"],
+["to approve","approuver","The manager approved the request.","Verbes clés"],
+["to inquire","se renseigner","I'm calling to inquire about the job.","Verbes clés"],
+["to notify","informer, avertir","We will notify you when the order ships.","Verbes clés"],
+["to attach","joindre","I've attached the report to this e-mail.","Verbes clés"],
+["to enclose","joindre (par courrier)","Please find enclosed a copy of the contract.","Verbes clés"],
+["to confirm","confirmer","Please confirm your attendance.","Verbes clés"],
+["to handle","gérer, traiter","Who will handle the client's request?","Verbes clés"],
+["to assist","aider","How may I assist you?","Verbes clés"],
+["to attend","assister à (≠ attendre !)","Did you attend the conference?","Faux amis"],
+["eventually","finalement (≠ éventuellement)","The project was eventually completed.","Faux amis"],
+["actually","en fait (≠ actuellement)","Actually, the meeting is tomorrow.","Faux amis"],
+["currently","actuellement","She is currently on vacation.","Faux amis"],
+["library","bibliothèque (≠ librairie)","Return the books to the library.","Faux amis"],
+["bookstore","librairie","The bookstore is next to the café.","Faux amis"],
+["sensible","raisonnable (≠ sensible)","That's a sensible decision.","Faux amis"],
+["sensitive","sensible","This is sensitive information.","Faux amis"],
+["to achieve","atteindre, réaliser (≠ achever)","We achieved our sales target.","Faux amis"],
+["to complete","terminer, remplir","Complete the form in black ink.","Faux amis"],
+["appointment","rendez-vous","I have a dentist appointment at 3.","Faux amis"],
+["to assume","supposer (≠ assumer)","I assume you've read the report.","Faux amis"],
+["to rent","louer (≠ rente)","We rent a car at the airport.","Faux amis"],
+["to recover","se remettre, récupérer","Sales recovered in the spring.","Faux amis"],
+["exhibition","exposition","The art exhibition opens on Friday.","Événements"],
+["prior to","avant","Arrive 15 minutes prior to departure.","Mots de liaison"],
+["due to","en raison de","The game was cancelled due to rain.","Mots de liaison"],
+["in addition to","en plus de","In addition to a salary, we offer a bonus.","Mots de liaison"],
+["despite","malgré (+ nom)","Despite the rain, the event was a success.","Mots de liaison"],
+["although","bien que (+ phrase)","Although it rained, the event was a success.","Mots de liaison"],
+["whereas","alors que (opposition)","Sales rose in Asia, whereas they fell in Europe.","Mots de liaison"],
+["therefore","par conséquent","Costs rose; therefore, prices increased.","Mots de liaison"],
+["however","cependant","The plan is good; however, it is expensive.","Mots de liaison"],
+["unless","à moins que","We'll start at 9 unless the train is late.","Mots de liaison"],
+["as soon as","dès que","Call me as soon as you arrive.","Mots de liaison"],
+["upon","dès, à (la réception de)","Payment is due upon receipt.","Mots de liaison"],
+["regarding","concernant","I'm writing regarding your order.","Mots de liaison"]
+];
+
+// Part 5 : [phrase avec ___, [A,B,C,D], index bonne réponse, explication, catégorie]
+const GRAMMAR = [
+["The new software will help employees work more ___.",["efficient","efficiency","efficiently","efficiencies"],2,"Après un verbe (work more…), il faut un <b>adverbe</b> : efficiently (-ly).","Nature des mots"],
+["Ms. Tanaka gave an ___ presentation at the conference.",["impress","impressive","impressively","impression"],1,"Entre un article (an) et un nom (presentation) : un <b>adjectif</b>.","Nature des mots"],
+["The ___ of the new factory will create 300 jobs.",["construct","constructive","construction","constructed"],2,"Après « The » et avant « of » : un <b>nom</b>. Suffixe -tion.","Nature des mots"],
+["Please ___ the attached form and return it by Friday.",["completion","complete","completely","completing"],1,"Impératif après « Please » : <b>verbe à la base</b>.","Nature des mots"],
+["Our sales have increased ___ since we lowered our prices.",["significant","significance","significantly","signify"],2,"Modifie le verbe « have increased » : <b>adverbe</b>.","Nature des mots"],
+["All ___ must wear a badge in the building.",["visit","visits","visitors","visiting"],2,"Après « All » et devant un verbe : nom de <b>personne au pluriel</b> (must wear → sujet humain).","Nature des mots"],
+["The manager was ___ satisfied with the results.",["extreme","extremely","extremes","extremity"],1,"Devant un adjectif (satisfied) : un <b>adverbe</b>.","Nature des mots"],
+["The company is known for its ___ customer service.",["rely","reliable","reliably","reliability"],1,"Entre « its » et un groupe nominal : <b>adjectif</b>.","Nature des mots"],
+["The report must be submitted ___ Friday.",["by","until","on","at"],0,"<b>by</b> = au plus tard (une échéance). <i>until</i> = jusqu'à (action qui dure).","Prépositions"],
+["The store will remain open ___ 9 P.M.",["by","until","in","at"],1,"Action qui continue jusqu'à un moment : <b>until</b>.","Prépositions"],
+["The conference will take place ___ March 14.",["in","at","on","by"],2,"Date précise ou jour : <b>on</b>. Mois/année : in. Heure : at.","Prépositions"],
+["Mr. Davis has worked here ___ 2015.",["for","since","during","from"],1,"Point de départ dans le temps avec le present perfect : <b>since</b>. Durée : for.","Prépositions"],
+["She has been the director ___ ten years.",["since","for","during","while"],1,"Durée avec present perfect : <b>for</b> + durée.","Prépositions"],
+["Please do not use your phone ___ the presentation.",["while","during","when","as"],1,"Devant un <b>nom</b> (the presentation) : <b>during</b>. <i>while</i> est suivi d'une phrase.","Prépositions"],
+["The meeting was cancelled ___ the director was sick.",["because of","due to","because","despite"],2,"Suivi d'une phrase (sujet + verbe) : <b>because</b>. because of / due to + nom.","Connecteurs"],
+["___ the heavy traffic, Ms. Ruiz arrived on time.",["Although","Despite","However","Even though"],1,"Suivi d'un <b>nom</b> (the heavy traffic) : <b>Despite</b>. Although/Even though + phrase.","Connecteurs"],
+["___ sales were lower than expected, the company made a profit.",["Despite","In spite of","Although","Because of"],2,"Suivi d'une phrase complète : <b>Although</b>.","Connecteurs"],
+["You will not receive a refund ___ you have the receipt.",["if","unless","whether","so"],1,"<b>unless</b> = sauf si / à moins que. Sens : pas de remboursement sans reçu.","Connecteurs"],
+["The product is popular; ___, its price is high.",["therefore","however","because","so that"],1,"Opposition entre deux phrases (point-virgule + virgule) : <b>however</b>.","Connecteurs"],
+["The hotel offers free Wi-Fi ___ a fitness center.",["as well as","as soon as","as long as","so as"],0,"<b>as well as</b> = ainsi que (ajout de deux noms).","Connecteurs"],
+["Neither the manager ___ his assistant attended the meeting.",["or","nor","and","but"],1,"Paire fixe : <b>neither … nor</b>. (either … or, both … and)","Connecteurs"],
+["Applicants should submit ___ a résumé and a cover letter.",["either","both","neither","whether"],1,"« ___ X <b>and</b> Y » : <b>both … and</b>.","Connecteurs"],
+["The package ___ yesterday afternoon.",["delivers","was delivered","has delivered","is delivering"],1,"Le colis ne livre pas, il est livré → <b>passif</b>. « yesterday » → prétérit.","Temps & voix"],
+["By the end of next year, the company ___ three new stores.",["opens","opened","will have opened","has opened"],2,"« By + moment futur » : <b>futur antérieur</b> (will have + participe).","Temps & voix"],
+["Mr. Park ___ for the company since 2018.",["works","worked","has worked","is working"],2,"« since 2018 » → <b>present perfect</b>.","Temps & voix"],
+["The new policy ___ effective next Monday.",["became","has become","will become","becoming"],2,"« next Monday » → <b>futur</b>.","Temps & voix"],
+["When the client called, Ms. Lee ___ a meeting.",["attends","was attending","has attended","attend"],1,"Action en cours interrompue dans le passé : <b>past continuous</b>.","Temps & voix"],
+["All employees are required ___ the safety training.",["attend","attending","to attend","attended"],2,"<b>be required to</b> + base verbale.","Temps & voix"],
+["The manager suggested ___ the meeting to Thursday.",["move","to move","moving","moved"],2,"<b>suggest + V-ing</b> (comme avoid, consider, recommend, enjoy, finish).","Temps & voix"],
+["We look forward to ___ from you soon.",["hear","hearing","heard","be heard"],1,"<b>look forward to + V-ing</b> : ici « to » est une préposition.","Temps & voix"],
+["If the shipment ___ late, we will contact you.",["is","will be","was","would be"],0,"Conditionnel type 1 : <b>if + présent</b>, will + base. Jamais « will » après if.","Temps & voix"],
+["The documents ___ by the legal team before signing.",["must review","must be reviewed","must reviewing","must reviewed"],1,"Les documents sont relus → <b>passif</b> : modal + be + participe passé.","Temps & voix"],
+["The employee ___ won the award is from our Tokyo office.",["which","who","whom","whose"],1,"Pronom relatif sujet pour une personne : <b>who</b>.","Pronoms"],
+["The client ___ order was delayed received a discount.",["who","which","whose","whom"],2,"Possession (la commande du client) : <b>whose</b> + nom.","Pronoms"],
+["Ms. Grant prepared the report by ___.",["she","her","herself","hers"],2,"« by + pronom réfléchi » = toute seule : <b>herself</b>.","Pronoms"],
+["The team members presented ___ ideas to the board.",["they","their","them","theirs"],1,"Devant un nom (ideas) : <b>adjectif possessif</b> their.","Pronoms"],
+["Please send the files to Mr. Kim or ___.",["I","my","me","mine"],2,"Après une préposition (to) : <b>pronom complément</b> me.","Pronoms"],
+["This is the ___ proposal we have received so far.",["more detailed","most detailed","detailed","detailing"],1,"« the … so far » : <b>superlatif</b>.","Comparaison"],
+["The new model is ___ than the previous one.",["light","lighter","lightest","more light"],1,"Comparatif d'un adjectif court : <b>-er than</b>.","Comparaison"],
+["This year's results are ___ better than last year's.",["very","much","more","most"],1,"Pour renforcer un comparatif : <b>much</b> / far (jamais very).","Comparaison"],
+["There are ___ applicants for the position this year.",["less","fewer","little","much"],1,"Nom dénombrable pluriel : <b>fewer</b>. less pour l'indénombrable.","Quantité"],
+["We have very ___ information about the new client.",["few","little","many","a few"],1,"« information » est <b>indénombrable</b> : little / much.","Quantité"],
+["Each of the participants ___ a certificate.",["receive","receives","receiving","have received"],1,"« Each of » + pluriel, mais verbe au <b>singulier</b>.","Accords"],
+["The number of complaints ___ decreased.",["have","has","are","were"],1,"<b>The number of</b> → singulier. (A number of → pluriel.)","Accords"],
+["Ms. Novak will ___ the training session next week.",["lead","leads","leading","led"],0,"Après un modal (will) : <b>base verbale</b>.","Temps & voix"],
+["The hotel is ___ located near the airport.",["convenient","convenience","conveniently","convened"],2,"Devant un participe passé (located) : <b>adverbe</b>.","Nature des mots"],
+["We need to find a ___ to the problem quickly.",["solve","solution","solved","solvable"],1,"Après « a » : un <b>nom</b>.","Nature des mots"],
+["The museum is closed ___ renovations.",["because","due to","since","so"],1,"Devant un nom (renovations) : <b>due to</b>.","Connecteurs"],
+["Please ___ us if you have any questions.",["contact","contact to","contact with","contacting"],0,"<b>contact</b> est transitif direct : contact someone (sans préposition).","Vocabulaire"],
+["The CEO will ___ the new strategy at the meeting.",["say","tell","announce","speak"],2,"On <b>annonce</b> une stratégie. say/tell ne collent pas ici (tell + personne).","Vocabulaire"],
+["Our company has ___ a new policy on remote work.",["adopted","adapted","adept","adoption"],0,"<b>adopt</b> = adopter (une politique). adapt = adapter.","Vocabulaire"],
+["The flight was ___ because of the storm.",["called off","called on","called up","called for"],0,"<b>call off</b> = annuler.","Vocabulaire"],
+["The new manager will ___ the project from next week.",["take over","take off","take up","take after"],0,"<b>take over</b> = reprendre, prendre la direction.","Vocabulaire"],
+["Please ___ the form before you leave.",["fill out","fill up","fill on","fill with"],0,"<b>fill out / fill in</b> a form = remplir un formulaire.","Vocabulaire"],
+["The sales figures were ___ than we had expected.",["high","higher","highest","highly"],1,"« than » → <b>comparatif</b>.","Comparaison"]
+];
+
+// Part 2 : [question, [rép A, B, C], index, explication]
+const LISTEN = [
+["Where is the nearest post office?",["It's two blocks from here.","I posted it yesterday.","Yes, it's open."],0,"Question en <b>Where</b> → un lieu. Piège C : on ne répond pas « Yes » à une question en Wh-. Piège B : « post » répété."],
+["When does the training session start?",["In Room 204.","At ten o'clock.","Yes, I trained hard."],1,"<b>When</b> → un moment. A répond à Where, C répète « train »."],
+["Who's in charge of the budget report?",["Ms. Chen is handling it.","It's about forty pages.","The charge is ten dollars."],0,"<b>Who</b> → une personne (ou un service). C : piège sonore « charge »."],
+["Why was the meeting cancelled?",["At the main office.","Because the director is sick.","I'll meet you there."],1,"<b>Why</b> → une raison (because, to + verbe). C : « meet » ≈ meeting."],
+["How long will the repairs take?",["About two weeks.","By the copier.","It's very long."],0,"<b>How long</b> → une durée."],
+["Would you like some coffee?",["I'd love some, thanks.","The coffee shop downstairs.","Yes, I copied it."],0,"Proposition → acceptation ou refus poli. C : copied ≈ coffee."],
+["Didn't you send the invoice yesterday?",["Yes, this morning actually.","No, I sent it on Monday.","The voice was clear."],1,"Question négative : réponds comme si elle était positive. B donne une info cohérente. A se contredit (yesterday/this morning). C : voice ≈ invoice."],
+["Should we take a taxi or the subway?",["Yes, we should.","The subway is faster.","I'll take two."],1,"Question à choix (or) → on choisit l'une des options. Jamais « Yes/No »."],
+["The printer isn't working again.",["I'll call maintenance.","Twenty copies, please.","He's working late."],0,"Affirmation → réaction logique. Piège C : « working » répété."],
+["Can you help me move these boxes?",["Sure, where do they go?","They're in the box.","She moved last year."],0,"Demande → accord/refus. Les autres répètent box/move."],
+["Which hotel are you staying at?",["For three nights.","The one near the station.","Yes, it's a nice stay."],1,"<b>Which</b> → « the one… » est une réponse typique."],
+["How much does the ticket cost?",["Thirty dollars each.","Twice a week.","At the ticket counter."],0,"<b>How much</b> → un prix. B répond à How often, C à Where."],
+["Has the shipment arrived yet?",["Not yet, it's delayed.","By ship.","Yes, I arrived early."],0,"Réponse indirecte cohérente. C : sujet différent (I)."],
+["What time does the store close?",["At nine on weekdays.","Close to the bank.","For the whole store."],0,"<b>What time</b> → une heure. B : piège « close » (proche)."],
+["Why don't we order lunch for the team?",["Good idea, I'll call the restaurant.","Because it's lunchtime.","In alphabetical order."],0,"<b>Why don't we…</b> = suggestion, pas une vraie question en Why. B est le piège classique."],
+["Who's going to replace Mr. Allen?",["We haven't decided yet.","Put it back in its place.","Yes, he's leaving."],0,"« Je ne sais pas / pas encore décidé » est souvent la bonne réponse au TOEIC."],
+["Where can I find the conference schedule?",["It's on the company website.","At 2 P.M.","It was a long conference."],0,"<b>Where</b> → un lieu, y compris un site web."],
+["Isn't the presentation tomorrow?",["No, it's been moved to Friday.","A nice present.","I presented it well."],0,"Question négative → information de date. B et C : pièges sonores."],
+["How often do you visit the Seoul office?",["About once a month.","By plane.","For a week."],0,"<b>How often</b> → une fréquence."],
+["I can't find my keys anywhere.",["Did you check your desk?","Yes, it's the key point.","Anywhere is fine."],0,"Affirmation d'un problème → suggestion utile."]
+];
+
+const PLAN = [
+ // [focus, tâches]
+ ["Diagnostic","Fais 2 séries Part 5 et note tes erreurs · 20 cartes vocab · lis la fiche « Structure de l'examen »"],
+ ["Nature des mots","Fiche suffixes · 2 séries Part 5 · 20 cartes vocab"],
+ ["Écoute Part 2","2 séries Part 2 · fiche « Pièges de la Part 2 » · 20 cartes vocab"],
+ ["Prépositions","Fiche prépositions de temps · 2 séries Part 5 · 20 cartes"],
+ ["Temps & voix","Fiche temps · 2 séries Part 5 · 20 cartes"],
+ ["Connecteurs","Fiche connecteurs · 2 séries Part 5 · 20 cartes"],
+ ["Bilan semaine 1","Série chrono Part 5 · révise les cartes « À revoir » · repos léger"],
+ ["Écoute Part 1–2","2 séries Part 2 · 15 min de podcast en anglais · 20 cartes"],
+ ["Faux amis","Thème « Faux amis » en vocab · 2 séries Part 5"],
+ ["Lecture Part 7","Fiche stratégie Part 7 · lis un article en anglais en 10 min · 20 cartes"],
+ ["Pronoms & accords","2 séries Part 5 · 20 cartes · fiche phrasal verbs"],
+ ["Écoute Part 3–4","Fiche Part 3–4 · 2 séries Part 2 · 20 cartes"],
+ ["Mix chrono","2 séries chrono Part 5 · 2 séries Part 2"],
+ ["Bilan semaine 2","Révise toutes les cartes dues · relis tes fiches"],
+ ["Examen blanc","Fais un test complet (L&R, 2 h) dans les conditions réelles"],
+ ["Analyse","Reprends les erreurs du test blanc · 2 séries Part 5"],
+ ["Vocab intensif","40 cartes · 1 série Part 2 · 1 série Part 5"],
+ ["Points faibles","Séries Part 5 sur tes catégories les plus faibles"],
+ ["Veille d'examen","Révision légère, 20 cartes, fiches. Dors bien, prépare ta pièce d'identité."]
+];
+
+/* ============ STORAGE ============ */
+const KEY="toeic-j19-v1";
+let S={cards:{},gram:{},listen:{},days:{},dir:"en"};
+try{const raw=localStorage.getItem(KEY); if(raw) S=Object.assign(S,JSON.parse(raw));}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+
+/* ============ DATES ============ */
+const DAY=86400000;
+function startOfDay(d){const x=new Date(d);x.setHours(0,0,0,0);return x}
+function todayKey(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function daysLeft(){return Math.max(0,Math.round((startOfDay(EXAM)-startOfDay(new Date()))/DAY))}
+function dayIndex(){return Math.round((startOfDay(new Date())-startOfDay(START))/DAY)}
+function logActivity(kind,n){const k=todayKey();S.days[k]=S.days[k]||{v:0,g:0,l:0};S.days[k][kind]=(S.days[k][kind]||0)+(n||1);save();renderHeader()}
+function streak(){let n=0;let d=startOfDay(new Date());
+  const has=k=>{const x=S.days[k];return x&&(x.v+x.g+x.l)>0};
+  const key=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+  if(!has(key(d))) d=new Date(d-DAY);
+  while(has(key(d))){n++;d=new Date(d-DAY)}
+  return n}
+
+/* ============ HELPERS ============ */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const L="ABCD";
+function renderHeader(){
+  const d=daysLeft();$("#hdrDays").textContent=d;
+  const s=streak();$("#streak").textContent=s+(s>1?" jours":" jour")+" d'affilée";
+}
+
+/* ============ VOCAB (Leitner) ============ */
+const INTERVALS=[0,1,2,4,7,14];
+function cardState(i){return S.cards[i]}
+function dueCards(theme){
+  const now=Date.now();const due=[],fresh=[];
+  VOCAB.forEach((v,i)=>{ if(theme&&theme!=="Tous"&&v[3]!==theme) return;
+    const c=S.cards[i]; if(!c) fresh.push(i); else if(c.due<=now && c.box<5) due.push(i); });
+  return {due:shuffle(due),fresh};
+}
+let vq=null;
+function vocabView(){
+  const themes=["Tous",...Array.from(new Set(VOCAB.map(v=>v[3])))];
+  const theme=S.theme||"Tous";
+  const counts=[0,0,0,0,0,0];let seen=0;
+  VOCAB.forEach((v,i)=>{const c=S.cards[i];if(c){counts[c.box]++;seen++}});
+  const {due,fresh}=dueCards(theme);
+  if(!vq||vq.theme!==theme){vq={theme,list:due.concat(fresh.slice(0,Math.max(0,20-due.length))).slice(0,30),i:0,shown:false,ok:0,ko:0}}
+  const cur=vq.list[vq.i];
+  let html=`<div class="row" style="justify-content:space-between"><div><p class="eyebrow">Vocabulaire · répétition espacée</p><h2>${VOCAB.length} mots du TOEIC</h2></div>
+  <div class="seg" role="group" aria-label="Sens"><button id="dirEn" aria-pressed="${S.dir==="en"}">EN → FR</button><button id="dirFr" aria-pressed="${S.dir==="fr"}">FR → EN</button></div></div>
+  <div class="row"><label for="theme" class="muted">Thème</label><select id="theme">${themes.map(t=>`<option ${t===theme?"selected":""}>${esc(t)}</option>`).join("")}</select>
+  <span class="muted">${due.length} à revoir · ${fresh.length} nouveaux</span></div>`;
+  if(cur===undefined){
+    html+=`<div class="card flash" style="cursor:default"><p class="eyebrow">Session terminée</p><div class="word">${vq.ok} ✓ · ${vq.ko} ✗</div><p class="muted">Les cartes ratées reviendront demain, les cartes sues plus tard.</p><button class="btn" id="vRestart">Nouvelle session</button></div>`;
+  } else {
+    const v=VOCAB[cur];const front=S.dir==="en"?v[0]:v[1];const back=S.dir==="en"?v[1]:v[0];
+    html+=`<div class="progress" aria-hidden="true">${vq.list.map((_,k)=>`<i class="${k<vq.i?"ok":k===vq.i?"cur":""}"></i>`).join("")}</div>
+    <div class="card flash" id="flash" tabindex="0" role="button" aria-label="Retourner la carte">
+      <span class="tag">${esc(v[3])} · boîte ${S.cards[cur]?S.cards[cur].box:"nouvelle"}</span>
+      <div class="word">${esc(front)}</div>
+      ${vq.shown?`<div class="tr">${esc(back)}</div><p class="ex">${esc(v[2])}</p>`:`<p class="muted">Touche la carte pour voir la réponse</p>`}
+    </div>
+    <div class="row" style="justify-content:center">
+      ${vq.shown?`<button class="btn bad" id="vKo">À revoir</button><button class="btn good" id="vOk">Je savais</button>`:`<button class="btn ghost" id="vShow">Voir la réponse</button>`}
+      <button class="btn ghost small" id="vSay" aria-label="Écouter la prononciation">▶ Écouter</button>
+    </div>`;
+  }
+  html+=`<div class="card"><p class="eyebrow" style="margin-bottom:10px">Tes boîtes (${seen}/${VOCAB.length} vus)</p><div class="boxes">${counts.map((n,b)=>`<div class="bx"><b>${n}</b>${b===5?"acquis":"boîte "+b}</div>`).join("")}</div>
+  <p class="note" style="margin-top:10px">Bonne réponse : la carte monte d'une boîte et revient plus tard (1, 2, 4, 7 jours). Erreur : retour en boîte 0, elle revient aujourd'hui.</p></div>`;
+  $("#main").innerHTML=`<section class="view">${html}</section>`;
+  $("#theme").onchange=e=>{S.theme=e.target.value;save();vq=null;vocabView()};
+  $("#dirEn").onclick=()=>{S.dir="en";save();vocabView()};
+  $("#dirFr").onclick=()=>{S.dir="fr";save();vocabView()};
+  if(cur===undefined){$("#vRestart").onclick=()=>{vq=null;vocabView()};return}
+  const flip=()=>{vq.shown=true;vocabView()};
+  $("#flash").onclick=()=>{if(!vq.shown)flip()};
+  $("#flash").onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();if(!vq.shown)flip()}};
+  if($("#vShow"))$("#vShow").onclick=flip;
+  $("#vSay").onclick=()=>speak(VOCAB[cur][0].replace(/^to /,""));
+  const grade=ok=>{const c=S.cards[cur]||{box:0,due:0};
+    if(ok){c.box=Math.min(5,c.box+1);vq.ok++}else{c.box=0;vq.ko++;vq.list.push(cur)}
+    c.due=startOfDay(new Date()).getTime()+INTERVALS[c.box]*DAY;S.cards[cur]=c;
+    vq.i++;vq.shown=false;logActivity("v");vocabView()};
+  if($("#vOk")){$("#vOk").onclick=()=>grade(true);$("#vKo").onclick=()=>grade(false)}
+}
+
+/* ============ SPEECH ============ */
+let voice=null;
+function pickVoice(){try{const vs=speechSynthesis.getVoices();voice=vs.find(v=>/en[-_]US/i.test(v.lang)&&/Google|Samantha|Aria|Jenny/i.test(v.name))||vs.find(v=>/en[-_]US/i.test(v.lang))||vs.find(v=>/^en/i.test(v.lang))||null}catch(e){}}
+try{pickVoice();speechSynthesis.onvoiceschanged=pickVoice}catch(e){}
+const canSpeak=()=>{try{return "speechSynthesis" in window}catch(e){return false}};
+function speak(text,onend){
+  if(!canSpeak()){onend&&onend();return false}
+  try{const u=new SpeechSynthesisUtterance(text);u.lang="en-US";u.rate=.92;if(voice)u.voice=voice;if(onend)u.onend=onend;speechSynthesis.speak(u);return true}catch(e){onend&&onend();return false}
+}
+function speakSeq(parts){try{speechSynthesis.cancel()}catch(e){} let i=0;const next=()=>{if(i<parts.length){const p=parts[i++];speak(p,()=>setTimeout(next,450))}};next()}
+
+/* ============ QUIZ ENGINE (Part 5 & Part 2) ============ */
+let quiz=null;
+function pickSet(bank,store,n,cat){
+  let idx=bank.map((_,i)=>i);
+  if(cat&&cat!=="Toutes") idx=idx.filter(i=>bank[i][4]===cat);
+  // priorité : jamais vues ou ratées
+  const w=i=>{const s=store[i];if(!s)return 2;return s.ko>s.ok?3:(s.ok>0?0:1)};
+  idx=shuffle(idx).sort((a,b)=>w(b)-w(a));
+  return shuffle(idx.slice(0,n));
+}
+function startQuiz(kind,opts){
+  const bank=kind==="g"?GRAMMAR:LISTEN;const store=kind==="g"?S.gram:S.listen;
+  quiz={kind,set:pickSet(bank,store,10,opts&&opts.cat),i:0,ans:[],chrono:!!(opts&&opts.chrono),t:0,timer:null};
+}
+function stopTimer(){if(quiz&&quiz.timer){clearInterval(quiz.timer);quiz.timer=null}}
+function accuracy(store){let ok=0,tot=0;Object.values(store).forEach(s=>{ok+=s.ok;tot+=s.ok+s.ko});return tot?Math.round(ok/tot*100):null}
+
+function grammarView(){
+  if(!quiz||quiz.kind!=="g"){
+    const cats=["Toutes",...Array.from(new Set(GRAMMAR.map(g=>g[4])))];
+    const byCat={};GRAMMAR.forEach((g,i)=>{const s=S.gram[i];if(!s)return;byCat[g[4]]=byCat[g[4]]||{ok:0,t:0};byCat[g[4]].ok+=s.ok;byCat[g[4]].t+=s.ok+s.ko});
+    const acc=accuracy(S.gram);
+    $("#main").innerHTML=`<section class="view">
+      <div><p class="eyebrow">Reading · Part 5 · Phrases à compléter</p><h2>${GRAMMAR.length} questions de grammaire</h2></div>
+      <div class="card" style="display:flex;flex-direction:column;gap:14px">
+        <p>Séries de 10 questions. Les questions ratées reviennent en priorité. Le jour J tu as <b>environ 20 secondes</b> par question en Part 5.</p>
+        <div class="row"><label for="cat" class="muted">Catégorie</label><select id="cat">${cats.map(c=>`<option>${esc(c)}</option>`).join("")}</select></div>
+        <div class="row"><button class="btn" id="go">Commencer une série</button><button class="btn ghost" id="goChrono">Série chrono · 20 s</button></div>
+      </div>
+      <div class="card"><p class="eyebrow" style="margin-bottom:12px">Réussite par catégorie ${acc!==null?"· "+acc+" % au total":""}</p>
+        ${Object.keys(byCat).length?`<div style="display:flex;flex-direction:column;gap:10px">${Object.entries(byCat).sort((a,b)=>a[1].ok/a[1].t-b[1].ok/b[1].t).map(([c,v])=>{const p=Math.round(v.ok/v.t*100);return `<div><div class="row" style="justify-content:space-between"><span>${esc(c)}</span><span class="mono">${p} %</span></div><div class="bar"><i style="width:${p}%;background:${p<60?"var(--bad)":p<80?"var(--marker)":"var(--good)"}"></i></div></div>`}).join("")}</div>`:`<p class="muted">Fais une première série pour voir tes points forts et tes points faibles.</p>`}
+      </div></section>`;
+    $("#go").onclick=()=>{startQuiz("g",{cat:$("#cat").value});grammarView()};
+    $("#goChrono").onclick=()=>{startQuiz("g",{cat:$("#cat").value,chrono:true});grammarView()};
+    return;
+  }
+  renderQuestion();
+}
+function listenView(){
+  if(!quiz||quiz.kind!=="l"){
+    const acc=accuracy(S.listen);
+    $("#main").innerHTML=`<section class="view">
+      <div><p class="eyebrow">Listening · Part 2 · Questions-réponses</p><h2>Entraîne ton oreille</h2></div>
+      <div class="card" style="display:flex;flex-direction:column;gap:14px">
+        <p>Tu entends une question puis trois réponses (A), (B), (C). Choisis la réponse logique. Au vrai test, <b>rien n'est écrit</b> : essaie d'abord sans afficher le texte.</p>
+        ${canSpeak()?"":`<p class="expl">Ton navigateur ne lit pas l'audio. Le texte sera affiché directement.</p>`}
+        <p class="note">Voix de synthèse de ton appareil. Monte le son et désactive le mode silencieux sur iPhone.</p>
+        <div class="row"><button class="btn" id="go">Commencer une série</button>${acc!==null?`<span class="muted">Réussite : <b class="mono">${acc} %</b></span>`:""}</div>
+      </div>
+      <div class="card"><p class="eyebrow" style="margin-bottom:8px">Le réflexe Part 2</p>
+        <p>Retiens le <span class="hl">premier mot</span> de la question (Where, When, Who, Why, How…). Il élimine souvent deux réponses tout seul. Méfie-toi des réponses qui <span class="hl">répètent un mot</span> de la question ou un son proche.</p></div>
+    </section>`;
+    $("#go").onclick=()=>{startQuiz("l");quiz.reveal=!canSpeak();listenView()};
+    return;
+  }
+  renderQuestion();
+}
+function renderQuestion(){
+  const g=quiz.kind==="g";const bank=g?GRAMMAR:LISTEN;
+  if(quiz.i>=quiz.set.length) return renderResult();
+  const qi=quiz.set[quiz.i];const item=bank[qi];const answered=quiz.ans[quiz.i]!==undefined;
+  const prog=`<div class="progress" aria-hidden="true">${quiz.set.map((_,k)=>`<i class="${k<quiz.i||(k===quiz.i&&answered)?(quiz.ans[k]===bank[quiz.set[k]][2]?"ok":"ko"):k===quiz.i?"cur":""}"></i>`).join("")}</div>`;
+  let body;
+  if(g){
+    const parts=item[0].split("___");
+    body=`<p class="eyebrow">Question ${quiz.i+1}/10 · ${esc(item[4])}</p>
+      <p class="q">${esc(parts[0])}<span class="gap"></span>${esc(parts[1]||"")}</p>`;
+  } else {
+    const show=quiz.reveal||answered;
+    body=`<p class="eyebrow">Question ${quiz.i+1}/10</p>
+      <div class="row"><button class="btn" id="play">▶ Écouter</button><button class="btn ghost small" id="reveal">${show?"Texte affiché":"Afficher le texte"}</button></div>
+      ${show?`<p class="q">${esc(item[0])}</p>`:`<p class="muted">Mark your answer on your answer sheet.</p>`}`;
+  }
+  const opts=item[1].map((o,k)=>{let cls="";if(answered){if(k===item[2])cls="ok";else if(k===quiz.ans[quiz.i])cls="ko"}
+    const label=g||quiz.reveal||answered?esc(o):`<span class="muted">Réponse ${L[k]}</span>`;
+    return `<button class="opt ${cls}" data-k="${k}" ${answered?"disabled":""}><span class="bub">${L[k]}</span><span>${label}</span></button>`}).join("");
+  $("#main").innerHTML=`<section class="view">${prog}
+    <div class="card" style="display:flex;flex-direction:column;gap:16px">
+      <div class="row" style="justify-content:space-between"><div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:10px">${body}</div>${quiz.chrono&&!answered?`<span class="timer mono" id="timer">20 s</span>`:""}</div>
+      <div class="opts">${opts}</div>
+      ${answered?`<div class="expl">${quiz.ans[quiz.i]===-1?"<b>Temps écoulé.</b> ":""}${item[3]}</div>
+      <div class="row" style="justify-content:space-between"><button class="btn ghost small" id="quit">Arrêter</button><button class="btn" id="next">${quiz.i===quiz.set.length-1?"Voir le résultat":"Question suivante"}</button></div>`:`<div><button class="btn ghost small" id="quit">Arrêter</button></div>`}
+    </div></section>`;
+  document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>answer(+b.dataset.k));
+  $("#quit").onclick=()=>{stopTimer();quiz=null;route()};
+  if($("#next")) $("#next").onclick=()=>{quiz.i++;renderQuestion();window.scrollTo({top:0})};
+  if(!g){
+    const play=()=>speakSeq([item[0],...item[1].map((o,k)=>L[k]+". "+o)]);
+    $("#play").onclick=play;
+    $("#reveal").onclick=()=>{quiz.reveal=true;renderQuestion()};
+    if(!answered&&!quiz.played){quiz.played=true;if(canSpeak())setTimeout(play,250)}
+  }
+  if(g&&quiz.chrono&&!answered){
+    stopTimer();quiz.t=20;
+    quiz.timer=setInterval(()=>{quiz.t--;const el=$("#timer");if(el){el.textContent=quiz.t+" s";el.classList.toggle("low",quiz.t<=5)}
+      if(quiz.t<=0){stopTimer();answer(-1)}},1000);
+  }
+}
+function answer(k){
+  stopTimer();const g=quiz.kind==="g";const bank=g?GRAMMAR:LISTEN;const store=g?S.gram:S.listen;
+  const qi=quiz.set[quiz.i];quiz.ans[quiz.i]=k;
+  const s=store[qi]||{ok:0,ko:0};if(k===bank[qi][2])s.ok++;else s.ko++;store[qi]=s;
+  logActivity(g?"g":"l");quiz.played=false;renderQuestion();
+}
+function renderResult(){
+  const g=quiz.kind==="g";const bank=g?GRAMMAR:LISTEN;
+  const ok=quiz.set.filter((qi,k)=>quiz.ans[k]===bank[qi][2]).length;
+  const msg=ok>=9?"Excellent, tu es prêt(e) pour cette partie.":ok>=7?"Bon niveau. Relis les explications des erreurs.":ok>=5?"Correct. Repasse par les fiches de la catégorie.":"Les questions ratées reviendront en priorité. Continue !";
+  $("#main").innerHTML=`<section class="view"><div class="card" style="display:flex;flex-direction:column;gap:14px;align-items:flex-start">
+    <p class="eyebrow">${g?"Part 5":"Part 2"} · résultat</p><div class="result mono">${ok}/10</div><p>${msg}</p>
+    <div class="row"><button class="btn" id="again">Nouvelle série</button><button class="btn ghost" id="back">Retour</button></div></div></section>`;
+  const kind=quiz.kind;const chrono=quiz.chrono;
+  $("#again").onclick=()=>{startQuiz(kind,{chrono});if(kind==="l")quiz.reveal=!canSpeak();route()};
+  $("#back").onclick=()=>{quiz=null;route()};
+}
+
+/* ============ HOME ============ */
+function homeView(){
+  const left=daysLeft();const di=dayIndex();
+  const t=S.days[todayKey()]||{v:0,g:0,l:0};
+  const planToday=PLAN[Math.min(Math.max(di,0),PLAN.length-1)];
+  const seen=Object.keys(S.cards).length;const mastered=Object.values(S.cards).filter(c=>c.box>=3).length;
+  const ga=accuracy(S.gram),la=accuracy(S.listen);
+  const examStr=EXAM.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});
+  const tasks=[["20 cartes de vocabulaire",t.v>=20,`${Math.min(t.v,20)}/20`],["20 questions Part 5",t.g>=20,`${Math.min(t.g,20)}/20`],["10 questions Part 2",t.l>=10,`${Math.min(t.l,10)}/10`]];
+  const plan=PLAN.map((p,k)=>{const d=new Date(START.getTime()+k*DAY);
+    const cls=k<di?"past":k===di?"now":"";
+    return `<div class="day ${cls}"><span class="d">${d.toLocaleDateString("fr-FR",{weekday:"short",day:"numeric"})} · J-${19-k}</span><b>${esc(p[0])}</b></div>`}).join("")+
+    `<div class="day exam"><span class="d">${EXAM.toLocaleDateString("fr-FR",{weekday:"short",day:"numeric"})} · J</span><b>Jour du TOEIC</b></div>`;
+  $("#main").innerHTML=`<section class="view">
+    <div class="card count">
+      <div class="big mono"><small>J-</small>${left}</div>
+      <div style="display:flex;flex-direction:column;gap:6px;min-width:0"><p class="eyebrow">Examen le ${esc(examStr)}</p>
+      <p>${left>0?`Encore ${left} jour${left>1?"s":""}. 30 à 45 minutes par jour suffisent si tu es régulier(e).`:"C'est aujourd'hui. Respire, lis bien les consignes, et bonne chance !"}</p></div>
+    </div>
+    <div class="card today">
+      <p class="eyebrow">Aujourd'hui · ${esc(planToday[0])}</p>
+      <p class="focus">${esc(planToday[1])}</p>
+      <ul class="tasks">${tasks.map(([l,d,n])=>`<li><span class="b ${d?"done":""}"></span><span style="flex:1">${l}</span><span class="mono muted">${n}</span></li>`).join("")}</ul>
+      <div class="row"><a class="btn" href="#vocab" style="text-decoration:none">Vocab</a><a class="btn ghost" href="#grammaire" style="text-decoration:none">Part 5</a><a class="btn ghost" href="#ecoute" style="text-decoration:none">Part 2</a></div>
+    </div>
+    <div class="card"><div class="stats">
+      <div class="stat"><span class="eyebrow">Mots vus</span><span class="n">${seen}<span class="muted" style="font-size:.6em">/${VOCAB.length}</span></span><div class="bar"><i style="width:${seen/VOCAB.length*100}%"></i></div></div>
+      <div class="stat"><span class="eyebrow">Part 5</span><span class="n">${ga===null?"–":ga+" %"}</span><div class="bar"><i style="width:${ga||0}%"></i></div></div>
+      <div class="stat"><span class="eyebrow">Part 2</span><span class="n">${la===null?"–":la+" %"}</span><div class="bar"><i style="width:${la||0}%"></i></div></div>
+    </div><p class="note" style="margin-top:12px">${mastered} mot${mastered>1?"s":""} bien ancré${mastered>1?"s":""} (boîte 3 ou plus). Ta progression est enregistrée sur cet appareil.</p></div>
+    <div><p class="eyebrow" style="margin-bottom:10px">Plan sur 19 jours</p><div class="plan">${plan}</div></div>
+    <div class="card scale"><p class="eyebrow">Échelle du score</p>
+      <div class="track"></div><div class="ticks"><span>10</span><span>405</span><span>605</span><span>785</span><span>945</span><span>990</span></div>
+      <p class="note">Listening /495 + Reading /495. Repères usuels : 605 ≈ B1, 785 ≈ B2, 945 ≈ C1. Vérifie le score demandé par ton école ou ton employeur.</p></div>
+  </section>`;
+}
+
+/* ============ FICHES ============ */
+function fichesView(){
+  const F=[
+  ["Structure de l'examen",`<div class="tbl"><table><tr><th>Part</th><th>Contenu</th><th>Questions</th></tr>
+   <tr><td>1</td><td>Photographies (décrire une image)</td><td class="mono">6</td></tr>
+   <tr><td>2</td><td>Questions-réponses</td><td class="mono">25</td></tr>
+   <tr><td>3</td><td>Conversations courtes</td><td class="mono">39</td></tr>
+   <tr><td>4</td><td>Exposés courts (annonces, messages)</td><td class="mono">30</td></tr>
+   <tr><td>5</td><td>Phrases à compléter</td><td class="mono">30</td></tr>
+   <tr><td>6</td><td>Textes à compléter</td><td class="mono">16</td></tr>
+   <tr><td>7</td><td>Compréhension écrite (1, 2 ou 3 textes)</td><td class="mono">54</td></tr></table></div>
+   <p>Listening : <b>45 min</b>, 100 questions. Reading : <b>75 min</b>, 100 questions. Pas de pénalité pour une mauvaise réponse : <span class="hl">ne laisse jamais de case vide</span>.</p>`],
+  ["Suffixes : reconnaître la nature d'un mot",`<div class="tbl"><table><tr><th>Nature</th><th>Suffixes</th><th>Exemples</th></tr>
+   <tr><td>Nom</td><td>-tion, -ment, -ness, -ity, -ance/-ence, -er/-or, -ee, -ant</td><td>decision, payment, reliability, attendee</td></tr>
+   <tr><td>Adjectif</td><td>-ive, -able/-ible, -ful, -ous, -al, -ic, -ent/-ant</td><td>effective, reliable, careful, financial</td></tr>
+   <tr><td>Adverbe</td><td>-ly</td><td>quickly, recently, significantly</td></tr>
+   <tr><td>Verbe</td><td>-ize, -ify, -en, -ate</td><td>organize, clarify, widen, evaluate</td></tr></table></div>
+   <ul><li><b>article/possessif + ___ + nom</b> → adjectif (a <i>reliable</i> supplier)</li>
+   <li><b>article + ___ + of / verbe</b> → nom (the <i>approval</i> of)</li>
+   <li><b>___ + adjectif / verbe / participe</b> → adverbe (<i>highly</i> recommended)</li>
+   <li><b>modal / to + ___</b> → verbe base (will <i>expand</i>)</li></ul>`],
+  ["Prépositions de temps et de lieu",`<ul><li><b>at</b> + heure (at 3 P.M.), <b>on</b> + jour/date (on Monday, on May 5), <b>in</b> + mois/année/saison (in June, in 2026)</li>
+   <li><b>by</b> = au plus tard (submit by Friday) · <b>until</b> = jusqu'à, ça dure (open until 9)</li>
+   <li><b>for</b> + durée (for 3 years) · <b>since</b> + point de départ (since 2020)</li>
+   <li><b>during</b> + nom · <b>while</b> + phrase</li>
+   <li><b>within</b> = dans un délai de (within 30 days) · <b>in</b> = dans (in two weeks)</li>
+   <li><b>between</b> 2 éléments · <b>among</b> 3 et plus</li></ul>`],
+  ["Connecteurs : + nom ou + phrase ?",`<div class="tbl"><table><tr><th>Sens</th><th>+ nom / V-ing</th><th>+ phrase</th><th>Entre deux phrases</th></tr>
+   <tr><td>Cause</td><td>because of, due to, owing to</td><td>because, since, as</td><td>therefore, consequently</td></tr>
+   <tr><td>Opposition</td><td>despite, in spite of</td><td>although, even though, whereas</td><td>however, nevertheless</td></tr>
+   <tr><td>Ajout</td><td>in addition to, besides</td><td>—</td><td>moreover, furthermore</td></tr>
+   <tr><td>Condition</td><td>in case of</td><td>if, unless, provided that</td><td>otherwise</td></tr></table></div>
+   <p>Paires fixes : <b>both … and</b>, <b>either … or</b>, <b>neither … nor</b>, <b>not only … but also</b>.</p>`],
+  ["Les temps qui tombent le plus",`<ul><li><b>Present perfect</b> (have + PP) : since, for, already, yet, recently, so far</li>
+   <li><b>Prétérit</b> : yesterday, last week, ago, in 2019</li>
+   <li><b>Futur</b> : next, tomorrow, soon, upcoming</li>
+   <li><b>Futur antérieur</b> (will have + PP) : by the end of, by next year</li>
+   <li><b>Après if / when / as soon as / before</b> au futur : présent simple (When he <i>arrives</i>, …)</li>
+   <li><b>Passif</b> : si le sujet subit l'action → be + participe passé</li>
+   <li><b>+ V-ing</b> : suggest, recommend, avoid, consider, enjoy, finish, look forward to</li>
+   <li><b>+ to V</b> : plan, decide, hope, agree, need, be required to, be able to</li></ul>`],
+  ["Pièges de la Part 2",`<ul><li>Une question en <b>Wh-</b> n'accepte jamais « Yes / No ».</li>
+   <li>Une réponse qui <b>répète un mot</b> de la question est souvent fausse.</li>
+   <li>Attention aux <b>sons proches</b> : copy/coffee, meet/meeting, train/training.</li>
+   <li>Les réponses indirectes sont souvent justes : « I'm not sure », « Let me check », « Ask Ms. Kim ».</li>
+   <li><b>Why don't we…?</b> et <b>Would you like…?</b> sont des propositions.</li>
+   <li>Question à choix (A <b>or</b> B) : on choisit, ou on dit « either is fine ».</li></ul>`],
+  ["Stratégie Part 3 et 4",`<ul><li>Pendant les consignes, <b>lis les questions</b> (et les réponses si tu as le temps) des 3 questions suivantes.</li>
+   <li>Repère les mots-clés : <i>Who</i> is the man? <i>Where</i>? <i>What will</i> the woman do <i>next</i>?</li>
+   <li>Les réponses arrivent dans l'ordre des questions.</li>
+   <li>La question « What will … do next? » se joue souvent dans la dernière phrase.</li>
+   <li>Les réponses justes <b>reformulent</b> (synonymes) au lieu de répéter les mots entendus.</li>
+   <li>Si tu rates une question, lâche-la tout de suite et prépare la suivante.</li></ul>`],
+  ["Stratégie Reading : gérer les 75 minutes",`<ul><li>Part 5 : <b>~10 min</b> (20 s par question). Regarde d'abord les 4 options : si ce sont des formes du même mot, c'est de la grammaire et tu peux répondre sans lire toute la phrase.</li>
+   <li>Part 6 : <b>~8 min</b>. Pour les questions « insérer une phrase », lis la phrase d'avant et d'après.</li>
+   <li>Part 7 : <b>~55 min</b>. Lis la question d'abord, puis cherche l'info dans le texte (scanning).</li>
+   <li>Questions « NOT true » et « suggested / implied » : garde-les pour la fin si tu bloques.</li>
+   <li>Garde 1 minute à la fin pour <b>noircir toutes les cases vides</b>.</li></ul>`],
+  ["Phrasal verbs fréquents",`<div class="tbl"><table><tr><th>Verbe</th><th>Sens</th></tr>
+   <tr><td>call off</td><td>annuler</td></tr><tr><td>put off</td><td>reporter</td></tr><tr><td>set up</td><td>installer, organiser</td></tr>
+   <tr><td>take over</td><td>reprendre (la direction)</td></tr><tr><td>fill out / fill in</td><td>remplir (un formulaire)</td></tr>
+   <tr><td>look into</td><td>examiner, étudier</td></tr><tr><td>turn down</td><td>refuser</td></tr><tr><td>carry out</td><td>effectuer, mener</td></tr>
+   <tr><td>run out of</td><td>manquer de, être à court</td></tr><tr><td>pick up</td><td>aller chercher</td></tr><tr><td>drop off</td><td>déposer</td></tr>
+   <tr><td>hand in</td><td>remettre (un document)</td></tr><tr><td>go over</td><td>passer en revue</td></tr><tr><td>figure out</td><td>comprendre, trouver</td></tr></table></div>`],
+  ["Le jour J",`<ul><li>Pièce d'identité valide et convocation. Arrive <b>30 minutes</b> en avance.</li>
+   <li>Crayons HB, gomme si le test est sur papier.</li>
+   <li>Pour la Part 1, élimine les réponses avec un verbe d'action que personne ne fait sur la photo.</li>
+   <li>Ne bloque jamais plus de 30 secondes sur une question.</li>
+   <li>Dors bien la veille : ton cerveau consolide le vocabulaire pendant le sommeil.</li></ul>`]
+  ];
+  $("#main").innerHTML=`<section class="view"><div><p class="eyebrow">Fiches de révision</p><h2>L'essentiel à relire</h2></div>
+  ${F.map((f,k)=>`<details class="fiche" ${k===0?"open":""}><summary>${esc(f[0])}</summary><div class="fiche-body">${f[1]}</div></details>`).join("")}
+  <div class="row"><button class="btn ghost small" id="reset">Effacer ma progression</button><span id="resetMsg" class="note"></span></div></section>`;
+  let armed=false;
+  $("#reset").onclick=()=>{if(!armed){armed=true;$("#reset").textContent="Confirmer l'effacement";$("#resetMsg").textContent="Toutes tes cartes et tes scores seront supprimés.";return}
+    S={cards:{},gram:{},listen:{},days:{},dir:"en"};save();vq=null;quiz=null;renderHeader();$("#resetMsg").textContent="Progression effacée.";$("#reset").textContent="Effacer ma progression";armed=false};
+}
+
+/* ============ ROUTER ============ */
+const VIEWS={accueil:homeView,vocab:vocabView,grammaire:grammarView,ecoute:listenView,fiches:fichesView};
+function route(){
+  const v=(location.hash||"#accueil").slice(1);const name=VIEWS[v]?v:"accueil";
+  if(quiz&&((name==="grammaire"&&quiz.kind!=="g")||(name==="ecoute"&&quiz.kind!=="l")||(name!=="grammaire"&&name!=="ecoute"))){stopTimer();quiz=null}
+  try{speechSynthesis.cancel()}catch(e){}
+  document.querySelectorAll("nav.tabs a").forEach(a=>a.setAttribute("aria-current",a.dataset.v===name?"page":"false"));
+  VIEWS[name]();
+}
+window.addEventListener("hashchange",()=>{route();window.scrollTo({top:0})});
+renderHeader();route();
+})();
+</script>
+</body>
+</html>
