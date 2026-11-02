@@ -1,99 +1,14 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Max Libre · Trains à 0 € avec l'abonnement MAX</title>
-  <meta name="description" content="Trouve en un clin d'œil tous les trains à 0 € disponibles avec ton abonnement MAX JEUNE / MAX SENIOR, sur une carte." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚄</text></svg>" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MaxLibre a déménagé</title>
+<meta http-equiv="refresh" content="0; url=https://ruuuuuub.github.io/maxlibre/">
+<link rel="canonical" href="https://ruuuuuub.github.io/maxlibre/">
+<script>location.replace('https://ruuuuuub.github.io/maxlibre/' + location.search + location.hash);</script>
 </head>
-<body>
-  <header class="topbar">
-    <div class="brand">
-      <span class="brand-logo" aria-hidden="true">🚄</span>
-      <span class="brand-name">Max<b>Libre</b></span>
-    </div>
-    <span class="badge-live"><span class="dot"></span> Données SNCF mises à jour chaque jour</span>
-  </header>
-
-  <main class="layout">
-    <!-- PANNEAU GAUCHE -->
-    <section class="panel">
-      <div class="hero">
-        <h1>Où partir <span class="free">à 0 €</span> avec ton abonnement MAX&nbsp;?</h1>
-        <p>Choisis ta gare de départ <em>et/ou</em> d'arrivée, puis une date&nbsp;: la carte t'affiche toutes les gares où il reste des places <strong>gratuites</strong>.</p>
-        <ol class="steps">
-          <li><span>1</span>Ta gare</li>
-          <li><span>2</span>Ta date</li>
-          <li><span>3</span>Tu pars&nbsp;!</li>
-        </ol>
-      </div>
-
-      <form id="search" class="card search" autocomplete="off">
-        <div class="stations">
-          <div class="field combo">
-            <label for="from">Départ</label>
-            <div class="input-wrap">
-              <span class="ico ico-from" aria-hidden="true"></span>
-              <input id="from" type="text" placeholder="Ex : Paris, Lyon, Bordeaux…" role="combobox" aria-expanded="false" aria-controls="from-list" />
-              <button type="button" class="clear" data-clear="from" aria-label="Effacer le départ">×</button>
-            </div>
-            <ul class="suggest" id="from-list" role="listbox" hidden></ul>
-          </div>
-
-          <button type="button" id="swap" class="swap" title="Inverser départ et arrivée" aria-label="Inverser départ et arrivée">⇅</button>
-
-          <div class="field combo">
-            <label for="to">Arrivée <span class="opt">(facultatif)</span></label>
-            <div class="input-wrap">
-              <span class="ico ico-to" aria-hidden="true"></span>
-              <input id="to" type="text" placeholder="N'importe où 🌍" role="combobox" aria-expanded="false" aria-controls="to-list" />
-              <button type="button" class="clear" data-clear="to" aria-label="Effacer l'arrivée">×</button>
-            </div>
-            <ul class="suggest" id="to-list" role="listbox" hidden></ul>
-          </div>
-        </div>
-
-        <div class="quick" id="quick">
-          <span>Populaires :</span>
-        </div>
-
-        <div class="field">
-          <label>Date</label>
-          <div class="dates" id="dates"></div>
-          <input id="date" type="date" class="date-input" aria-label="Choisir une autre date" />
-        </div>
-
-        <button type="submit" class="btn-primary" id="go">Voir les trains à 0 €</button>
-        <p class="form-msg" id="form-msg" role="alert"></p>
-      </form>
-
-      <section id="results" class="results" aria-live="polite"></section>
-
-      <footer class="foot">
-        <p>Site non officiel, sans lien avec la SNCF. Données <a href="https://ressources.data.sncf.com/explore/dataset/tgvmax/" target="_blank" rel="noopener">SNCF Open Data « TGV MAX »</a> (places disponibles à 0 € sur les 30 prochains jours, actualisées quotidiennement). Les places partent vite : vérifie toujours sur l'appli SNCF Connect avant de réserver.</p>
-      </footer>
-    </section>
-
-    <!-- CARTE -->
-    <section class="map-wrap">
-      <div id="map" aria-label="Carte des gares"></div>
-      <div class="legend" id="legend">
-        <span><i class="lg lg-origin"></i>Ta gare</span>
-        <span><i class="lg lg-free"></i>Accessible à 0 €</span>
-        <span><i class="lg lg-other"></i>Autres gares</span>
-      </div>
-      <div class="map-loading" id="map-loading" hidden><div class="spinner"></div><span>Recherche des places à 0 €…</span></div>
-    </section>
-  </main>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-  <script src="stations.js"></script>
-  <script src="app.js"></script>
+<body style="font-family:system-ui,sans-serif;padding:24px">
+<p>MaxLibre a déménagé : <a href="https://ruuuuuub.github.io/maxlibre/">https://ruuuuuub.github.io/maxlibre/</a></p>
 </body>
 </html>
