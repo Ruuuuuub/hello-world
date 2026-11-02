@@ -261,17 +261,22 @@
   $("#search").addEventListener("submit", (e) => { e.preventDefault(); runSearch(); });
 
   /* ---------------- Recherche ---------------- */
-  let searchId = 0;
-  async function runSearch() {
+  let searchId = 0, lastFetch = 0, silentRender = false;
+  const REFRESH_MS = 10 * 60 * 1000; // actualisation automatique toutes les 10 minutes
+  async function runSearch(silent) {
+    silent = silent === true;
     const msg = $("#form-msg");
     if (!state.from && !state.to) { msg.textContent = "Choisis au moins une gare de départ ou d'arrivée dans la liste."; $("#from").focus(); return; }
     if (state.from && state.from === state.to) { msg.textContent = "Le départ et l'arrivée sont identiques."; return; }
     msg.textContent = "";
     const id = ++searchId;
-    $("#map-loading").hidden = false;
-    $("#results").innerHTML = skeleton();
-    state.selected = null;
-    updateUrl();
+    const keep = silent ? { selected: state.selected, scroll: $(".panel").scrollTop, calDate: state.calDate } : null;
+    if (!silent) {
+      $("#map-loading").hidden = false;
+      $("#results").innerHTML = skeleton();
+      state.selected = null;
+      updateUrl();
+    }
     try {
       const where = ['od_happy_card="OUI"'];
       if (state.from) where.push("origine=" + qstr(state.from));
@@ -284,11 +289,20 @@
       state.mode = both ? "both" : state.from ? "from" : "to";
       if (both) {
         const days = new Set(rows.map((r) => r.date));
-        state.calDate = days.has(state.date) ? state.date : (rows[0] ? rows[0].date : state.date);
+        const want = keep && keep.calDate ? keep.calDate : state.date;
+        state.calDate = days.has(want) ? want : (rows[0] ? rows[0].date : state.date);
       }
+      lastFetch = Date.now();
+      setUpdated();
+      silentRender = silent;
       render();
+      silentRender = false;
+      if (keep) {
+        if (keep.selected) selectGroup(keep.selected, true, true);
+        $(".panel").scrollTop = keep.scroll;
+      }
     } catch (err) {
-      if (id !== searchId) return;
+      if (id !== searchId || silent) return;
       $("#results").innerHTML = `<div class="card empty-state"><div class="big">📡</div><h3>Impossible de joindre les données SNCF</h3><p>Vérifie ta connexion puis réessaie dans un instant.</p><button class="btn-ghost" id="retry">Réessayer</button></div>`;
       $("#retry").onclick = runSearch;
       resultLayer.clearLayers();
@@ -350,7 +364,8 @@
         .addTo(resultLayer);
       markers.set(g.name, m);
     });
-    if (bounds.length > 1) map.fitBounds(bounds, { padding: [40, 40], maxZoom: 9 });
+    if (silentRender) { /* on ne bouge pas la carte pendant une actualisation auto */ }
+    else if (bounds.length > 1) map.fitBounds(bounds, { padding: [40, 40], maxZoom: 9 });
     else if (bounds.length === 1) map.setView(bounds[0], 8);
 
     // Liste
@@ -390,7 +405,7 @@
     }));
   }
 
-  function selectGroup(name, fromMap) {
+  function selectGroup(name, fromMap, quiet) {
     const li = Array.from(document.querySelectorAll(".group")).find((x) => x.dataset.name === name);
     if (!li) return;
     const open = li.classList.contains("open") && !fromMap;
@@ -403,10 +418,10 @@
     state.selected = name;
     const m = markers.get(name);
     if (m) {
-      m.setStyle({ fillColor: "#f59e0b" }); m.bringToFront(); m.openTooltip();
+      m.setStyle({ fillColor: "#f59e0b" }); m.bringToFront(); if (!quiet) m.openTooltip();
       if (!fromMap) map.panTo(m.getLatLng());
     }
-    li.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    if (!quiet) li.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
   function trainList(trains) {
@@ -415,9 +430,36 @@
       return `<li class="train">
         <div class="t-times"><b>${t.heure_depart.replace(":", "h")}</b><span class="t-line"><i></i><small>${fmtDur(d)}</small><i></i></span><b>${t.heure_arrivee.replace(":", "h")}</b></div>
         <div class="t-meta"><span>${esc(pretty(t.origine))} → ${esc(pretty(t.destination))}</span><span class="t-no">Train n° ${esc(t.train_no)}</span></div>
+        <a class="btn-book" href="${SNCF_URL}" target="_blank" rel="noopener" data-book="${esc(JSON.stringify([t.origine, t.destination, t.date, t.heure_depart, t.heure_arrivee, t.train_no]))}">Réserver ce train ↗</a>
       </li>`;
-    }).join("") + `</ul>
-    <a class="btn-book" href="https://www.sncf-connect.com/" target="_blank" rel="noopener">Réserver sur SNCF Connect ↗</a>`;
+    }).join("") + `</ul>`;
+  }
+
+  /* SNCF Connect ne propose pas de lien public qui ouvre directement un train précis :
+     on copie le récapitulatif du train et on l'affiche, puis on ouvre SNCF Connect. */
+  const SNCF_URL = "https://www.sncf-connect.com/";
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest("[data-book]");
+    if (!a) return;
+    const [o, d, date, dep, arr, no] = JSON.parse(a.dataset.book);
+    const text = `${pretty(o)} → ${pretty(d)} · ${fmtDay(date, true)} · départ ${dep.replace(":", "h")} (arrivée ${arr.replace(":", "h")}) · train n° ${no}`;
+    try { navigator.clipboard.writeText(text); } catch (err) { /* copie impossible : le récapitulatif reste affiché */ }
+    showBookingTip(o, d, date, dep, arr, no);
+  });
+  function showBookingTip(o, d, date, dep, arr, no) {
+    const box = $("#toast");
+    box.innerHTML = `<button class="toast-x" aria-label="Fermer">×</button>
+      <b>📋 Ton train (infos copiées)</b>
+      <div class="toast-trip">${esc(pretty(o))} → ${esc(pretty(d))}<br>${esc(fmtDay(date, true))} · <b>${dep.replace(":", "h")}</b> → ${arr.replace(":", "h")} · train n° ${esc(no)}</div>
+      <ol>
+        <li>Dans SNCF Connect, tape <b>${esc(pretty(o).replace(" (toutes gares)", ""))}</b> puis <b>${esc(pretty(d).replace(" (toutes gares)", ""))}</b>.</li>
+        <li>Choisis le <b>${esc(fmtDay(date, true))}</b> à partir de <b>${dep.replace(":", "h")}</b>.</li>
+        <li>Ton train (n° ${esc(no)}) est en haut de la liste, affiché à <b>0 €</b>.</li>
+      </ol>`;
+    box.hidden = false;
+    box.querySelector(".toast-x").onclick = () => { box.hidden = true; };
+    clearTimeout(showBookingTip.t);
+    showBookingTip.t = setTimeout(() => { box.hidden = true; }, 30000);
   }
 
   function filtersBar(withSort) {
@@ -455,8 +497,8 @@
     if (b) L.circleMarker(b, { radius: 11, weight: 3, color: "#fff", fillColor: all.length ? "#16a34a" : "#9ca3af", fillOpacity: 1 }).bindTooltip(pretty(state.to), { permanent: true, direction: "top", offset: [0, -10] }).addTo(resultLayer);
     if (a && b) {
       L.polyline([a, b], { color: all.length ? "#16a34a" : "#9ca3af", weight: 3, opacity: 0.7, dashArray: "6 8" }).addTo(resultLayer);
-      map.fitBounds([a, b], { padding: [60, 60], maxZoom: 9 });
-    } else if (a || b) map.setView(a || b, 8);
+      if (!silentRender) map.fitBounds([a, b], { padding: [60, 60], maxZoom: 9 });
+    } else if ((a || b) && !silentRender) map.setView(a || b, 8);
 
     // Calendrier 31 jours
     let cal = "";
@@ -487,6 +529,16 @@
     const any = $("#anywhere");
     if (any) any.onclick = () => { setStation("to", null); runSearch(); };
   }
+
+  function setUpdated() {
+    const d = new Date(lastFetch);
+    $("#live-text").textContent = "Places vérifiées à " + String(d.getHours()).padStart(2, "0") + "h" + String(d.getMinutes()).padStart(2, "0") + " · actualisation auto";
+  }
+  function maybeRefresh() {
+    if (document.visibilityState === "visible" && state.mode && lastFetch && Date.now() - lastFetch >= REFRESH_MS) runSearch(true);
+  }
+  setInterval(maybeRefresh, 60 * 1000);
+  document.addEventListener("visibilitychange", maybeRefresh);
 
   function skeleton() {
     return `<div class="skeleton"><div></div><div></div><div></div><div></div></div>`;

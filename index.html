@@ -18,7 +18,7 @@
       <span class="brand-logo" aria-hidden="true">🚄</span>
       <span class="brand-name">Max<b>Libre</b></span>
     </div>
-    <span class="badge-live"><span class="dot"></span> Données SNCF mises à jour chaque jour</span>
+    <span class="badge-live"><span class="dot"></span> <span id="live-text">Données SNCF en direct</span></span>
   </header>
 
   <main class="layout">
@@ -76,7 +76,7 @@
       <section id="results" class="results" aria-live="polite"></section>
 
       <footer class="foot">
-        <p>Site non officiel, sans lien avec la SNCF. Données <a href="https://ressources.data.sncf.com/explore/dataset/tgvmax/" target="_blank" rel="noopener">SNCF Open Data « TGV MAX »</a> (places disponibles à 0 € sur les 30 prochains jours, actualisées quotidiennement). Les places partent vite : vérifie toujours sur l'appli SNCF Connect avant de réserver.</p>
+        <p>Site non officiel, sans lien avec la SNCF. Données <a href="https://ressources.data.sncf.com/explore/dataset/tgvmax/" target="_blank" rel="noopener">SNCF Open Data « TGV MAX »</a> (places disponibles à 0 € sur les 30 prochains jours). Les résultats affichés se rafraîchissent automatiquement toutes les 10 minutes. Les places partent vite : vérifie toujours sur l'appli SNCF Connect avant de réserver.</p>
       </footer>
     </section>
 
@@ -91,6 +91,8 @@
       <div class="map-loading" id="map-loading" hidden><div class="spinner"></div><span>Recherche des places à 0 €…</span></div>
     </section>
   </main>
+
+  <div id="toast" class="toast" role="status" hidden></div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
   <script src="stations.js"></script>

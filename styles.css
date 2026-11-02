@@ -197,7 +197,7 @@ a { color: var(--primary); }
 .t-meta { display: flex; justify-content: space-between; gap: 8px; font-size: 12px; color: var(--muted); margin-top: 2px; }
 .t-no { white-space: nowrap; }
 .btn-book {
-  display: block; text-align: center; margin-top: 10px; padding: 10px;
+  display: block; text-align: center; margin-top: 8px; padding: 8px;
   border-radius: 10px; background: var(--primary-soft); color: var(--primary);
   font-weight: 700; text-decoration: none; font-size: 14px;
 }
@@ -285,3 +285,16 @@ a { color: var(--primary); }
   .badge-live { display: none; }
   .dates { grid-template-columns: repeat(4, 1fr); }
 }
+
+/* ---------- Récapitulatif de réservation ---------- */
+.toast {
+  position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); z-index: 2000;
+  width: min(420px, calc(100vw - 32px));
+  background: var(--ink); color: #fff; border-radius: 16px; padding: 16px 18px;
+  box-shadow: 0 16px 48px rgba(0,0,0,.35); font-size: 14px;
+}
+.toast[hidden] { display: none; }
+.toast-trip { margin: 8px 0; padding: 10px 12px; background: rgba(255,255,255,.1); border-radius: 10px; line-height: 1.5; }
+.toast ol { padding-left: 20px; display: flex; flex-direction: column; gap: 4px; color: #d8d9e6; }
+.toast ol b { color: #fff; }
+.toast-x { position: absolute; top: 8px; right: 10px; background: none; border: 0; color: #fff; font-size: 22px; line-height: 1; }
