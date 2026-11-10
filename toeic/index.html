@@ -308,6 +308,12 @@ details.skill .sk-name{flex:1;min-width:0}
 .testfont{font-family:var(--f-test)}
 .testfont b{color:var(--good)}
 @media (max-width:640px){nav.tabs a{font-size:.66rem;padding:8px 2px}nav.tabs a .ico{width:26px;height:26px}}
+.natcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+.natcard{border:1px solid var(--line);border-top:4px solid var(--blue);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.natcard > div{display:flex;flex-direction:column;gap:1px}
+.natcard .nt{font-family:var(--f-display);font-size:1.25rem}
+.natcard.n1{border-top-color:var(--good)}.natcard.n2{border-top-color:var(--marker)}.natcard.n3{border-top-color:var(--bad)}
+.natgo .btn{width:100%}
 </style>
 </head>
 <body>
@@ -1664,6 +1670,138 @@ K("inv","Should you require further assistance, ___ hesitate to contact us.",["d
 K("inv","Only after the contract was signed ___ the payment.",["did they send","they sent","they did send","sent they"],0,"Ce n'est qu'après la signature du contrat qu'ils ont envoyé le paiement.","« Only after … » en tête.","Only after / Only when en tête → inversion : DID + sujet + base.",["Inversion.","Ordre normal.","Ordre normal.","Ordre impossible."],"Only + complément en tête → inversion dans la principale.",1),
 K("inv","So popular ___ the new model that stores ran out of stock.",["was","were","did","had"],0,"Le nouveau modèle a eu tant de succès que les magasins ont été en rupture.","« So popular ___ the new model that ».","So + adjectif en tête → BE + sujet + that.",["Singulier.","Pluriel : le sujet est singulier.","did + base.","had + participe."],"So + adjectif en tête : inversion de « be ».",1)
 );
+
+/* ================= NATURE DES MOTS : nom, verbe, adjectif, adverbe ================= */
+/* t : A = mot surligné dans une phrase · B = quel type de mot dans le trou · C = mot seul (suffixes et pièges)
+   a : 0 nom · 1 verbe · 2 adjectif · 3 adverbe. {mot} = mot surligné. fill = mot qui va dans le trou (B). */
+const NAT=["un nom","un verbe","un adjectif","un adverbe"];
+const NAT_NO=[
+ "Pas un nom : un nom désigne une chose, une personne ou une idée, et se place après a / the / my ou avant of.",
+ "Pas un verbe : un verbe exprime une action et se place après le sujet ou après will / can / to.",
+ "Pas un adjectif : un adjectif décrit un nom et se place avant ce nom ou après be / seem / feel.",
+ "Pas un adverbe : un adverbe décrit un verbe, un adjectif ou un participe, souvent en -ly."];
+const NA=(t,s,a,why,how,trap,fill)=>{const w=NAT_NO.slice();w[a]=why;return {ty:t,s,a,o:NAT,w,k:how,r:NAT_RULE[a],t:trap||"",fill,trap:!!trap}};
+const NAT_RULE=[
+ "NOM : après a / an / the / my / many, avant of, ou sujet du verbe. Suffixes : -tion, -ment, -ity, -ance, -ness, -er, -or, -ee, -ant, -al.",
+ "VERBE : après le sujet, après will / can / must / to / please. Il se conjugue (-s, -ed, -ing).",
+ "ADJECTIF : avant un nom, ou après be / seem / feel / become / look / remain. Suffixes : -ive, -able, -ful, -ous, -al, -ic, -ent.",
+ "ADVERBE : décrit un verbe (works hard), un adjectif (very good), un participe (well trained). Souvent -ly."];
+const NATURE=[
+/* ---------- A : mot surligné ---------- */
+NA("A","The {increase} in sales surprised everyone.",0,"Après « The » et avant « in » : c'est la hausse, un nom.","Mets « the » devant : « the increase » marche → nom.","increase est aussi un verbe : seule la place dans la phrase décide."),
+NA("A","Prices will {increase} next year.",1,"Après « will » : c'est l'action, un verbe.","Après will / can / must → verbe.","Même mot que « the increase » : regarde le mot juste avant."),
+NA("A","We need a {quick} answer.",2,"Entre « a » et le nom « answer » : il décrit la réponse → adjectif.","Un mot entre a / the et un nom → adjectif."),
+NA("A","Please reply {quickly}.",3,"Il dit COMMENT répondre : il décrit le verbe « reply » → adverbe.","Pose la question « comment ? » → adverbe."),
+NA("A","She is a very {friendly} manager.",2,"Il décrit « manager » et se place avant ce nom → adjectif, malgré le -ly.","Un mot en -ly placé avant un nom est un adjectif.","friendly, lovely, costly, likely, lonely, elderly : adjectifs en -ly !"),
+NA("A","Changing suppliers was a {costly} mistake.",2,"Il décrit le nom « mistake » → adjectif.","Avant un nom → adjectif, même en -ly.","costly = coûteux. C'est un adjectif, pas un adverbe."),
+NA("A","The newsletter is sent {daily}.",3,"Il dit QUAND on l'envoie : il décrit le verbe → adverbe.","Après le verbe, il répond à « quand ? » → adverbe.","daily peut aussi être un adjectif (a daily report) : regarde sa place."),
+NA("A","Please read the {daily} report before the meeting.",2,"Il décrit le nom « report » → adjectif.","Entre « the » et un nom → adjectif.","Même mot que « sent daily » : ici il est avant un nom."),
+NA("A","Our team works {hard} every day.",3,"Il dit COMMENT ils travaillent → adverbe, sans -ly.","Après un verbe d'action, répond à « comment ? » → adverbe.","hard est un adverbe sans -ly. hardly veut dire « à peine » : sens différent !"),
+NA("A","The manager {hardly} had time to eat.",3,"hardly = à peine. Il modifie le verbe « had » → adverbe.","Entre le sujet et le verbe, il nuance l'action → adverbe.","hardly ≠ hard : « he hardly works » = il ne travaille presque pas."),
+NA("A","Closing the store was a {hard} decision.",2,"Il décrit le nom « decision » → adjectif.","Entre « a » et un nom → adjectif.","hard peut être adjectif (a hard job) ou adverbe (work hard)."),
+NA("A","The new train is very {fast}.",2,"Après « is very » : il décrit le train → adjectif.","Après be (+ very) → adjectif.","fast = adjectif ET adverbe, toujours sans -ly (« fastly » n'existe pas)."),
+NA("A","The new train goes {fast}.",3,"Il dit COMMENT le train va → adverbe.","Après un verbe d'action → adverbe.","Même mot, autre place : après « is » → adjectif ; après « goes » → adverbe."),
+NA("A","Please {present} your ticket at the gate.",1,"Après « Please » : c'est l'action → verbe (présenter).","Please + verbe.","present = verbe (présenter), nom (cadeau) ou adjectif (présent)."),
+NA("A","Thank you for the lovely {present}.",0,"Après « the lovely » : c'est l'objet, le cadeau → nom.","Après the + adjectif → nom.","Même mot que « Please present » : regarde le mot avant."),
+NA("A","All staff must be {present} at the meeting.",2,"Après « be » : il décrit le personnel (présent) → adjectif.","Après be → adjectif.","Troisième sens du même mot : être présent."),
+NA("A","The {proposal} was approved by the board.",0,"Après « The » et sujet du verbe : c'est la proposition → nom.","Mets « the » devant : ça marche → nom.","-al n'est pas toujours un adjectif : proposal, approval, arrival, rental, renewal sont des NOMS."),
+NA("A","This is a {personal} matter.",2,"Entre « a » et le nom « matter » → adjectif.","Avant un nom → adjectif.","-al ici est bien un adjectif : regarde toujours la place."),
+NA("A","Our sales {representative} will call you tomorrow.",0,"Sujet de « will call » : c'est une personne → nom.","Peut-on dire « the representative » ? Oui → nom.","-ive n'est pas toujours un adjectif : representative, executive, alternative peuvent être des NOMS."),
+NA("A","The {effective} date of the contract is May 1.",2,"Entre « The » et le nom « date » → adjectif.","Avant un nom → adjectif."),
+NA("A","Mr. Lin has been a {resident} of Paris for ten years.",0,"Après « a » et avant « of » : c'est une personne → nom.","a + ___ + of → nom.","-ent peut être un nom : resident, agent, student, president."),
+NA("A","Each {applicant} must send a cover letter.",0,"Sujet de « must send » : c'est une personne → nom.","Après each → nom.","-ant peut être un nom de personne : applicant, assistant, consultant."),
+NA("A","The changes to the schedule are {significant}.",2,"Après « are » : il décrit les changements → adjectif.","Après be → adjectif."),
+NA("A","{Reading} the contract carefully is essential.",0,"C'est le sujet de « is » : « la lecture du contrat » → nom (gérondif).","Un -ing en début de phrase, sujet du verbe → nom.","Un mot en -ing n'est pas toujours un verbe : sujet ou après une préposition, c'est un NOM."),
+NA("A","We had an {interesting} discussion with the client.",2,"Entre « an » et le nom « discussion » → adjectif.","Avant un nom → adjectif.","-ing peut être un adjectif : interesting, boring, convincing."),
+NA("A","Ms. Diaz is {reading} the report right now.",1,"Après « is » + action en cours → verbe (présent continu).","be + -ing qui exprime une action → verbe.","Trois -ing, trois natures : Reading is… (nom), an interesting… (adjectif), is reading (verbe)."),
+NA("A","The {attached} file contains all the details.",2,"Entre « The » et le nom « file » → adjectif (participe).","Avant un nom → adjectif.","Un mot en -ed avant un nom est un adjectif : the attached file, the revised plan."),
+NA("A","I {attached} the file to my e-mail.",1,"Après le sujet « I » : c'est l'action → verbe (prétérit).","Juste après le sujet → verbe.","Même mot que « the attached file » : ici il suit le sujet."),
+NA("A","We {plan} to open a new store next year.",1,"Après le sujet « We » : c'est l'action → verbe.","Sujet + ___ → verbe."),
+NA("A","The {plan} was approved last week.",0,"Après « The » et sujet du verbe → nom.","the + ___ + verbe → nom.","plan, increase, change, offer, report : même forme pour le nom et le verbe."),
+NA("A","The pharmacy is {open} until 9 P.M.",2,"Après « is » : il décrit la pharmacie → adjectif (ouvert).","Après be → adjectif."),
+NA("A","We {open} at 8 A.M. every day.",1,"Après le sujet « We » : action → verbe.","Sujet + ___ → verbe."),
+NA("A","The {early} train leaves at 6 A.M.",2,"Entre « The » et « train » → adjectif.","Avant un nom → adjectif.","early = adjectif ET adverbe, sans -ly."),
+NA("A","Please arrive {early} for the interview.",3,"Il dit QUAND arriver : il décrit le verbe → adverbe.","Après le verbe, répond à « quand ? » → adverbe."),
+NA("A","Ms. Kim did the job very {well}.",3,"well est l'adverbe de good : il décrit « did » → adverbe.","Répond à « comment ? » → adverbe.","good = adjectif, well = adverbe : « a good job », « she works well »."),
+NA("A","Have you spoken to the client {lately}?",3,"lately = récemment, il décrit le verbe → adverbe.","Répond à « quand ? » → adverbe.","lately (récemment) ≠ late (en retard)."),
+NA("A","There was a {late} change to the program.",2,"Entre « a » et le nom « change » → adjectif.","Avant un nom → adjectif."),
+NA("A","The meeting started {late}.",3,"Il dit QUAND la réunion a commencé → adverbe.","Après le verbe → adverbe.","late (adverbe, en retard) ≠ lately (récemment)."),
+NA("A","The company {grew} rapidly in 2025.",1,"Après le sujet : action → verbe (prétérit de grow).","Sujet + ___ → verbe."),
+NA("A","Sales grew {rapidly} in 2025.",3,"Il dit COMMENT les ventes ont augmenté → adverbe.","Après le verbe, -ly → adverbe."),
+NA("A","The {growth} of the company was impressive.",0,"Après « The » et avant « of » → nom.","the + ___ + of → nom.","Famille à connaître : grow (verbe), growth (nom), growing (adjectif)."),
+NA("A","Children under five travel {free}.",3,"Il dit COMMENT ils voyagent (gratuitement) → adverbe.","Après le verbe → adverbe.","free est adjectif (free delivery) ou adverbe (travel free)."),
+NA("A","We offer {free} delivery on all orders.",2,"Entre « offer » et le nom « delivery » : il décrit la livraison → adjectif.","Avant un nom → adjectif."),
+NA("A","We will {lower} our prices next month.",1,"Après « will » → verbe (baisser).","will + ___ → verbe.","lower est aussi un adjectif (lower prices) : regarde le mot avant."),
+NA("A","Our {lower} prices attract new customers.",2,"Entre « Our » et le nom « prices » → adjectif (comparatif).","Possessif + ___ + nom → adjectif."),
+NA("A","The new {manager} starts on Monday.",0,"Après « The new » et sujet du verbe → nom (une personne).","the + adjectif + ___ → nom.","-er / -or désignent souvent une personne : manager, supervisor, visitor."),
+/* ---------- B : quel mot dans le trou ? ---------- */
+NA("B","The ___ of the new director was announced today.",0,"« The ___ of » : il faut un nom (appointment).","the + ___ + of → nom.","","appointment"),
+NA("B","Ms. Lee works very ___.",3,"Après le verbe « works » + very : il faut dire COMMENT → adverbe (efficiently).","verbe + (very) + ___ → adverbe.","","efficiently"),
+NA("B","We need a ___ solution to this problem.",2,"« a ___ solution » : entre a et un nom → adjectif (practical).","a + ___ + nom → adjectif.","","practical"),
+NA("B","The company will ___ its prices in May.",1,"Après « will » → verbe (reduce).","will + ___ → verbe.","","reduce"),
+NA("B","Please ___ the attached form.",1,"Après « Please » → verbe (complete).","Please + ___ → verbe.","","complete"),
+NA("B","This is an ___ decision for our team.",2,"« an ___ decision » → adjectif (important).","an + ___ + nom → adjectif.","","important"),
+NA("B","Our sales have ___ increased this year.",3,"Entre « have » et le participe « increased » → adverbe (significantly).","have + ___ + participe → adverbe.","","significantly"),
+NA("B","The hotel is ___ located near the station.",3,"Devant le participe « located » → adverbe (conveniently).","___ + participe → adverbe.","","conveniently"),
+NA("B","Thank you for your ___.",0,"Après le possessif « your » → nom (patience).","possessif + ___ → nom.","","patience"),
+NA("B","The results of the test were ___.",2,"Après « were », en fin de phrase → adjectif (excellent).","be + ___ → adjectif.","","excellent"),
+NA("B","The new assistant seems very ___.",2,"Après « seems very » → adjectif (capable).","seem / feel / look + ___ → adjectif.","Après seem, feel, look, sound : jamais d'adverbe.","capable"),
+NA("B","We must ___ this problem before Friday.",1,"Après « must » → verbe (solve).","must + ___ → verbe.","","solve"),
+NA("B","The ___ manager will visit our office.",2,"« The ___ manager » : entre the et un nom → adjectif (regional).","the + ___ + nom → adjectif.","","regional"),
+NA("B","His ___ during the interview was impressive.",0,"Après « His » et sujet de « was » → nom (performance).","possessif + ___ + verbe → nom.","","performance"),
+NA("B","They worked ___ to finish the project on time.",3,"Après le verbe « worked » : comment ? → adverbe (hard).","verbe + ___ → adverbe.","Ici l'adverbe ne finit pas en -ly : hard.","hard"),
+NA("B","All ___ must register at the front desk.",0,"Après « All » et sujet de « must register » → nom pluriel (visitors).","All + ___ + verbe → nom.","","visitors"),
+NA("B","The museum is ___ crowded on weekends.",3,"Devant l'adjectif « crowded » → adverbe (usually).","___ + adjectif → adverbe.","","usually"),
+NA("B","The new schedule sounds ___.",2,"Après « sounds » → adjectif (reasonable).","sound + ___ → adjectif.","sound = « avoir l'air » : il est suivi d'un adjectif.","reasonable"),
+NA("B","You can ___ online until May 30.",1,"Après « can » → verbe (register).","can + ___ → verbe.","","register"),
+NA("B","Prices are ___ higher than last year.",3,"Devant le comparatif « higher » → adverbe (considerably).","___ + comparatif → adverbe.","","considerably"),
+NA("B","We received many ___ about the new website.",0,"Après « many » → nom pluriel (complaints).","many + ___ → nom pluriel.","","complaints"),
+NA("B","The ___ report is due on Friday.",2,"« The ___ report » → adjectif (annual).","the + ___ + nom → adjectif.","","annual"),
+NA("B","Please speak ___ during the presentation.",3,"Après le verbe « speak » : comment ? → adverbe (clearly).","verbe + ___ → adverbe.","","clearly"),
+NA("B","The director wants to ___ the budget.",1,"Après « to » → verbe (review).","to + ___ → verbe.","","review"),
+NA("B","Customers expect ___ service.",2,"Avant le nom « service » → adjectif (reliable).","___ + nom → adjectif.","","reliable"),
+NA("B","The ___ of the project depends on funding.",0,"« The ___ of » → nom (success).","the + ___ + of → nom.","","success"),
+NA("B","The new policy has proved ___ effective.",3,"Devant l'adjectif « effective » → adverbe (highly).","___ + adjectif → adverbe.","","highly"),
+NA("B","It is ___ to book a table in advance.",2,"« It is ___ to » → adjectif (advisable).","It is + ___ + to → adjectif.","","advisable"),
+NA("B","Her ___ to detail impressed the client.",0,"Après « Her » et avant « to » → nom (attention).","possessif + ___ → nom.","","attention"),
+NA("B","Please keep the meeting room ___.",2,"« keep the room ___ » : keep + objet + adjectif (clean).","keep / make / find + objet + ___ → adjectif.","Piège : on décrit la salle, pas l'action → adjectif.","clean"),
+NA("B","The staff were ___ trained for the new system.",3,"Devant le participe « trained » → adverbe (well).","___ + participe → adverbe.","well est l'adverbe de good.","well"),
+NA("B","We look forward to your ___.",0,"Après « your » → nom (reply).","possessif + ___ → nom.","","reply"),
+NA("B","The decision was made ___.",3,"En fin de phrase, après le verbe → adverbe (quickly).","verbe + ___ → adverbe.","","quickly"),
+NA("B","The new software is easy to ___.",1,"Après « to » → verbe (install).","to + ___ → verbe.","","install"),
+NA("B","The team ___ the deadline despite the delays.",1,"Après le sujet « The team » et avant un complément → verbe (met).","Sujet + ___ + complément → verbe.","","met"),
+/* ---------- C : mot seul, suffixes et pièges ---------- */
+NA("C","approval",0,"-al ici est un nom : l'approbation (the approval of).","Peut-on dire « the approval » ? Oui → nom.","Piège : -al fait penser à un adjectif. approval, proposal, arrival, rental = noms."),
+NA("C","arrival",0,"L'arrivée : nom (the arrival of the train).","Teste avec « the » : the arrival → nom.","-al peut être un nom."),
+NA("C","representative",0,"Un représentant : nom (a sales representative).","Teste : « a representative » marche → nom.","Piège : -ive fait penser à un adjectif."),
+NA("C","assistant",0,"Un assistant : nom de personne.","-ant désigne souvent une personne : assistant, applicant, consultant.","Piège : -ant peut aussi être un adjectif (important)."),
+NA("C","employee",0,"Un employé : nom de personne (-ee = celui qui reçoit).","-ee = la personne : employee, attendee, trainee."),
+NA("C","development",0,"Le développement : nom (-ment).","-ment → nom."),
+NA("C","reliability",0,"La fiabilité : nom (-ity).","-ity → nom."),
+NA("C","importance",0,"L'importance : nom (-ance).","-ance / -ence → nom."),
+NA("C","rental",0,"La location : nom (a car rental).","Teste : « a rental » marche → nom.","Encore un -al qui est un nom."),
+NA("C","friendly",2,"Aimable : adjectif (a friendly manager), malgré le -ly.","Teste : « a friendly person » marche → adjectif.","Piège n°1 : les adjectifs en -ly : friendly, lovely, costly, lonely, elderly."),
+NA("C","costly",2,"Coûteux : adjectif (a costly mistake).","Teste : « very costly » + nom → adjectif.","-ly ne veut pas toujours dire adverbe."),
+NA("C","lovely",2,"Charmant : adjectif (a lovely view).","Teste : « a lovely … » → adjectif.","Adjectif en -ly."),
+NA("C","careful",2,"Prudent, attentif : adjectif (-ful).","-ful → adjectif. L'adverbe est carefully."),
+NA("C","reliable",2,"Fiable : adjectif (-able).","-able / -ible → adjectif."),
+NA("C","expensive",2,"Cher : adjectif (-ive).","-ive → adjectif (sauf representative, executive…)."),
+NA("C","financial",2,"Financier : adjectif (-al).","-al → souvent adjectif (financial, annual, personal)… mais vérifie : proposal est un nom."),
+NA("C","dangerous",2,"Dangereux : adjectif (-ous).","-ous → adjectif."),
+NA("C","efficient",2,"Efficace : adjectif (-ent).","-ent → souvent adjectif… mais resident, agent sont des noms."),
+NA("C","economic",2,"Économique : adjectif (-ic).","-ic → adjectif."),
+NA("C","organize",1,"Organiser : verbe (-ize).","-ize / -ise → verbe."),
+NA("C","clarify",1,"Clarifier : verbe (-ify).","-ify → verbe."),
+NA("C","widen",1,"Élargir : verbe (-en).","-en → verbe (widen, strengthen, shorten)."),
+NA("C","evaluate",1,"Évaluer : verbe (-ate).","-ate → souvent un verbe (evaluate, create, operate)."),
+NA("C","simplify",1,"Simplifier : verbe (-ify).","-ify → verbe."),
+NA("C","strengthen",1,"Renforcer : verbe (-en).","-en → verbe."),
+NA("C","carefully",3,"Avec soin : adverbe (careful + -ly).","adjectif + -ly → adverbe."),
+NA("C","recently",3,"Récemment : adverbe.","-ly ajouté à un adjectif (recent) → adverbe."),
+NA("C","frequently",3,"Fréquemment : adverbe.","frequent (adjectif) + -ly → adverbe."),
+NA("C","hardly",3,"À peine : adverbe.","hardly n'est pas l'adverbe de hard au sens « dur » : il veut dire « à peine ».","Piège de sens : work hard (dur) ≠ hardly work (presque pas)."),
+NA("C","nearly",3,"Presque : adverbe (nearly 50 people).","Devant un nombre ou un adjectif → adverbe.","nearly (presque) ≠ near (près de).")
+];
 const AUDIO={"p2:0":{"f":"audio/p2-0.mp3","s":[[0.15,1.85],[2.3,3.66],[4.11,5.49],[5.94,7.14],[7.59,7.87],[8.32,8.62],[9.07,9.45]]},"p2:1":{"f":"audio/p2-1.mp3","s":[[0.15,2.16],[2.61,3.93],[4.38,5.16],[5.61,7.07],[7.52,7.82],[8.27,8.54],[8.99,9.38]]},"p2:2":{"f":"audio/p2-2.mp3","s":[[0.15,1.83],[2.28,3.53],[3.98,5.43],[5.88,7.33],[7.78,8.14],[8.59,8.88],[9.33,9.72]]},"p2:3":{"f":"audio/p2-3.mp3","s":[[0.15,1.58],[2.03,3.0],[3.45,5.02],[5.47,6.36],[6.81,6.81],[7.26,7.44],[7.89,8.14]]},"p2:4":{"f":"audio/p2-4.mp3","s":[[0.15,1.63],[2.08,3.18],[3.63,4.57],[5.02,5.99],[6.44,6.78],[7.23,7.62],[8.07,8.57]]},"p2:5":{"f":"audio/p2-5.mp3","s":[[0.15,1.4],[1.85,3.32],[3.77,5.32],[5.77,7.13],[7.58,7.87],[8.32,8.68],[9.13,9.52]]},"p2:6":{"f":"audio/p2-6.mp3","s":[[0.15,2.14],[2.59,4.51],[4.96,6.64],[7.09,8.27],[8.72,9.0],[9.45,9.75],[10.2,10.59]]},"p2:7":{"f":"audio/p2-7.mp3","s":[[0.15,2.4],[2.85,3.9],[4.35,5.55],[6.0,6.74],[7.19,7.49],[7.94,8.21],[8.66,9.05]]},"p2:8":{"f":"audio/p2-8.mp3","s":[[0.15,1.66],[2.11,3.16],[3.61,5.18],[5.63,6.61],[7.06,7.42],[7.87,8.16],[8.61,8.99]]},"p2:9":{"f":"audio/p2-9.mp3","s":[[0.15,1.87],[2.32,3.47],[3.92,4.89],[5.34,6.62],[7.07,7.07],[7.52,7.7],[8.15,8.41]]},"p2:10":{"f":"audio/p2-10.mp3","s":[[0.15,1.29],[1.74,2.69],[3.14,4.49],[4.94,6.49],[6.94,7.29],[7.74,8.13],[8.58,9.07]]},"p2:11":{"f":"audio/p2-11.mp3","s":[[0.15,1.84],[2.29,3.42],[3.87,4.65],[5.1,6.12],[6.57,6.86],[7.31,7.67],[8.12,8.52]]},"p2:12":{"f":"audio/p2-12.mp3","s":[[0.15,1.66],[2.11,3.56],[4.01,4.42],[4.87,6.73],[7.18,7.47],[7.92,8.21],[8.66,9.05]]},"p2:13":{"f":"audio/p2-13.mp3","s":[[0.15,2.04],[2.49,3.82],[4.27,5.15],[5.6,6.47],[6.92,7.22],[7.67,7.95],[8.4,8.79]]},"p2:14":{"f":"audio/p2-14.mp3","s":[[0.15,1.75],[2.2,4.15],[4.6,5.76],[6.21,7.43],[7.88,8.24],[8.69,8.98],[9.43,9.82]]},"p2:15":{"f":"audio/p2-15.mp3","s":[[0.15,2.05],[2.5,3.7],[4.15,5.55],[6.0,6.99],[7.44,7.44],[7.89,8.07],[8.52,8.77]]},"p2:16":{"f":"audio/p2-16.mp3","s":[[0.15,1.65],[2.1,3.63],[4.08,5.1],[5.55,6.96],[7.41,7.75],[8.2,8.59],[9.04,9.54]]},"p2:17":{"f":"audio/p2-17.mp3","s":[[0.15,1.93],[2.38,4.23],[4.68,5.54],[5.99,7.02],[7.47,7.76],[8.21,8.57],[9.02,9.41]]},"p2:18":{"f":"audio/p2-18.mp3","s":[[0.15,2.12],[2.57,3.63],[4.08,4.75],[5.2,5.87],[6.32,6.6],[7.05,7.35],[7.8,8.18]]},"p2:19":{"f":"audio/p2-19.mp3","s":[[0.15,2.11],[2.56,3.56],[4.01,5.54],[5.99,7.01],[7.46,7.76],[8.21,8.48],[8.93,9.32]]},"p2:20":{"f":"audio/p2-20.mp3","s":[[0.15,1.81],[2.26,3.52],[3.97,4.98],[5.43,6.85],[7.3,7.66],[8.11,8.4],[8.85,9.24]]},"p2:21":{"f":"audio/p2-21.mp3","s":[[0.15,1.4],[1.85,2.97],[3.42,4.5],[4.95,5.84],[6.29,6.29],[6.74,6.92],[7.37,7.62]]},"p2:22":{"f":"audio/p2-22.mp3","s":[[0.15,1.17],[1.62,2.72],[3.17,4.06],[4.51,5.66],[6.11,6.45],[6.9,7.3],[7.75,8.24]]},"p2:23":{"f":"audio/p2-23.mp3","s":[[0.15,1.52],[1.97,3.4],[3.85,4.85],[5.3,6.26],[6.71,7.0],[7.45,7.81],[8.26,8.65]]},"p2:24":{"f":"audio/p2-24.mp3","s":[[0.15,2.19],[2.64,4.4],[4.85,5.88],[6.33,7.69],[8.14,8.42],[8.87,9.17],[9.62,10.01]]},"p2:25":{"f":"audio/p2-25.mp3","s":[[0.15,1.93],[2.38,4.01],[4.46,5.6],[6.05,6.99],[7.44,7.74],[8.19,8.47],[8.92,9.31]]},"p2:26":{"f":"audio/p2-26.mp3","s":[[0.15,1.67],[2.12,3.36],[3.81,4.99],[5.44,6.33],[6.78,7.14],[7.59,7.88],[8.33,8.72]]},"p2:27":{"f":"audio/p2-27.mp3","s":[[0.15,1.57],[2.02,3.75],[4.2,5.43],[5.88,7.25],[7.7,7.7],[8.15,8.33],[8.78,9.03]]},"p2:28":{"f":"audio/p2-28.mp3","s":[[0.15,1.46],[1.91,3.26],[3.71,4.83],[5.28,6.48],[6.93,7.28],[7.73,8.12],[8.57,9.06]]},"p2:29":{"f":"audio/p2-29.mp3","s":[[0.15,1.48],[1.93,3.99],[4.44,5.69],[6.14,7.14],[7.59,7.88],[8.33,8.68],[9.13,9.53]]},"p2:30":{"f":"audio/p2-30.mp3","s":[[0.15,1.88],[2.33,3.9],[4.35,5.34],[5.79,7.01],[7.46,7.75],[8.2,8.49],[8.94,9.33]]},"p2:31":{"f":"audio/p2-31.mp3","s":[[0.15,2.91],[3.36,4.5],[4.95,6.06],[6.51,7.34],[7.79,8.09],[8.54,8.82],[9.27,9.66]]},"p2:32":{"f":"audio/p2-32.mp3","s":[[0.15,1.76],[2.21,3.59],[4.04,5.18],[5.63,6.82],[7.27,7.63],[8.08,8.37],[8.82,9.2]]},"p2:33":{"f":"audio/p2-33.mp3","s":[[0.15,1.53],[1.98,3.24],[3.69,4.89],[5.34,6.13],[6.58,6.58],[7.03,7.21],[7.66,7.91]]},"p2:34":{"f":"audio/p2-34.mp3","s":[[0.15,2.02],[2.47,3.79],[4.24,5.7],[6.15,7.59],[8.04,8.38],[8.83,9.22],[9.67,10.17]]},"p2:35":{"f":"audio/p2-35.mp3","s":[[0.15,2.86],[3.31,4.75],[5.2,6.19],[6.64,7.76],[8.21,8.5],[8.95,9.31],[9.76,10.15]]},"p2:36":{"f":"audio/p2-36.mp3","s":[[0.15,2.43],[2.88,4.27],[4.72,5.94],[6.39,7.75],[8.2,8.48],[8.93,9.23],[9.68,10.07]]},"p2:37":{"f":"audio/p2-37.mp3","s":[[0.15,2.79],[3.24,4.14],[4.59,5.7],[6.15,7.08],[7.53,7.84],[8.29,8.56],[9.01,9.4]]},"p2:38":{"f":"audio/p2-38.mp3","s":[[0.15,1.97],[2.42,3.97],[4.42,5.72],[6.17,7.34],[7.79,8.15],[8.6,8.89],[9.34,9.73]]},"p2:39":{"f":"audio/p2-39.mp3","s":[[0.15,2.1],[2.55,3.64],[4.09,5.33],[5.78,6.78],[7.23,7.23],[7.68,7.86],[8.31,8.56]]},"p2:40":{"f":"audio/p2-40.mp3","s":[[0.15,1.89],[2.34,4.13],[4.58,5.53],[5.98,7.44],[7.89,8.23],[8.68,9.07],[9.52,10.02]]},"p2:41":{"f":"audio/p2-41.mp3","s":[[0.15,1.72],[2.17,3.71],[4.16,5.45],[5.9,6.98],[7.43,7.72],[8.17,8.53],[8.98,9.38]]},"p2:42":{"f":"audio/p2-42.mp3","s":[[0.15,1.88],[2.33,3.24],[3.69,4.6],[5.05,5.64],[6.09,6.37],[6.82,7.12],[7.57,7.96]]},"p2:43":{"f":"audio/p2-43.mp3","s":[[0.15,2.27],[2.72,3.41],[3.86,4.5],[4.95,5.82],[6.27,6.57],[7.02,7.29],[7.74,8.13]]},"p2:44":{"f":"audio/p2-44.mp3","s":[[0.15,2.06],[2.51,3.46],[3.91,5.0],[5.45,6.54],[6.99,7.35],[7.8,8.09],[8.54,8.92]]},"p2:45":{"f":"audio/p2-45.mp3","s":[[0.15,1.69],[2.14,2.87],[3.32,4.21],[4.66,5.75],[6.2,6.2],[6.65,6.83],[7.28,7.53]]},"p2:46":{"f":"audio/p2-46.mp3","s":[[0.15,1.02],[1.47,2.57],[3.02,4.33],[4.78,6.0],[6.45,6.79],[7.24,7.64],[8.09,8.58]]},"p2:47":{"f":"audio/p2-47.mp3","s":[[0.15,1.96],[2.41,3.24],[3.69,4.86],[5.31,6.36],[6.81,7.1],[7.55,7.9],[8.35,8.75]]},"p2:48":{"f":"audio/p2-48.mp3","s":[[0.15,1.91],[2.36,3.65],[4.1,5.39],[5.84,7.15],[7.6,7.88],[8.33,8.63],[9.08,9.47]]},"p2:49":{"f":"audio/p2-49.mp3","s":[[0.15,1.79],[2.24,2.8],[3.25,4.3],[4.75,5.66],[6.11,6.41],[6.86,7.13],[7.58,7.97]]},"p2:50":{"f":"audio/p2-50.mp3","s":[[0.15,1.78],[2.23,3.57],[4.02,5.23],[5.68,6.73],[7.18,7.54],[7.99,8.28],[8.73,9.11]]},"p2:51":{"f":"audio/p2-51.mp3","s":[[0.15,1.54],[1.99,2.67],[3.12,4.22],[4.67,5.51],[5.96,5.96],[6.41,6.59],[7.04,7.29]]},"p2:52":{"f":"audio/p2-52.mp3","s":[[0.15,1.87],[2.32,4.2],[4.65,6.11],[6.56,7.83],[8.28,8.62],[9.07,9.46],[9.91,10.41]]},"p2:53":{"f":"audio/p2-53.mp3","s":[[0.15,2.36],[2.81,4.05],[4.5,5.53],[5.98,7.7],[8.15,8.45],[8.9,9.25],[9.7,10.1]]},"p2:54":{"f":"audio/p2-54.mp3","s":[[0.15,1.77],[2.22,3.87],[4.32,5.42],[5.87,7.62],[8.07,8.36],[8.81,9.1],[9.55,9.94]]},"p2:55":{"f":"audio/p2-55.mp3","s":[[0.15,3.4],[3.85,4.79],[5.24,6.18],[6.63,7.68],[8.13,8.43],[8.88,9.15],[9.6,9.99]]},"p2:56":{"f":"audio/p2-56.mp3","s":[[0.15,1.7],[2.15,3.73],[4.18,5.28],[5.73,6.83],[7.28,7.64],[8.09,8.38],[8.83,9.22]]},"p2:57":{"f":"audio/p2-57.mp3","s":[[0.15,2.48],[2.93,4.66],[5.11,5.98],[6.43,7.34],[7.79,7.79],[8.24,8.42],[8.87,9.13]]},"p2:58":{"f":"audio/p2-58.mp3","s":[[0.15,2.35],[2.8,4.33],[4.78,6.24],[6.69,7.98],[8.43,8.77],[9.22,9.62],[10.07,10.56]]},"p2:59":{"f":"audio/p2-59.mp3","s":[[0.15,2.22],[2.67,4.0],[4.45,5.05],[5.5,6.54],[6.99,7.28],[7.73,8.09],[8.54,8.94]]},"p2:60":{"f":"audio/p2-60.mp3","s":[[0.15,2.52],[2.97,4.06],[4.51,5.7],[6.15,7.31],[7.76,8.05],[8.5,8.79],[9.24,9.63]]},"p2:61":{"f":"audio/p2-61.mp3","s":[[0.15,1.85],[2.3,3.29],[3.74,5.13],[5.58,6.59],[7.04,7.34],[7.79,8.06],[8.51,8.9]]},"p2:62":{"f":"audio/p2-62.mp3","s":[[0.15,2.15],[2.6,3.5],[3.95,5.54],[5.99,7.14],[7.59,7.95],[8.4,8.69],[9.14,9.52]]},"p2:63":{"f":"audio/p2-63.mp3","s":[[0.15,1.87],[2.32,3.52],[3.97,5.26],[5.71,6.68],[7.13,7.13],[7.58,7.76],[8.21,8.46]]},"p1:0":{"f":"audio/p1-0.mp3","s":[[0.15,1.6],[2.05,3.24],[3.69,5.2],[5.65,7.06],[7.51,7.8],[8.25,8.6],[9.05,9.45],[9.9,10.22]]},"p1:1":{"f":"audio/p1-1.mp3","s":[[0.15,2.0],[2.45,4.47],[4.92,6.39],[6.84,8.85],[9.3,9.59],[10.04,10.33],[10.78,11.17],[11.62,11.98]]},"p1:2":{"f":"audio/p1-2.mp3","s":[[0.15,1.15],[1.6,2.57],[3.02,4.58],[5.03,5.99],[6.44,6.74],[7.19,7.46],[7.91,8.3],[8.75,9.08]]},"p1:3":{"f":"audio/p1-3.mp3","s":[[0.15,1.51],[1.96,3.22],[3.67,4.86],[5.31,6.53],[6.98,7.34],[7.79,8.08],[8.53,8.92],[9.37,9.71]]},"p1:4":{"f":"audio/p1-4.mp3","s":[[0.15,1.87],[2.32,3.56],[4.01,5.49],[5.94,7.92],[8.37,8.37],[8.82,9.0],[9.45,9.71],[10.16,10.34]]},"p1:5":{"f":"audio/p1-5.mp3","s":[[0.15,1.96],[2.41,3.65],[4.1,5.21],[5.66,6.86],[7.31,7.66],[8.11,8.5],[8.95,9.44],[9.89,10.32]]},"p1:6":{"f":"audio/p1-6.mp3","s":[[0.15,1.94],[2.39,3.83],[4.28,5.63],[6.08,7.52],[7.97,8.26],[8.71,9.06],[9.51,9.91],[10.36,10.68]]},"p1:7":{"f":"audio/p1-7.mp3","s":[[0.15,1.86],[2.31,3.62],[4.07,5.49],[5.94,7.29],[7.74,8.03],[8.48,8.77],[9.22,9.61],[10.06,10.42]]},"p1:8":{"f":"audio/p1-8.mp3","s":[[0.15,1.22],[1.67,2.54],[2.99,3.91],[4.36,5.53],[5.98,6.28],[6.73,7.0],[7.45,7.84],[8.29,8.62]]},"p1:9":{"f":"audio/p1-9.mp3","s":[[0.15,1.29],[1.74,3.34],[3.79,5.01],[5.46,6.63],[7.08,7.44],[7.89,8.18],[8.63,9.02],[9.47,9.81]]},"p1:10":{"f":"audio/p1-10.mp3","s":[[0.15,1.92],[2.37,4.08],[4.53,6.36],[6.81,8.58],[9.03,9.03],[9.48,9.66],[10.11,10.36],[10.81,11.0]]},"p1:11":{"f":"audio/p1-11.mp3","s":[[0.15,1.62],[2.07,3.48],[3.93,5.27],[5.72,6.82],[7.27,7.61],[8.06,8.45],[8.9,9.4],[9.85,10.28]]},"p1:12":{"f":"audio/p1-12.mp3","s":[[0.15,1.22],[1.67,2.81],[3.26,4.47],[4.92,6.09],[6.54,6.83],[7.28,7.63],[8.08,8.48],[8.93,9.25]]},"p1:13":{"f":"audio/p1-13.mp3","s":[[0.15,1.88],[2.33,3.65],[4.1,5.51],[5.96,6.97],[7.42,7.71],[8.16,8.46],[8.91,9.29],[9.74,10.1]]},"p1:14":{"f":"audio/p1-14.mp3","s":[[0.15,1.85],[2.3,3.95],[4.4,5.7],[6.15,7.24],[7.69,7.99],[8.44,8.71],[9.16,9.55],[10.0,10.33]]},"p1:15":{"f":"audio/p1-15.mp3","s":[[0.15,1.85],[2.3,3.45],[3.9,5.45],[5.9,7.15],[7.6,7.96],[8.41,8.7],[9.15,9.54],[9.99,10.33]]},"p1:16":{"f":"audio/p1-16.mp3","s":[[0.15,1.8],[2.25,3.38],[3.83,5.14],[5.59,7.21],[7.66,7.66],[8.11,8.29],[8.74,8.99],[9.44,9.62]]},"p1:17":{"f":"audio/p1-17.mp3","s":[[0.15,1.78],[2.23,4.02],[4.47,6.04],[6.49,8.0],[8.45,8.8],[9.25,9.64],[10.09,10.58],[11.03,11.46]]},"p1:18":{"f":"audio/p1-18.mp3","s":[[0.15,1.77],[2.22,3.51],[3.96,5.4],[5.85,7.33],[7.78,8.07],[8.52,8.88],[9.33,9.73],[10.18,10.5]]},"p1:19":{"f":"audio/p1-19.mp3","s":[[0.15,1.28],[1.73,2.7],[3.15,4.23],[4.68,5.9],[6.35,6.64],[7.09,7.39],[7.84,8.22],[8.67,9.03]]},"p3:0":{"f":"audio/p3-0.mp3","s":[[0.15,7.92],[8.27,11.79],[12.14,15.78],[16.13,26.78],[27.13,32.53]]},"p3:1":{"f":"audio/p3-1.mp3","s":[[0.15,3.83],[4.18,12.08],[12.43,17.48],[17.83,25.49]]},"p3:2":{"f":"audio/p3-2.mp3","s":[[0.15,4.2],[4.55,11.11],[11.46,20.82],[21.17,29.52]]},"p3:3":{"f":"audio/p3-3.mp3","s":[[0.15,9.62],[9.97,14.17],[14.52,20.05],[20.4,26.27],[26.62,32.77]]},"p3:4":{"f":"audio/p3-4.mp3","s":[[0.15,3.66],[4.01,9.5],[9.85,14.76],[15.11,20.26],[20.61,25.8]]},"p3:5":{"f":"audio/p3-5.mp3","s":[[0.15,6.06],[6.41,12.39],[12.74,20.63],[20.98,25.97]]},"p3:6":{"f":"audio/p3-6.mp3","s":[[0.15,7.06],[7.41,12.59],[12.94,18.73],[19.08,23.96],[24.31,31.26],[31.61,35.99]]},"p3:7":{"f":"audio/p3-7.mp3","s":[[0.15,7.16],[7.51,11.42],[11.77,17.64],[17.99,28.74],[29.09,33.95],[34.3,38.75]]},"p3:8":{"f":"audio/p3-8.mp3","s":[[0.15,6.9],[7.25,14.38],[14.73,18.34],[18.69,23.9]]},"p3:9":{"f":"audio/p3-9.mp3","s":[[0.15,4.2],[4.55,17.12],[17.47,23.28],[23.63,32.05]]},"p3:10":{"f":"audio/p3-10.mp3","s":[[0.15,6.06],[6.41,14.23],[14.58,21.04],[21.39,27.29],[27.64,34.24]]},"p3:11":{"f":"audio/p3-11.mp3","s":[[0.15,10.48],[10.83,17.01],[17.36,25.0],[25.35,29.71]]},"p3:12":{"f":"audio/p3-12.mp3","s":[[0.15,3.78],[4.13,11.66],[12.01,20.04],[20.39,23.64],[23.99,29.55]]},"p3:13":{"f":"audio/p3-13.mp3","s":[[0.15,5.2],[5.55,13.56],[13.91,18.31],[18.66,26.4]]},"p4:0":{"f":"audio/p4-0.mp3","s":[[0.15,24.87]]},"p4:1":{"f":"audio/p4-1.mp3","s":[[0.15,25.61]]},"p4:2":{"f":"audio/p4-2.mp3","s":[[0.15,30.79]]},"p4:3":{"f":"audio/p4-3.mp3","s":[[0.15,23.83]]},"p4:4":{"f":"audio/p4-4.mp3","s":[[0.15,25.99]]},"p4:5":{"f":"audio/p4-5.mp3","s":[[0.15,33.24]]},"p4:6":{"f":"audio/p4-6.mp3","s":[[0.15,31.06]]},"p4:7":{"f":"audio/p4-7.mp3","s":[[0.15,35.71]]},"p4:8":{"f":"audio/p4-8.mp3","s":[[0.15,32.04]]},"p4:9":{"f":"audio/p4-9.mp3","s":[[0.15,35.92]]},"p4:10":{"f":"audio/p4-10.mp3","s":[[0.15,34.18]]},"p4:11":{"f":"audio/p4-11.mp3","s":[[0.15,33.03]]},"p4:12":{"f":"audio/p4-12.mp3","s":[[0.15,31.95]]},"v":{"f":"audio/vocab.mp3","s":[[0.15,0.72],[1.02,1.87],[2.17,2.98],[3.28,3.85],[4.15,4.68],[4.98,5.58],[5.88,6.64],[6.94,7.41],[7.71,8.52],[8.82,9.57],[9.87,10.44],[10.74,11.74],[12.04,12.86],[13.16,13.98],[14.28,14.93],[15.23,15.83],[16.13,16.91],[17.21,17.79],[18.09,18.76],[19.06,19.57],[19.87,20.58],[20.88,21.53],[21.83,22.46],[22.76,23.41],[23.71,24.41],[24.71,25.46],[25.76,26.46],[26.76,27.24],[27.54,28.04],[28.34,28.94],[29.24,30.28],[30.58,31.61],[31.91,32.47],[32.77,33.35],[33.65,34.26],[34.56,35.09],[35.39,35.92],[36.22,36.72],[37.02,37.6],[37.9,38.41],[38.71,39.26],[39.56,40.39],[40.69,41.51],[41.81,42.23],[42.53,43.26],[43.56,44.2],[44.5,44.99],[45.29,46.05],[46.35,46.98],[47.28,47.65],[47.95,48.48],[48.78,49.36],[49.66,50.38],[50.68,51.33],[51.63,52.32],[52.62,53.21],[53.51,53.99],[54.29,54.98],[55.28,55.69],[55.99,56.82],[57.12,57.83],[58.13,58.75],[59.05,59.75],[60.05,60.6],[60.9,61.46],[61.76,62.27],[62.57,63.17],[63.47,63.86],[64.16,64.78],[65.08,65.65],[65.95,66.53],[66.83,67.46],[67.76,68.65],[68.95,69.47],[69.77,70.44],[70.74,71.51],[71.81,72.38],[72.68,73.35],[73.65,74.17],[74.47,75.03],[75.33,75.88],[76.18,76.97],[77.27,78.14],[78.44,78.94],[79.24,79.79],[80.09,80.56],[80.86,81.22],[81.52,82.02],[82.32,83.14],[83.44,84.38],[84.68,85.28],[85.58,86.43],[86.73,87.72],[88.02,88.5],[88.8,89.49],[89.79,90.23],[90.53,91.07],[91.37,92.22],[92.52,93.28],[93.58,94.63],[94.93,95.53],[95.83,96.61],[96.91,97.6],[97.9,98.65],[98.95,99.62],[99.92,100.37],[100.67,101.27],[101.57,101.93],[102.23,103.09],[103.39,104.15],[104.45,104.92],[105.22,105.88],[106.18,107.41],[107.71,108.49],[108.79,109.62],[109.92,110.53],[110.83,111.59],[111.89,112.49],[112.79,113.48],[113.78,114.55],[114.85,115.54],[115.84,116.53],[116.83,117.59],[117.89,118.66],[118.96,119.7],[120.0,120.8],[121.1,121.86],[122.16,122.74],[123.04,123.79],[124.09,124.78],[125.08,125.8],[126.1,126.69],[126.99,127.54],[127.84,128.46],[128.76,129.35],[129.65,130.28],[130.58,131.28],[131.58,132.31],[132.61,133.34],[133.64,134.37],[134.67,135.33],[135.63,136.16],[136.46,137.14],[137.44,138.23],[138.53,139.21],[139.51,140.03],[140.33,141.21],[141.51,142.11],[142.41,142.89],[143.19,143.79],[144.09,144.66],[144.96,145.45],[145.75,146.3],[146.6,147.41],[147.71,148.23],[148.53,149.16],[149.46,150.28],[150.58,151.39],[151.69,152.5],[152.8,153.43],[153.73,154.76],[155.06,155.65],[155.95,156.67],[156.97,157.55],[157.85,158.6],[158.9,159.59],[159.89,160.78],[161.08,161.71],[162.01,162.74],[163.04,163.51],[163.81,164.65],[164.95,165.78],[166.08,166.77],[167.07,167.82],[168.12,168.8],[169.1,169.74],[170.04,170.88],[171.18,171.99],[172.29,173.25],[173.55,174.38],[174.68,175.39],[175.69,176.23],[176.53,177.24],[177.54,178.18],[178.48,179.34],[179.64,180.33],[180.63,181.22],[181.52,182.15],[182.45,183.23],[183.53,184.07],[184.37,185.12],[185.42,186.36],[186.66,187.47],[187.77,188.42],[188.72,189.34],[189.64,190.47]]}};
 
 /* ================= PARTIES ================= */
@@ -1674,9 +1812,10 @@ const PARTS={
   p4:{n:"Part 4",t:"Exposés",sec:"L",bank:TALKS,set:true,per:2,min:"30 questions"},
   p5:{n:"Part 5",t:"Phrases à compléter",sec:"R",bank:GRAMMAR,set:false,per:10,min:"30 questions"},
   p6:{n:"Part 6",t:"Textes à compléter",sec:"R",bank:TEXTS,set:true,per:2,min:"16 questions"},
-  p7:{n:"Part 7",t:"Compréhension écrite",sec:"R",bank:READS,set:true,per:3,min:"54 questions"}
+  p7:{n:"Part 7",t:"Compréhension écrite",sec:"R",bank:READS,set:true,per:3,min:"54 questions"},
+  pn:{n:"Nature",t:"Nom, verbe, adjectif, adverbe",sec:"R",bank:NATURE,set:false,per:15,min:""}
 };
-const LPARTS=["p1","p2","p3","p4"],RPARTS=["p5","p6","p7"],ALLP=LPARTS.concat(RPARTS);
+const LPARTS=["p1","p2","p3","p4"],RPARTS=["p5","p6","p7"],ALLP=LPARTS.concat(RPARTS,["pn"]);
 const EXAM=new Date(2026,10,19);
 const START=new Date(2026,10,2);
 const PLAN=[
@@ -1810,6 +1949,7 @@ const itemOf=key=>PARTS[pk(key)].bank[ix(key)];
 function tipOf(part,i,item){
   if(item.t) return item.t;
   if(part==="p5"){const a=CAT_TIPS[item.c]||CAT_TIPS["Nature des mots"];return a[i%a.length]}
+  if(part==="pn") return NAT_TIPS[item.ty];
   if(part==="p2") return P2_TIPS[i%P2_TIPS.length];
   return "";
 }
@@ -1979,6 +2119,8 @@ function pool(p,opts){
   if(p==="p5"&&opts.cat&&opts.cat!=="Toutes") idx=idx.filter(i=>GRAMMAR[i].c===opts.cat);
   if(opts.hard) idx=idx.filter(i=>PARTS[p].bank[i].h);
   if(opts.len&&opts.len!=="all") idx=idx.filter(i=>lenCat(p,PARTS[p].bank[i])===opts.len);
+  if(p==="pn"&&opts.ntype&&opts.ntype!=="all") idx=idx.filter(i=>NATURE[i].ty===opts.ntype);
+  if(p==="pn"&&opts.traps) idx=idx.filter(i=>NATURE[i].trap);
   return idx;
 }
 function buildUnits(p,opts){
@@ -2012,6 +2154,7 @@ function stopTimer(){if(quiz&&quiz.timer){clearInterval(quiz.timer);quiz.timer=n
 /* Mélange les réponses ; si la question a déjà été vue, la bonne réponse change toujours de lettre */
 function shuffleAway(n,a,last){let p;for(let t=0;t<30;t++){p=shuffle([...Array(n).keys()]);if(last===undefined||p.indexOf(a)!==last)break}return p}
 function permFor(i){
+  if(!quiz.perms[i]&&pk(quiz.units[i])==="pn") quiz.perms[i]=[0,1,2,3]; /* nom, verbe, adjectif, adverbe : toujours dans le même ordre */
   if(!quiz.perms[i]){const key=quiz.units[i],it=itemOf(key),r=S.q[key],last=r&&r.pos;
     quiz.perms[i]=PARTS[pk(key)].set?it.qs.map((s,k)=>shuffleAway(s.o.length,s.a,Array.isArray(last)?last[k]:undefined)):shuffleAway(it.o.length,it.a,typeof last==="number"?last:undefined)}
   return quiz.perms[i];
@@ -2059,6 +2202,7 @@ function renderSingle(key,p,answered){
   const it=itemOf(key),perm=permFor(quiz.i),ch=quiz.ans[quiz.i];
   const coach=quiz.opts.coach&&p==="p5";
   let top="";const hide=(p==="p1"||p==="p2")&&!quiz.reveal;
+  if(p==="pn") top=`<p class="eyebrow" style="color:var(--blue)">${natPrompt(it)}</p><p class="q">${natSentence(it,answered)}</p>`;
   if(p==="p5"){const s=it.s.split("___");
     const showMark=coach&&!answered&&quiz.lv[quiz.i]!=="auto"&&(quiz.lv[quiz.i]==="guide"||(quiz.hn[quiz.i]||0)>=2);
     top=`<p class="q">${showMark?markGap(it.s):`${esc(s[0])}<span class="gap"></span>${esc(s[1]||"")}`}</p>`+(coach?coachHints(key,it,answered):"")}
@@ -2070,14 +2214,14 @@ function renderSingle(key,p,answered){
   if(answered){
     const ok=ch===it.a,dpos=d=>L[perm.indexOf(d)];
     const tip=tipOf(p,ix(key),it);
-    const filled=p==="p5"?(()=>{const s=it.s.split("___");return `${esc(s[0])}<span class="fill">${esc(it.o[it.a])}</span>${esc(s[1]||"")}`})():p==="p2"?esc(it.q):esc(it.d);
+    const filled=p==="pn"?natSentence(it,true):p==="p5"?(()=>{const s=it.s.split("___");return `${esc(s[0])}<span class="fill">${esc(it.o[it.a])}</span>${esc(s[1]||"")}`})():p==="p2"?esc(it.q):esc(it.d);
     out+=`<div class="verdict ${ok?"ok":"ko"} pop"><span class="ic">${ok?"✓":"✗"}</span>${ok?"Bonne réponse !":ch===-1?"Temps écoulé":"Pas tout à fait"}</div>
     <div class="explain pop">
       ${!ok&&ch>=0?`<div class="ex-row"><span>Ta réponse</span><div><span class="mono" style="color:var(--bad);font-weight:700">(${dpos(ch)})</span> ${esc(it.o[ch])} : ${esc(it.w[ch])}</div></div>`:""}
       <div class="ex-row"><span>La bonne</span><div><span class="mono" style="color:var(--good);font-weight:700">(${dpos(it.a)})</span> <b>${esc(it.o[it.a])}</b></div></div>
-      ${p!=="p1"?`<div class="ex-row"><span>${p==="p5"?"Phrase":"Question"}</span><div class="q" style="font-size:1.02rem">${filled}</div></div>`:""}
+      ${p!=="p1"?`<div class="ex-row"><span>${p==="p5"||p==="pn"?"Phrase":"Question"}</span><div class="q" style="font-size:1.02rem">${filled}</div></div>`:""}
       ${it.fr?`<div class="ex-row"><span>Traduction</span><div><i>${esc(it.fr)}</i></div></div>`:""}
-      ${it.k?`<div class="ex-row"><span>L'indice</span><div>${esc(it.k)}</div></div>`:""}
+      ${it.k?`<div class="ex-row"><span>${p==="pn"?"Le test":"L'indice"}</span><div>${esc(it.k)}</div></div>`:""}
       ${it.r?`<div class="ex-row"><span>La règle</span><div class="rule">${esc(it.r)}</div></div>`:""}
       <div class="ex-row"><span>Chaque option</span>${whyList(it,perm,ch)}</div>
       ${tipBox(tip)}
@@ -2183,6 +2327,7 @@ function renderResult(){
     ${wrong.length?`<div class="card stack"><p class="eyebrow">À retenir de cette série</p><div class="recap">${wrong.map(w=>{
       if(w.it){const it=w.it,p=pk(w.u);
         if(p==="p5"){const s=it.s.split("___");return `<div><span class="q" style="font-size:1rem">${esc(s[0])}<span class="fill">${esc(it.o[it.a])}</span>${esc(s[1]||"")}</span><div class="rule" style="font-weight:400">${esc(it.r)}</div></div>`}
+        if(p==="pn") return `<div><span class="q" style="font-size:1rem">${natSentence(it,true)}</span><span>→ <span class="fill">${esc(it.o[it.a])}</span></span><span class="note">${esc(it.k)}</span></div>`;
         return `<div><b>${esc(p==="p2"?it.q:it.d)}</b><span>→ <span class="fill">${esc(it.o[it.a])}</span></span><span class="note">${esc(it.k||tipOf(p,ix(w.u),it))}</span></div>`}
       return `<div><b>${esc(itemOf(w.u).title)} · ${esc(w.q.q)}</b><span>→ <span class="fill">${esc(w.q.o[w.q.a])}</span></span><span class="note">${esc(w.q.k)}</span></div>`}).join("")}</div></div>`:""}
   </section>`;
@@ -2456,6 +2601,7 @@ function coachView(){
       <div class="sbar" style="margin-top:22px"><i style="width:${score!==null?score/30*100:0}%"></i><span class="goal" style="left:${26/30*100}%"></span><span class="gl" style="left:${26/30*100}%">26</span></div>
       <p class="note">Pour viser 870, il faut environ 26 bonnes réponses sur 30 en Part 5. ${score!==null&&score<26?"Il te manque "+(26-score)+" points : ce sont les règles en « Guidé » ci-dessous qui te les feront gagner.":""}</p>
     </div>
+    <a class="card natlink" href="#nature"><span class="eyebrow">Entraînement ciblé</span><b>Nom, verbe, adjectif ou adverbe ?</b><span class="note">${NATURE.length} questionnaires avec pièges, et la fiche pour les reconnaître en 2 secondes →</span></a>
     <div class="card stack">
       <p class="eyebrow">Tes 4 réflexes, à chaque question</p>
       <ol class="reflex"><li><b>Lis les 4 options d'abord</b>, avant la phrase.</li><li><b>Trouve le type</b> : même racine → nature du mot ; at / on / by → préposition ; despite / although → connecteur ; même verbe → temps.</li><li><b>Regarde seulement 2 mots</b> avant et après le trou.</li><li><b>Applique la règle</b>, réponds, passe. Objectif : moins de 20 secondes.</li></ol>
@@ -2490,8 +2636,76 @@ function coachResultCard(){
     <p class="note">Les règles encore en « Guidé » reviendront en priorité dans ta prochaine séance.</p></div>`;
 }
 
+
+/* ================= NATURE DES MOTS : page d'entraînement ================= */
+const NAT_TIPS={A:"Ne traduis pas le mot : regarde le mot juste AVANT et juste APRÈS. C'est sa place qui donne sa nature.",
+  B:"Pour trouver la nature du trou, cache les options et demande-toi : qu'est-ce qui manque ici ? Un nom, une action, une description d'un nom, ou une description d'un verbe ?",
+  C:"Seul, un mot se reconnaît à son suffixe. Mais méfie-toi : -ly, -al, -ive, -ant, -ent ont des exceptions."};
+function natPrompt(it){return it.ty==="A"?"Quelle est la nature du mot surligné ?":it.ty==="B"?"Quel type de mot faut-il dans le trou ?":"Quelle est la nature de ce mot ?"}
+function natSentence(it,answered){
+  if(it.ty==="A") return esc(it.s).replace(/\{(.+?)\}/,(m,w)=>`<mark class="nb"><b>${w}</b></mark>`);
+  if(it.ty==="B"){const p=it.s.split("___");return answered?`${esc(p[0])}<span class="fill">${esc(it.fill)}</span>${esc(p[1]||"")}`:`${esc(p[0])}<span class="gap"></span>${esc(p[1]||"")}`}
+  return `<span class="natword">${esc(it.s)}</span>`;
+}
+function natureView(){
+  if(quiz&&quiz.view==="nature") return renderQuiz();
+  const st=partStats("pn"),due=errorsOf(["pn"],true).length;
+  const n=ty=>NATURE.filter(x=>x.ty===ty).length,nt=NATURE.filter(x=>x.trap).length;
+  const accBy=a=>{let ok=0,t=0;NATURE.forEach((x,i)=>{const r=S.q["pn:"+i];if(r&&x.a===a){ok+=r.ok;t+=r.ok+r.ko}});return t?Math.round(ok/t*100)+" %":"–"};
+  $("#main").innerHTML=`<section class="view">
+    <div><p class="eyebrow">Coach Partie 5 · ${NATURE.length} exercices · ${nt} pièges</p><h2>Nom, verbe, adjectif, adverbe</h2></div>
+    <p>Un quart des questions de Part 5 testent la nature du mot. Si tu reconnais en 2 secondes ce qu'il faut dans le trou, tu gagnes 5 à 8 points.</p>
+    <div class="card stack">
+      <p class="eyebrow">Comment les reconnaître</p>
+      <div class="natcards">
+        ${[["Nom","n0","une chose, une personne, une idée","Qui ? Quoi ?","après <b>a / the / my / many</b>, avant <b>of</b>, ou sujet du verbe","-tion, -ment, -ity, -ance, -ness, -er, -or, -ee","« the ___ » marche, et il peut prendre un -s","the <b>approval</b> of the plan"],
+           ["Verbe","n1","une action ou un état","Que fait-on ?","après le sujet, ou après <b>will / can / must / to / please</b>","-ize, -ify, -en, -ate","« to ___ » ou « will ___ » marche","The board will <b>approve</b> it."],
+           ["Adjectif","n2","décrit un <b>nom</b>","Comment est la chose ? Quel… ?","<b>avant un nom</b>, ou après <b>be / seem / feel / become / keep</b>","-ive, -able, -ful, -ous, -al, -ic, -ent","« a very ___ thing » marche","an <b>approved</b> plan"],
+           ["Adverbe","n3","décrit un <b>verbe</b>, un <b>adjectif</b> ou un participe","Comment ? Quand ? À quel point ?","après le verbe, <b>avant un adjectif</b>, entre <b>has</b> et le participe","-ly (mais fast, hard, early, late, well)","« do it ___ » ou « ___ good » marche","It was <b>quickly</b> approved."]]
+          .map(c=>`<div class="natcard ${c[1]}"><b class="nt">${c[0]}</b>
+            <div><span class="eyebrow">Ce que c'est</span><span>${c[2]}</span></div>
+            <div><span class="eyebrow">Question à poser</span><span>${c[3]}</span></div>
+            <div><span class="eyebrow">Sa place</span><span>${c[4]}</span></div>
+            <div><span class="eyebrow">Suffixes</span><span class="mono" style="font-size:.85rem">${c[5]}</span></div>
+            <div><span class="eyebrow">Test rapide</span><span>${c[6]}</span></div>
+            <div><span class="eyebrow">Exemple</span><span class="testfont">${c[7]}</span></div></div>`).join("")}
+      </div>
+    </div>
+    <div class="card stack">
+      <p class="eyebrow">Les 6 pièges à connaître par cœur</p>
+      <ol class="reflex">
+        <li><b>-ly n'est pas toujours un adverbe</b> : friendly, costly, lovely, likely, elderly sont des <b>adjectifs</b> (a friendly manager).</li>
+        <li><b>Adverbes sans -ly</b> : fast, hard, early, late, well (work hard, arrive early, did well).</li>
+        <li><b>-al, -ive, -ant, -ent peuvent être des noms</b> : proposal, approval, arrival, representative, applicant, resident.</li>
+        <li><b>Même mot, nature différente</b> : the increase (nom) / will increase (verbe) ; the plan / we plan ; free delivery (adj) / travel free (adv).</li>
+        <li><b>-ing a 3 natures</b> : Reading is useful (nom) · an interesting idea (adjectif) · she is reading (verbe).</li>
+        <li><b>Après be, seem, feel, look, become, keep</b> : un adjectif, jamais un adverbe (feel comfortable, keep it clean).</li>
+      </ol>
+      <p class="note">Sens à ne pas confondre : hard (dur) ≠ hardly (à peine) · late (en retard) ≠ lately (récemment) · near (près) ≠ nearly (presque) · good (adjectif) ≠ well (adverbe).</p>
+    </div>
+    <div class="card stack">
+      <p class="eyebrow">Les questionnaires · 15 questions</p>
+      <div class="meta note">Réussite : nom <b class="mono">${accBy(0)}</b> · verbe <b class="mono">${accBy(1)}</b> · adjectif <b class="mono">${accBy(2)}</b> · adverbe <b class="mono">${accBy(3)}</b> · jamais vus <b class="mono">${st.total-st.seen}</b></div>
+      <div class="natgo">
+        <button class="btn" data-nat="all">Tout mélanger</button>
+        <button class="btn ghost" data-nat="A">Le mot surligné <span class="n">${n("A")}</span></button>
+        <button class="btn ghost" data-nat="B">Ce qu'il faut dans le trou <span class="n">${n("B")}</span></button>
+        <button class="btn ghost" data-nat="C">Mots seuls et suffixes <span class="n">${n("C")}</span></button>
+        <button class="btn warn" data-nat="trap">Uniquement les pièges <span class="n">${nt}</span></button>
+        ${due?`<button class="btn bad" data-nat="err">Mes erreurs <span class="n">${due}</span></button>`:""}
+      </div>
+      <p class="note">« Le mot surligné » : tu dis si un mot dans une phrase est un nom, un verbe, un adjectif ou un adverbe. « Ce qu'il faut dans le trou » : c'est exactement le réflexe de la Part 5. Les questions ratées reviennent le lendemain.</p>
+    </div>
+    <div><a class="btn ghost" href="#coach">← Retour au Coach Partie 5</a></div>
+  </section>`;
+  document.querySelectorAll("[data-nat]").forEach(b=>b.onclick=()=>{const v=b.dataset.nat;
+    if(v==="err"){startQuiz("nature",reviewUnits(["pn"]),{parts:["pn"]})}
+    else{const o={part:"pn",ntype:v==="trap"||v==="all"?"all":v,traps:v==="trap"};startQuiz("nature",buildUnits("pn",o),o)}
+    renderQuiz();window.scrollTo({top:0})});
+}
+
 /* ================= NAVIGATION ================= */
-const VIEWS={coach:()=>coachView(),accueil:homeView,vocab:vocabView,ecoute:()=>sectionView("L"),lecture:()=>sectionView("R"),revision:revisionView,fiches:fichesView};
+const VIEWS={nature:()=>natureView(),coach:()=>coachView(),accueil:homeView,vocab:vocabView,ecoute:()=>sectionView("L"),lecture:()=>sectionView("R"),revision:revisionView,fiches:fichesView};
 let current="accueil";
 function route(){
   let v=(location.hash||"#accueil").slice(1);
@@ -2499,7 +2713,7 @@ function route(){
   current=v;
   if(quiz&&quiz.view!==v){stopTimer();quiz=null}
   stopAudio();
-  document.querySelectorAll("nav.tabs a").forEach(a=>a.setAttribute("aria-current",a.dataset.v===v||(v==="revision"&&a.dataset.v==="accueil")?"page":"false"));
+  document.querySelectorAll("nav.tabs a").forEach(a=>a.setAttribute("aria-current",a.dataset.v===v||(v==="revision"&&a.dataset.v==="accueil")||(v==="nature"&&a.dataset.v==="coach")?"page":"false"));
   renderHeader();VIEWS[v]();
 }
 function softRefresh(){renderHeader();if(!quiz&&(current!=="vocab"||!vq||vq.i===0)){vq=null;VIEWS[current]()}}
