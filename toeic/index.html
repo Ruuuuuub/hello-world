@@ -314,6 +314,16 @@ details.skill .sk-name{flex:1;min-width:0}
 .natcard .nt{font-family:var(--f-display);font-size:1.25rem}
 .natcard.n1{border-top-color:var(--good)}.natcard.n2{border-top-color:var(--marker)}.natcard.n3{border-top-color:var(--bad)}
 .natgo .btn{width:100%}
+/* Coach 6-7 */
+.coachseg{display:flex;width:100%}
+.coachseg a{flex:1;text-align:center;text-decoration:none;padding:9px 10px;border-radius:9px;font-weight:700;font-size:.9rem;color:var(--ink-soft)}
+.coachseg a.on{background:var(--ink);color:var(--sheet)}
+mark.ev{background:var(--marker-wash);color:inherit;border-bottom:2px solid var(--marker);border-radius:3px;padding:0 .1em}
+mark.ev::before{content:attr(data-n);font-family:var(--f-mono);font-size:.68rem;font-weight:700;background:var(--marker);color:var(--marker-ink);border-radius:50%;display:inline-grid;place-items:center;width:17px;height:17px;margin-right:4px;vertical-align:1px}
+.evn{font-family:var(--f-mono);background:var(--marker);color:var(--marker-ink);border-radius:50%;padding:0 6px}
+.hint.compact{gap:8px}
+.hint.compact .hrow{display:grid;grid-template-columns:78px 1fr;gap:8px;align-items:baseline;font-size:.9rem}
+@media (max-width:420px){.hint.compact .hrow{grid-template-columns:1fr;gap:2px}}
 </style>
 </head>
 <body>
@@ -1802,6 +1812,79 @@ NA("C","frequently",3,"Fréquemment : adverbe.","frequent (adjectif) + -ly → a
 NA("C","hardly",3,"À peine : adverbe.","hardly n'est pas l'adverbe de hard au sens « dur » : il veut dire « à peine ».","Piège de sens : work hard (dur) ≠ hardly work (presque pas)."),
 NA("C","nearly",3,"Presque : adverbe (nearly 50 people).","Devant un nombre ou un adjectif → adverbe.","nearly (presque) ≠ near (près de).")
 ];
+
+/* ================= COACH PARTIES 6 ET 7 : les compétences ================= */
+const SKILLS67=[
+{id:"s6-temps",part:"p6",name:"Le temps du verbe dans un texte",spot:"Les 4 options sont le même verbe à des formes différentes (sends, sent, will send, sending).",rule:"En Part 6, le temps se décide avec le RESTE DU TEXTE : la date de l'e-mail, ce qui s'est déjà passé, ce qui va arriver. Puis vérifie actif ou passif.",steps:["Repère le moment : date du document, verbes des phrases voisines, mots comme next week ou yesterday.","Passé terminé → prétérit · à venir → will · depuis → present perfect.","Le sujet subit l'action (une commande, un document) → passif : be + participe."],ex:["« Your order {1} on March 12 and is now being processed. » → was received","« Our budget meeting {1} tomorrow. » → will take place"],trap:"Seule, la phrase accepte parfois plusieurs temps : c'est le texte autour qui tranche."},
+{id:"s6-nature",part:"p6",name:"La nature du mot dans un texte",spot:"Les 4 options ont la même racine (personal, personally, personality, personalize).",rule:"Comme en Part 5 : regarde les mots autour du trou. Article ou possessif + ___ → nom · ___ + nom → adjectif · ___ + verbe ou adjectif → adverbe · to / will + ___ → verbe.",steps:["Même racine → question de nature, pas besoin de lire tout le texte.","Lis 2 mots avant et 2 mots après le trou.","Applique la règle de place."],ex:["« Thank you for your {4}. » → cooperation (nom)","« badges are {4} » → personal (adjectif)"],trap:"Ne te laisse pas impressionner par la longueur du texte : ces questions se traitent en 10 secondes."},
+{id:"s6-link",part:"p6",name:"Mots de liaison et mots-outils",spot:"Les options sont de petits mots : however, despite, which, during, by, its…",rule:"Deux questions : 1) quel lien logique (cause, opposition, ajout, but, temps) entre les idées ? 2) qu'est-ce qui suit : un nom ou une phrase ? Après une virgule : which, jamais that.",steps:["Lis la phrase d'avant et la phrase du trou : quel lien entre les deux idées ?","Regarde ce qui suit le trou : un nom (despite, during, due to) ou sujet + verbe (although, while, because) ?","Pour les relatifs : chose → which, personne → who, possession → whose."],ex:["« {1} the national holiday » → in observance of","« {1}, the completion date will move » → As a result"],trap:"However, therefore, as a result relient deux PHRASES : ils sont suivis d'une virgule."},
+{id:"s6-voc",part:"p6",name:"Vocabulaire en contexte",spot:"Les 4 options sont des mots différents de même nature (milestone, millstone…).",rule:"La grammaire ne suffit pas : c'est le sens du texte qui décide. Cherche le mot qui va avec le complément et avec l'idée générale du document.",steps:["Lis la phrase entière et la phrase d'avant.","Remplace le trou par chaque option et traduis rapidement.","Méfie-toi des mots qui se ressemblent à l'écrit."],ex:["« celebrating this {4} » (une inauguration) → milestone","« eco-friendly products {4} for only 18 percent » → accounted"],trap:"Les mots presque identiques (milestone / millstone) sont des pièges volontaires."},
+{id:"s6-insert",part:"p6",name:"La phrase à insérer",spot:"Les 4 options sont des phrases complètes.",rule:"La bonne phrase fait le LIEN entre la phrase d'avant et celle d'après : même sujet, pronoms (this, they, them) qui renvoient à quelque chose juste avant, mot de liaison logique (In return, However).",steps:["Lis la phrase AVANT et la phrase APRÈS le trou.","Élimine les phrases hors sujet ou qui ouvrent une idée jamais reprise.","Vérifie que les pronoms et les mots de liaison de la phrase choisie ont du sens."],ex:["Après « …the public garage on Elm Street. » → « Parking fees at the garage will be reimbursed… »"],trap:"Une phrase vraie et liée au thème général peut être fausse à CET endroit précis."},
+{id:"s7-main",part:"p7",name:"Le sujet ou le but du document",spot:"What is the article mainly about? · What is the purpose of…? · Why was the e-mail written?",rule:"La réponse est dans le titre, l'objet de l'e-mail ou les deux premières phrases. Choisis l'option la plus GÉNÉRALE qui couvre tout le document.",steps:["Lis le titre ou l'objet, puis la première phrase.","Résume le document en 4 mots dans ta tête.","Élimine les options qui ne parlent que d'un détail."],ex:["« Why did Ms. Liu write the letter? » → To request a solution for a damaged product"],trap:"Une option qui reprend un détail vrai du texte est trop étroite : ce n'est pas le sujet principal."},
+{id:"s7-detail",part:"p7",name:"Un détail précis",spot:"What / When / Where / Why / How much… sur un fait précis du texte.",rule:"Souligne le mot-clé de la question, cherche-le dans le texte (ou un synonyme), puis lis la phrase entière. La bonne réponse reformule souvent avec d'autres mots.",steps:["Repère le mot-clé (le nom, la date, la personne).","Scanne le texte jusqu'à le trouver, sans tout relire.","Compare la phrase trouvée aux options : choisis la reformulation."],ex:["« bigger meeting room » → « A larger meeting room »"],trap:"Les mauvaises options reprennent souvent les MÊMES mots que le texte, mais pour dire autre chose."},
+{id:"s7-true",part:"p7",name:"Ce qui est indiqué (vrai)",spot:"What is indicated / stated / true about X?",rule:"Trois options sont fausses ou non mentionnées. Va au passage qui parle de X et vérifie chaque option une par une.",steps:["Trouve où le texte parle de X.","Vérifie chaque option : vraie, fausse, ou absente ?","Garde la seule qui est clairement écrite (même reformulée)."],ex:["« What is indicated about the reception? » → Anyone can attend (« open to the public »)"],trap:"« Non mentionné » compte comme faux, même si c'est logique."},
+{id:"s7-not",part:"p7",name:"Les questions NOT",spot:"La question contient NOT en majuscules.",rule:"Trouve dans le texte les 3 options qui SONT présentes et élimine-les. La 4ᵉ, absente ou fausse, est la réponse. Ces questions prennent du temps : garde-les pour la fin si tu es en retard.",steps:["Lis les 4 options.","Coche dans le texte chaque option trouvée.","Celle qui reste est la bonne réponse."],ex:["« What is NOT mentioned as a responsibility? » → Hiring new staff"],trap:"Lis bien le NOT : on cherche ce qui manque, pas ce qui est écrit."},
+{id:"s7-infer",part:"p7",name:"La déduction",spot:"What is suggested / implied…? · Who most likely…? · What will probably…?",rule:"La réponse n'est pas écrite mot pour mot, mais elle découle d'un indice clair : une date, un mot comme « second », « again », « their ». Ne va jamais plus loin que ce que le texte permet.",steps:["Repère l'indice dans le texte (un mot, un chiffre, un pronom).","Demande-toi ce qu'il implique de façon évidente.","Élimine les options qui demandent d'imaginer des choses."],ex:["« her second restaurant » → She already owns a restaurant"],trap:"Une déduction trop audacieuse est fausse : il faut une preuve écrite."},
+{id:"s7-intent",part:"p7",name:"« Que veut dire… ? » (messageries)",spot:"At 10:19, what does X mean when he writes, « … »?",rule:"Relis le message JUSTE AVANT la citation : la phrase y répond. Cherche l'intention (accord, refus, surprise, inquiétude), pas le sens mot à mot.",steps:["Retrouve la citation et l'heure.","Lis le message juste avant, puis celui juste après.","Choisis l'intention qui relie les deux."],ex:["« Good call » après une suggestion → Elle approuve l'idée","« On it » après une demande → Je m'en occupe tout de suite"],trap:"Le sens littéral de l'expression (« Good call » = un bon appel téléphonique) est presque toujours le piège."},
+{id:"s7-syn",part:"p7",name:"Le synonyme dans le texte",spot:"The word « X » in paragraph 1, line 3, is closest in meaning to…",rule:"Retrouve la phrase, puis remplace le mot par chaque option : garde celle qui conserve le sens DANS CETTE PHRASE.",steps:["Va à la ligne indiquée et lis toute la phrase.","Remplace le mot par chaque option.","Garde celle qui ne change pas le sens."],ex:["« commit to a five-year lease » → pledge","« resolve billing issues » → settle"],trap:"Le sens le plus courant du mot est souvent faux ici (commit ≠ commettre, cut ≠ couper)."},
+{id:"s7-insert",part:"p7",name:"Placer une phrase [1] à [4]",spot:"In which of the positions marked [1], [2], [3], and [4] does the following sentence best belong?",rule:"Cherche dans la phrase à placer les mots qui renvoient à autre chose : This, These, Its, also, even, In addition, un nom déjà cité. Place-la JUSTE APRÈS ce à quoi elle renvoie.",steps:["Lis la phrase à placer et souligne ses mots de renvoi (Its, also, these…).","Trouve dans le texte la phrase à laquelle ils renvoient.","Choisis la position juste après."],ex:["« She also visits each farm » → juste après le passage sur les fermes"],trap:"Avec « also » ou « even », la phrase suit forcément une phrase sur le même sujet."},
+{id:"s7-cross",part:"p7",name:"Croiser les documents et calculer",spot:"Double ou triple document, avec un prix, une date, une quantité ou une condition.",rule:"La réponse combine une info de CHAQUE document : une règle (tarif, date limite, remise, plafond) dans l'un, une situation (date, nombre de personnes) dans l'autre. Note les deux, puis calcule.",steps:["Repère la règle dans un document (tarif, condition, date limite).","Repère la situation dans l'autre (date de l'e-mail, quantité, besoin).","Applique la règle à la situation, puis calcule."],ex:["E-mail du 20 mars + tarif « early » jusqu'au 15 mars → tarif standard","25 personnes × 22 $ = 550 $"],trap:"Le chiffre écrit dans un document est rarement la réponse : il faut appliquer la condition."}
+];
+const SK67_BY_ID={};SKILLS67.forEach(s=>SK67_BY_ID[s.id]=s);
+const QS=(sk,...x)=>Object.assign(Q(...x),{sk});
+
+/* ================= 10 nouveaux documents de Part 7 ================= */
+READS.push(
+{title:"Messagerie : un traiteur en retard",docs:[{h:"Text message chain",b:"Sam Patel (9:03 A.M.)\nThe caterer just called. They can't deliver the lunch for the board meeting until 1 P.M.\n\nAlicia Gómez (9:05 A.M.)\nThe meeting starts at 12. Do they have anything earlier?\n\nSam Patel (9:06 A.M.)\nNot for 20 people.\n\nAlicia Gómez (9:08 A.M.)\nThen let's push the meeting back an hour. I'll let the directors know.\n\nSam Patel (9:09 A.M.)\nThat works. I'll confirm with the caterer."}],qs:[
+QS("s7-detail","What problem does Mr. Patel mention?",["A delivery will be late","A meeting was canceled","The order is too small","The caterer is closed"],0,"« They can't deliver the lunch … until 1 P.M. »",["Livraison à 13 h pour une réunion à midi.","Elle est décalée, pas annulée.","Non.","Il a appelé, il est ouvert."],"can't … until = pas avant : c'est un retard."),
+QS("s7-intent","At 9:06 A.M., what does Mr. Patel mean when he writes, « Not for 20 people »?",["An earlier delivery is not possible for a group that size","Fewer people will attend","The room holds only 20 people","The caterer needs 20 more orders"],0,"Il répond à « Do they have anything earlier? »",["Rien plus tôt pour 20 personnes.","Non.","Il ne parle pas de la salle.","Non."],"Relis la question juste avant la citation : la réponse s'y rattache."),
+QS("s7-intent","At 9:09 A.M., what does Mr. Patel mean when he writes, « That works »?",["He agrees with changing the meeting time","The phone works again","He has finished his task","The caterer is open"],0,"Il répond à « let's push the meeting back an hour ».",["Il approuve.","Sens littéral : piège.","Non.","Non."],"« That works » = ça me va.")]},
+{h:1,title:"Discussion en ligne : des brochures erronées",docs:[{h:"Online chat · Marketing team",b:"Diane Wells [10:15]: The printer sent the brochures with last year's prices on page 4.\nOmar Said [10:16]: Oh no. The trade show is on Thursday.\nDiane Wells [10:17]: They can reprint them, but not before Friday.\nKeiko Mori [10:18]: What about adding a printed price sheet inside each brochure?\nOmar Said [10:19]: Now you're talking. I can design one this afternoon.\nDiane Wells [10:20]: Great. Keiko, can you check how many brochures we have?\nKeiko Mori [10:21]: On it."}],qs:[
+QS("s7-detail","What is the problem with the brochures?",["They contain outdated prices","They arrived late","They are missing a page","They went to the wrong address"],0,"« with last year's prices on page 4 »",["last year's = outdated.","Non.","Piège : page 4 existe.","Non."],"last year's prices → outdated prices : reformulation."),
+QS("s7-intent","At 10:19, what does Mr. Said mean when he writes, « Now you're talking »?",["He likes Ms. Mori's idea","He wants to speak now","He disagrees","He is joining a call"],0,"Il répond à la proposition de Ms. Mori et propose de dessiner la fiche.",["Il approuve l'idée.","Sens littéral.","Contraire.","Non."],"« Now you're talking » = voilà une bonne idée."),
+QS("s7-intent","At 10:21, what does Ms. Mori mean when she writes, « On it »?",["She will do the task right away","The price is on the brochure","She is at the trade show","The brochures are on her desk"],0,"Elle répond à « can you check how many brochures we have? »",["Je m'en occupe.","Sens littéral.","Non.","Sens littéral."],"« On it » = je m'en occupe tout de suite."),
+QS("s7-infer","What will most likely be included with the brochures at the trade show?",["A separate list of current prices","A discount coupon","A new cover","A product sample"],0,"Idée acceptée : « adding a printed price sheet inside each brochure ».",["Fiche de prix.","Non.","Non.","Non."],"Suis le fil : proposition → accord → c'est ce qui va se faire.")]},
+{title:"Messagerie : une signature oubliée",docs:[{h:"Text message chain",b:"Hannah Cole (3:40 P.M.)\nAre you still at the client's office? They wanted the signed contract back today.\n\nMarcus Lee (3:42 P.M.)\nJust left. I forgot to get Mr. Ruiz's signature on page 6.\n\nHannah Cole (3:43 P.M.)\nSeriously? Can you go back?\n\nMarcus Lee (3:44 P.M.)\nHe's in meetings until 6. I'll e-mail him the page and he can sign it electronically.\n\nHannah Cole (3:45 P.M.)\nI suppose that will have to do."}],qs:[
+QS("s7-detail","What did Mr. Lee forget to do?",["Get a signature","Print page 6","Send an invoice","Attend a meeting"],0,"« I forgot to get Mr. Ruiz's signature »",["Dit explicitement.","Piège : page 6 existe.","Non.","Non."],"Ne choisis pas une option juste parce qu'elle reprend un mot (page 6)."),
+QS("s7-intent","At 3:43 P.M., what does Ms. Cole most likely mean when she writes, « Seriously? »?",["She is surprised and unhappy","She is joking","She does not believe the client","She wants details about page 6"],0,"Elle réagit à l'oubli, puis demande de retourner au bureau.",["Surprise et agacement.","Non.","Non.","Non."],"Le message suivant (« Can you go back? ») confirme l'intention."),
+QS("s7-intent","At 3:45 P.M., what does Ms. Cole mean when she writes, « I suppose that will have to do »?",["She accepts the solution although it is not ideal","She will go to the office herself","She refuses the plan","The contract is finished"],0,"Elle réagit à la signature électronique proposée.",["Elle accepte à contrecœur.","Non.","Contraire.","Non."],"« I suppose » + « will have to do » = acceptation sans enthousiasme.")]},
+{h:1,title:"Article : la bibliothèque prête des outils",docs:[{h:"GREENVILLE GAZETTE",b:"The city's public library will begin lending more than books next month. [1] Starting March 1, residents with a library card can borrow tools such as drills, ladders, and garden equipment for up to one week. [2] The program, funded by a grant from a local hardware store, is intended to help residents who need a tool only occasionally. [3] « Many people buy expensive equipment they use once a year, » said head librarian Paula Ortiz. « Sharing makes more sense. » [4] Tools can be reserved online and must be picked up at the Main Street branch."}],qs:[
+QS("s7-main","What is the article mainly about?",["A new lending service","A hardware store opening","A library renovation","A gardening class"],0,"« The library will begin lending more than books »",["Nouveau service de prêt.","Le magasin finance, n'ouvre pas.","Non.","Non."],"Résume en 4 mots : « prêt d'outils à la bibliothèque »."),
+QS("s7-detail","How long can residents keep a tool?",["Up to one week","One month","One year","One day"],0,"« for up to one week »",["Dit explicitement.","Non.","Piège : « once a year ».","Non."],"Les chiffres d'une citation (once a year) sont des pièges classiques."),
+QS("s7-syn","The word « intended » in the article is closest in meaning to",["designed","expected","pretended","hired"],0,"« is intended to help residents » = conçu pour aider.",["Conçu pour.","Attendu : sens différent.","Faux ami avec « prétendre ».","Non."],"Remplace : « is designed to help » garde le sens."),
+QS("s7-insert","In which of the positions marked [1], [2], [3], and [4] does the following sentence best belong? « In addition to these tools, the library will offer sewing machines and cameras. »",["[2]","[1]","[3]","[4]"],0,"« these tools » renvoie à la liste « drills, ladders, and garden equipment ».",["Juste après la liste.","Avant qu'on cite des outils.","Coupe le lien programme → citation.","Trop loin de la liste."],"« these + nom » : place la phrase juste après l'endroit où ce nom est cité.")]},
+{title:"Lettre : locaux commerciaux",docs:[{h:"Maple Court Shopping Center",b:"Dear Ms. Bauer,\n\nThank you for your interest in renting space at Maple Court Shopping Center. [1] As requested, I have enclosed a floor plan of the two units currently available, along with a price list. [2] Unit 12, on the ground floor, offers 80 square meters and large windows facing the main entrance. [3] Unit 27 is slightly larger but is located on the second floor near the food court. [4] Both units can be viewed on weekdays between 10 A.M. and 4 P.M.\n\nPlease contact me to arrange a visit.\n\nSincerely,\nRobert Klein, Leasing Manager"}],qs:[
+QS("s7-main","What is the purpose of the letter?",["To provide information about available spaces","To request a rent payment","To announce a closure","To invite a tenant to an event"],0,"Plan, prix et description des deux locaux disponibles.",["But de la lettre.","Non.","Non.","Non."],"Une réponse à une demande d'information : « As requested »."),
+QS("s7-not","What is NOT mentioned about Unit 12?",["Its monthly rent","Its size","Its floor","Its windows"],0,"Taille (80 m²), étage (ground floor), fenêtres : présents. Le loyer est seulement dans la liste jointe.",["Absent du texte.","80 square meters.","ground floor.","large windows."],"Coche chaque option trouvée : la dernière restante est la réponse."),
+QS("s7-syn","The word « facing » in paragraph 1, line 4, is closest in meaning to",["looking toward","confronting","covering","avoiding"],0,"« windows facing the main entrance » = qui donnent sur l'entrée.",["Orientées vers.","Affronter : autre sens.","Non.","Contraire."],"Le sens « affronter » est le piège : pense à l'orientation."),
+QS("s7-insert","In which of the positions marked [1], [2], [3], and [4] does the following sentence best belong? « It is particularly popular with clothing stores because of its visibility. »",["[3]","[1]","[2]","[4]"],0,"« its visibility » : les grandes fenêtres sur l'entrée du local 12.",["Juste après la description du local 12.","Aucun local décrit.","Avant la description.","Après le local 27, au 2ᵉ étage : pas visible."],"« It / its » doit renvoyer au nom qui précède immédiatement.")]},
+{h:1,title:"Article : les idées des salariés",docs:[{h:"INDUSTRY WEEKLY",b:"Last year, Hollis Manufacturing introduced a program that allows employees to suggest improvements to the production process. [1] Any employee whose idea is adopted receives a bonus of 5 percent of the savings it generates in the first year. [2] So far, staff have submitted more than 400 suggestions, and 37 have been put into practice. [3] One of them, a new way of storing spare parts, has already cut machine repair times by half. [4] Managers say the program has also improved morale, as workers feel their experience is valued."}],qs:[
+QS("s7-true","What is indicated about the program?",["Employees are rewarded for useful ideas","Only managers can take part","It started five years ago","All suggestions were adopted"],0,"« receives a bonus of 5 percent of the savings »",["Prime pour les idées retenues.","Tous les employés.","Last year.","37 sur 400."],"Vérifie chaque option : 3 sont fausses."),
+QS("s7-syn","The word « adopted » in line 2 is closest in meaning to",["accepted","raised","adapted","borrowed"],0,"« whose idea is adopted » = retenue, acceptée.",["Acceptée.","Non.","Piège : adapter, mot proche à l'écrit.","Non."],"adopt ≠ adapt : piège fréquent."),
+QS("s7-syn","The word « cut » in line 4 is closest in meaning to",["reduced","divided","injured","removed"],0,"« cut repair times by half » = réduit de moitié.",["Réduit.","Divisé : pas le sens ici.","Blessé : sens littéral.","Supprimé : trop fort."],"Remplace dans la phrase : « reduced repair times by half »."),
+QS("s7-insert","In which of the positions marked [1], [2], [3], and [4] does the following sentence best belong? « Its author, a machine operator with twenty years at the company, received over $8,000. »",["[4]","[1]","[2]","[3]"],0,"« Its author » renvoie à « a new way of storing spare parts ».",["Juste après l'idée citée.","Aucune idée citée.","Aucune idée précise.","Avant la description de l'idée."],"Its / Their / This en tête de phrase : trouve à quoi ils renvoient.")]},
+{title:"Avis : travaux au parking",docs:[{h:"ATTENTION ALL TENANTS · Riverside Office Park",b:"The parking garage will undergo resurfacing work from June 3 to June 14. During this period, Levels 1 and 2 will be closed. Tenants may park on Level 3 or in the overflow lot behind Building C, which will be open from 6 A.M. to 10 P.M. A free shuttle will run every 15 minutes between the overflow lot and the main entrance.\n\nVehicles left on Levels 1 or 2 after 7 P.M. on June 2 will be towed at the owner's expense. Questions may be directed to the property office at extension 400."}],qs:[
+QS("s7-detail","Why will part of the garage be closed?",["For surface repairs","For a special event","Because of flooding","For painting"],0,"« will undergo resurfacing work »",["resurfacing = réfection du sol.","Non.","Non.","Non."],"undergo work = faire l'objet de travaux."),
+QS("s7-not","What is NOT mentioned as an option for tenants?",["Parking on the street","Parking on Level 3","Using the lot behind Building C","Taking a shuttle"],0,"Level 3, le parking derrière le bâtiment C et la navette sont cités.",["Absent.","Cité.","Cité.","Cité."],"Question NOT : cherche les 3 présentes."),
+QS("s7-not","What is NOT indicated about the overflow lot?",["It has security guards","It is behind Building C","It opens at 6 A.M.","A shuttle serves it"],0,"Lieu, horaires et navette sont écrits ; pas de gardiens.",["Absent.","Cité.","Cité.","Cité."],"Les options plausibles mais absentes sont les réponses des questions NOT."),
+QS("s7-syn","The word « directed » in paragraph 2, line 2, is closest in meaning to",["sent","managed","ordered","pointed out"],0,"« Questions may be directed to the property office » = envoyées.",["Adressées, envoyées.","Dirigées (une équipe) : autre sens.","Ordonnées.","Non."],"Plusieurs sens possibles : seul « sent » marche dans CETTE phrase.")]},
+{h:1,title:"Double : cours de langue",docs:[{h:"BRIGHTSIDE LANGUAGE SCHOOL · Autumn courses",b:"Group course (8 weeks, 2 evenings a week): $320\nIntensive course (4 weeks, 5 mornings a week): $480\nPrivate lessons: $45 per hour (minimum 10 hours)\n\nRegister before September 1 and save 10%. Course materials are included in group and intensive courses only."},{h:"From: Tomás Rivera\nTo: Brightside Language School\nDate: August 25\nSubject: English courses",b:"Hello,\n\nI work during the day, so I can only attend classes in the evening. I would like to improve my business English before a job interview in November. Could you tell me the total cost of the course that fits my schedule, and whether I need to buy a textbook?\n\nThank you,\nTomás Rivera"}],qs:[
+QS("s7-cross","Which course is most suitable for Mr. Rivera?",["The group course","The intensive course","Private lessons","None of them"],0,"Il ne peut venir que le soir → seul le cours en groupe est le soir.",["2 soirs par semaine.","Le matin.","Horaires non précisés et plus chers.","Non."],"Croise le besoin (le soir) avec le tableau."),
+QS("s7-cross","How much will Mr. Rivera most likely pay?",["$288","$320","$432","$450"],0,"E-mail du 25 août, avant le 1ᵉʳ septembre → −10 % : 320 × 0,9 = 288 $.",["Bon calcul.","Oublie la remise.","Intensif −10 %.","10 h de cours privés."],"Vérifie toujours la date de l'e-mail par rapport aux dates limites."),
+QS("s7-cross","Will Mr. Rivera need to buy a textbook?",["No, materials are included","Yes, for $45","Only after September 1","The documents do not say"],0,"« Course materials are included in group and intensive courses ».",["Inclus dans le cours en groupe.","45 $ = prix horaire des cours privés.","Non.","C'est indiqué."],"La réponse est dans le 1ᵉʳ document, la question dans le 2ᵉ."),
+QS("s7-syn","In the first document, the word « save » is closest in meaning to",["pay less","keep","rescue","store"],0,"« Register before September 1 and save 10% » = payer 10 % de moins.",["Économiser.","Garder.","Sauver.","Stocker."],"save a 3 sens : économiser, sauver, sauvegarder. Le contexte (10 %) décide.")]},
+{h:1,title:"Triple : cours de sport",docs:[{h:"WESTFIELD COMMUNITY CENTER · Fitness classes (Monday–Friday)",b:"Yoga · 7:00–8:00 A.M. · Room A\nPilates · 12:15–1:00 P.M. · Room B\nSpinning · 6:00–7:00 P.M. · Room C\nZumba · 7:30–8:30 P.M. · Room A\nMembers: free · Non-members: $8 per class"},{h:"From: Leah Grant\nTo: Westfield Community Center\nSubject: Classes",b:"Hello,\n\nI recently moved to the area and I'm not a member yet. I work from 9 to 5 and have a one-hour lunch break starting at noon. I'd like to take a class during my break and another one after work, but I need to be home by 8 P.M. to put my children to bed. Which classes would you recommend?\n\nThanks,\nLeah"},{h:"MEMBERSHIP FORM",b:"Annual membership: $120 · Monthly membership: $15\nMembers enjoy free fitness classes, free use of the pool, and 20% off workshops."}],qs:[
+QS("s7-main","Why did Ms. Grant write the e-mail?",["To ask for class recommendations","To cancel her membership","To complain about a class","To apply for a job"],0,"« Which classes would you recommend? »",["But de l'e-mail.","Elle n'est pas membre.","Non.","Non."],"Le but est souvent la question posée à la fin."),
+QS("s7-cross","Which classes are most suitable for Ms. Grant?",["Pilates and Spinning","Yoga and Zumba","Pilates and Zumba","Spinning and Zumba"],0,"Pause 12 h–13 h → Pilates (12 h 15). Après 17 h et chez elle à 20 h → Spinning (18 h–19 h).",["Les deux horaires conviennent.","Yoga avant le travail, Zumba finit à 20 h 30.","Zumba trop tard.","Zumba trop tard."],"Écris les contraintes (pause, retour à 20 h), puis coche le tableau."),
+QS("s7-cross","If Ms. Grant takes two classes a week for four weeks without joining, how much will she pay?",["$64","$15","$16","$120"],0,"2 × 4 = 8 cours × 8 $ = 64 $.",["Bon calcul.","Abonnement mensuel.","Une seule semaine.","Abonnement annuel."],"Compte d'abord le nombre de cours, puis multiplie."),
+QS("s7-infer","What would most likely be the best choice for Ms. Grant?",["Buying a monthly membership","Paying for each class","Taking only yoga","Joining a pool club"],0,"64 $ par mois sans abonnement contre 15 $ avec : l'abonnement est bien moins cher.",["Déduction logique.","Bien plus cher.","Horaire incompatible.","Non."],"Une déduction s'appuie sur un calcul ou un indice écrit."),
+QS("s7-not","What is NOT a benefit of membership?",["Free parking","Free classes","Use of the pool","Discounts on workshops"],0,"Le formulaire cite les cours, la piscine et −20 % sur les ateliers.",["Absent.","Cité.","Cité.","Cité."],"Les 3 avantages sont dans la même phrase : coche-les.")]},
+{title:"Double : hôtel et avis client",docs:[{h:"HOTEL MIRADOR · Room types",b:"Standard room · city view · $140/night\nSuperior room · sea view · $185/night\nFamily suite · sea view, two bedrooms · $260/night\n\nAll rates include breakfast. Guests staying three nights or more receive a free airport transfer."},{h:"Guest review · ★★★★☆ · posted by K. Andersen",b:"We stayed at the Mirador for two nights in a superior room. The view of the bay was breathtaking, and the breakfast was excellent. The only drawback was the noise from the street below in the early morning. We took a taxi from the airport, which cost us about $40. Next time we will stay longer and take advantage of the hotel's offer."}],qs:[
+QS("s7-syn","In the review, the word « drawback » is closest in meaning to",["disadvantage","return","delay","picture"],0,"« The only drawback was the noise » = le seul inconvénient.",["Inconvénient.","Non.","Non.","Non."],"Le contexte négatif (the noise) donne le sens."),
+QS("s7-cross","How much did Mr. Andersen most likely pay for his room in total?",["$370","$185","$280","$555"],0,"Chambre supérieure 185 $ × 2 nuits = 370 $.",["Bon calcul.","Une nuit.","2 nuits en standard.","3 nuits."],"Le type de chambre est dans l'avis, le prix dans le tableau."),
+QS("s7-infer","What offer does Mr. Andersen most likely refer to?",["A free ride from the airport","Free breakfast","A room upgrade","A discount on suites"],0,"Il a payé un taxi et restera plus longtemps : 3 nuits ou plus = transfert gratuit.",["Déduction par les deux documents.","Déjà inclus.","Non.","Non."],"« stay longer » + « three nights or more » : relie les deux."),
+QS("s7-not","What is NOT mentioned in the review?",["The size of the room","The view","The breakfast","The noise"],0,"Vue, petit-déjeuner, bruit : cités.",["Absent.","Cité.","Cité.","Cité."],"Pour une question NOT sur un document précis, ne regarde que ce document.")]}
+);
 const AUDIO={"p2:0":{"f":"audio/p2-0.mp3","s":[[0.15,1.85],[2.3,3.66],[4.11,5.49],[5.94,7.14],[7.59,7.87],[8.32,8.62],[9.07,9.45]]},"p2:1":{"f":"audio/p2-1.mp3","s":[[0.15,2.16],[2.61,3.93],[4.38,5.16],[5.61,7.07],[7.52,7.82],[8.27,8.54],[8.99,9.38]]},"p2:2":{"f":"audio/p2-2.mp3","s":[[0.15,1.83],[2.28,3.53],[3.98,5.43],[5.88,7.33],[7.78,8.14],[8.59,8.88],[9.33,9.72]]},"p2:3":{"f":"audio/p2-3.mp3","s":[[0.15,1.58],[2.03,3.0],[3.45,5.02],[5.47,6.36],[6.81,6.81],[7.26,7.44],[7.89,8.14]]},"p2:4":{"f":"audio/p2-4.mp3","s":[[0.15,1.63],[2.08,3.18],[3.63,4.57],[5.02,5.99],[6.44,6.78],[7.23,7.62],[8.07,8.57]]},"p2:5":{"f":"audio/p2-5.mp3","s":[[0.15,1.4],[1.85,3.32],[3.77,5.32],[5.77,7.13],[7.58,7.87],[8.32,8.68],[9.13,9.52]]},"p2:6":{"f":"audio/p2-6.mp3","s":[[0.15,2.14],[2.59,4.51],[4.96,6.64],[7.09,8.27],[8.72,9.0],[9.45,9.75],[10.2,10.59]]},"p2:7":{"f":"audio/p2-7.mp3","s":[[0.15,2.4],[2.85,3.9],[4.35,5.55],[6.0,6.74],[7.19,7.49],[7.94,8.21],[8.66,9.05]]},"p2:8":{"f":"audio/p2-8.mp3","s":[[0.15,1.66],[2.11,3.16],[3.61,5.18],[5.63,6.61],[7.06,7.42],[7.87,8.16],[8.61,8.99]]},"p2:9":{"f":"audio/p2-9.mp3","s":[[0.15,1.87],[2.32,3.47],[3.92,4.89],[5.34,6.62],[7.07,7.07],[7.52,7.7],[8.15,8.41]]},"p2:10":{"f":"audio/p2-10.mp3","s":[[0.15,1.29],[1.74,2.69],[3.14,4.49],[4.94,6.49],[6.94,7.29],[7.74,8.13],[8.58,9.07]]},"p2:11":{"f":"audio/p2-11.mp3","s":[[0.15,1.84],[2.29,3.42],[3.87,4.65],[5.1,6.12],[6.57,6.86],[7.31,7.67],[8.12,8.52]]},"p2:12":{"f":"audio/p2-12.mp3","s":[[0.15,1.66],[2.11,3.56],[4.01,4.42],[4.87,6.73],[7.18,7.47],[7.92,8.21],[8.66,9.05]]},"p2:13":{"f":"audio/p2-13.mp3","s":[[0.15,2.04],[2.49,3.82],[4.27,5.15],[5.6,6.47],[6.92,7.22],[7.67,7.95],[8.4,8.79]]},"p2:14":{"f":"audio/p2-14.mp3","s":[[0.15,1.75],[2.2,4.15],[4.6,5.76],[6.21,7.43],[7.88,8.24],[8.69,8.98],[9.43,9.82]]},"p2:15":{"f":"audio/p2-15.mp3","s":[[0.15,2.05],[2.5,3.7],[4.15,5.55],[6.0,6.99],[7.44,7.44],[7.89,8.07],[8.52,8.77]]},"p2:16":{"f":"audio/p2-16.mp3","s":[[0.15,1.65],[2.1,3.63],[4.08,5.1],[5.55,6.96],[7.41,7.75],[8.2,8.59],[9.04,9.54]]},"p2:17":{"f":"audio/p2-17.mp3","s":[[0.15,1.93],[2.38,4.23],[4.68,5.54],[5.99,7.02],[7.47,7.76],[8.21,8.57],[9.02,9.41]]},"p2:18":{"f":"audio/p2-18.mp3","s":[[0.15,2.12],[2.57,3.63],[4.08,4.75],[5.2,5.87],[6.32,6.6],[7.05,7.35],[7.8,8.18]]},"p2:19":{"f":"audio/p2-19.mp3","s":[[0.15,2.11],[2.56,3.56],[4.01,5.54],[5.99,7.01],[7.46,7.76],[8.21,8.48],[8.93,9.32]]},"p2:20":{"f":"audio/p2-20.mp3","s":[[0.15,1.81],[2.26,3.52],[3.97,4.98],[5.43,6.85],[7.3,7.66],[8.11,8.4],[8.85,9.24]]},"p2:21":{"f":"audio/p2-21.mp3","s":[[0.15,1.4],[1.85,2.97],[3.42,4.5],[4.95,5.84],[6.29,6.29],[6.74,6.92],[7.37,7.62]]},"p2:22":{"f":"audio/p2-22.mp3","s":[[0.15,1.17],[1.62,2.72],[3.17,4.06],[4.51,5.66],[6.11,6.45],[6.9,7.3],[7.75,8.24]]},"p2:23":{"f":"audio/p2-23.mp3","s":[[0.15,1.52],[1.97,3.4],[3.85,4.85],[5.3,6.26],[6.71,7.0],[7.45,7.81],[8.26,8.65]]},"p2:24":{"f":"audio/p2-24.mp3","s":[[0.15,2.19],[2.64,4.4],[4.85,5.88],[6.33,7.69],[8.14,8.42],[8.87,9.17],[9.62,10.01]]},"p2:25":{"f":"audio/p2-25.mp3","s":[[0.15,1.93],[2.38,4.01],[4.46,5.6],[6.05,6.99],[7.44,7.74],[8.19,8.47],[8.92,9.31]]},"p2:26":{"f":"audio/p2-26.mp3","s":[[0.15,1.67],[2.12,3.36],[3.81,4.99],[5.44,6.33],[6.78,7.14],[7.59,7.88],[8.33,8.72]]},"p2:27":{"f":"audio/p2-27.mp3","s":[[0.15,1.57],[2.02,3.75],[4.2,5.43],[5.88,7.25],[7.7,7.7],[8.15,8.33],[8.78,9.03]]},"p2:28":{"f":"audio/p2-28.mp3","s":[[0.15,1.46],[1.91,3.26],[3.71,4.83],[5.28,6.48],[6.93,7.28],[7.73,8.12],[8.57,9.06]]},"p2:29":{"f":"audio/p2-29.mp3","s":[[0.15,1.48],[1.93,3.99],[4.44,5.69],[6.14,7.14],[7.59,7.88],[8.33,8.68],[9.13,9.53]]},"p2:30":{"f":"audio/p2-30.mp3","s":[[0.15,1.88],[2.33,3.9],[4.35,5.34],[5.79,7.01],[7.46,7.75],[8.2,8.49],[8.94,9.33]]},"p2:31":{"f":"audio/p2-31.mp3","s":[[0.15,2.91],[3.36,4.5],[4.95,6.06],[6.51,7.34],[7.79,8.09],[8.54,8.82],[9.27,9.66]]},"p2:32":{"f":"audio/p2-32.mp3","s":[[0.15,1.76],[2.21,3.59],[4.04,5.18],[5.63,6.82],[7.27,7.63],[8.08,8.37],[8.82,9.2]]},"p2:33":{"f":"audio/p2-33.mp3","s":[[0.15,1.53],[1.98,3.24],[3.69,4.89],[5.34,6.13],[6.58,6.58],[7.03,7.21],[7.66,7.91]]},"p2:34":{"f":"audio/p2-34.mp3","s":[[0.15,2.02],[2.47,3.79],[4.24,5.7],[6.15,7.59],[8.04,8.38],[8.83,9.22],[9.67,10.17]]},"p2:35":{"f":"audio/p2-35.mp3","s":[[0.15,2.86],[3.31,4.75],[5.2,6.19],[6.64,7.76],[8.21,8.5],[8.95,9.31],[9.76,10.15]]},"p2:36":{"f":"audio/p2-36.mp3","s":[[0.15,2.43],[2.88,4.27],[4.72,5.94],[6.39,7.75],[8.2,8.48],[8.93,9.23],[9.68,10.07]]},"p2:37":{"f":"audio/p2-37.mp3","s":[[0.15,2.79],[3.24,4.14],[4.59,5.7],[6.15,7.08],[7.53,7.84],[8.29,8.56],[9.01,9.4]]},"p2:38":{"f":"audio/p2-38.mp3","s":[[0.15,1.97],[2.42,3.97],[4.42,5.72],[6.17,7.34],[7.79,8.15],[8.6,8.89],[9.34,9.73]]},"p2:39":{"f":"audio/p2-39.mp3","s":[[0.15,2.1],[2.55,3.64],[4.09,5.33],[5.78,6.78],[7.23,7.23],[7.68,7.86],[8.31,8.56]]},"p2:40":{"f":"audio/p2-40.mp3","s":[[0.15,1.89],[2.34,4.13],[4.58,5.53],[5.98,7.44],[7.89,8.23],[8.68,9.07],[9.52,10.02]]},"p2:41":{"f":"audio/p2-41.mp3","s":[[0.15,1.72],[2.17,3.71],[4.16,5.45],[5.9,6.98],[7.43,7.72],[8.17,8.53],[8.98,9.38]]},"p2:42":{"f":"audio/p2-42.mp3","s":[[0.15,1.88],[2.33,3.24],[3.69,4.6],[5.05,5.64],[6.09,6.37],[6.82,7.12],[7.57,7.96]]},"p2:43":{"f":"audio/p2-43.mp3","s":[[0.15,2.27],[2.72,3.41],[3.86,4.5],[4.95,5.82],[6.27,6.57],[7.02,7.29],[7.74,8.13]]},"p2:44":{"f":"audio/p2-44.mp3","s":[[0.15,2.06],[2.51,3.46],[3.91,5.0],[5.45,6.54],[6.99,7.35],[7.8,8.09],[8.54,8.92]]},"p2:45":{"f":"audio/p2-45.mp3","s":[[0.15,1.69],[2.14,2.87],[3.32,4.21],[4.66,5.75],[6.2,6.2],[6.65,6.83],[7.28,7.53]]},"p2:46":{"f":"audio/p2-46.mp3","s":[[0.15,1.02],[1.47,2.57],[3.02,4.33],[4.78,6.0],[6.45,6.79],[7.24,7.64],[8.09,8.58]]},"p2:47":{"f":"audio/p2-47.mp3","s":[[0.15,1.96],[2.41,3.24],[3.69,4.86],[5.31,6.36],[6.81,7.1],[7.55,7.9],[8.35,8.75]]},"p2:48":{"f":"audio/p2-48.mp3","s":[[0.15,1.91],[2.36,3.65],[4.1,5.39],[5.84,7.15],[7.6,7.88],[8.33,8.63],[9.08,9.47]]},"p2:49":{"f":"audio/p2-49.mp3","s":[[0.15,1.79],[2.24,2.8],[3.25,4.3],[4.75,5.66],[6.11,6.41],[6.86,7.13],[7.58,7.97]]},"p2:50":{"f":"audio/p2-50.mp3","s":[[0.15,1.78],[2.23,3.57],[4.02,5.23],[5.68,6.73],[7.18,7.54],[7.99,8.28],[8.73,9.11]]},"p2:51":{"f":"audio/p2-51.mp3","s":[[0.15,1.54],[1.99,2.67],[3.12,4.22],[4.67,5.51],[5.96,5.96],[6.41,6.59],[7.04,7.29]]},"p2:52":{"f":"audio/p2-52.mp3","s":[[0.15,1.87],[2.32,4.2],[4.65,6.11],[6.56,7.83],[8.28,8.62],[9.07,9.46],[9.91,10.41]]},"p2:53":{"f":"audio/p2-53.mp3","s":[[0.15,2.36],[2.81,4.05],[4.5,5.53],[5.98,7.7],[8.15,8.45],[8.9,9.25],[9.7,10.1]]},"p2:54":{"f":"audio/p2-54.mp3","s":[[0.15,1.77],[2.22,3.87],[4.32,5.42],[5.87,7.62],[8.07,8.36],[8.81,9.1],[9.55,9.94]]},"p2:55":{"f":"audio/p2-55.mp3","s":[[0.15,3.4],[3.85,4.79],[5.24,6.18],[6.63,7.68],[8.13,8.43],[8.88,9.15],[9.6,9.99]]},"p2:56":{"f":"audio/p2-56.mp3","s":[[0.15,1.7],[2.15,3.73],[4.18,5.28],[5.73,6.83],[7.28,7.64],[8.09,8.38],[8.83,9.22]]},"p2:57":{"f":"audio/p2-57.mp3","s":[[0.15,2.48],[2.93,4.66],[5.11,5.98],[6.43,7.34],[7.79,7.79],[8.24,8.42],[8.87,9.13]]},"p2:58":{"f":"audio/p2-58.mp3","s":[[0.15,2.35],[2.8,4.33],[4.78,6.24],[6.69,7.98],[8.43,8.77],[9.22,9.62],[10.07,10.56]]},"p2:59":{"f":"audio/p2-59.mp3","s":[[0.15,2.22],[2.67,4.0],[4.45,5.05],[5.5,6.54],[6.99,7.28],[7.73,8.09],[8.54,8.94]]},"p2:60":{"f":"audio/p2-60.mp3","s":[[0.15,2.52],[2.97,4.06],[4.51,5.7],[6.15,7.31],[7.76,8.05],[8.5,8.79],[9.24,9.63]]},"p2:61":{"f":"audio/p2-61.mp3","s":[[0.15,1.85],[2.3,3.29],[3.74,5.13],[5.58,6.59],[7.04,7.34],[7.79,8.06],[8.51,8.9]]},"p2:62":{"f":"audio/p2-62.mp3","s":[[0.15,2.15],[2.6,3.5],[3.95,5.54],[5.99,7.14],[7.59,7.95],[8.4,8.69],[9.14,9.52]]},"p2:63":{"f":"audio/p2-63.mp3","s":[[0.15,1.87],[2.32,3.52],[3.97,5.26],[5.71,6.68],[7.13,7.13],[7.58,7.76],[8.21,8.46]]},"p1:0":{"f":"audio/p1-0.mp3","s":[[0.15,1.6],[2.05,3.24],[3.69,5.2],[5.65,7.06],[7.51,7.8],[8.25,8.6],[9.05,9.45],[9.9,10.22]]},"p1:1":{"f":"audio/p1-1.mp3","s":[[0.15,2.0],[2.45,4.47],[4.92,6.39],[6.84,8.85],[9.3,9.59],[10.04,10.33],[10.78,11.17],[11.62,11.98]]},"p1:2":{"f":"audio/p1-2.mp3","s":[[0.15,1.15],[1.6,2.57],[3.02,4.58],[5.03,5.99],[6.44,6.74],[7.19,7.46],[7.91,8.3],[8.75,9.08]]},"p1:3":{"f":"audio/p1-3.mp3","s":[[0.15,1.51],[1.96,3.22],[3.67,4.86],[5.31,6.53],[6.98,7.34],[7.79,8.08],[8.53,8.92],[9.37,9.71]]},"p1:4":{"f":"audio/p1-4.mp3","s":[[0.15,1.87],[2.32,3.56],[4.01,5.49],[5.94,7.92],[8.37,8.37],[8.82,9.0],[9.45,9.71],[10.16,10.34]]},"p1:5":{"f":"audio/p1-5.mp3","s":[[0.15,1.96],[2.41,3.65],[4.1,5.21],[5.66,6.86],[7.31,7.66],[8.11,8.5],[8.95,9.44],[9.89,10.32]]},"p1:6":{"f":"audio/p1-6.mp3","s":[[0.15,1.94],[2.39,3.83],[4.28,5.63],[6.08,7.52],[7.97,8.26],[8.71,9.06],[9.51,9.91],[10.36,10.68]]},"p1:7":{"f":"audio/p1-7.mp3","s":[[0.15,1.86],[2.31,3.62],[4.07,5.49],[5.94,7.29],[7.74,8.03],[8.48,8.77],[9.22,9.61],[10.06,10.42]]},"p1:8":{"f":"audio/p1-8.mp3","s":[[0.15,1.22],[1.67,2.54],[2.99,3.91],[4.36,5.53],[5.98,6.28],[6.73,7.0],[7.45,7.84],[8.29,8.62]]},"p1:9":{"f":"audio/p1-9.mp3","s":[[0.15,1.29],[1.74,3.34],[3.79,5.01],[5.46,6.63],[7.08,7.44],[7.89,8.18],[8.63,9.02],[9.47,9.81]]},"p1:10":{"f":"audio/p1-10.mp3","s":[[0.15,1.92],[2.37,4.08],[4.53,6.36],[6.81,8.58],[9.03,9.03],[9.48,9.66],[10.11,10.36],[10.81,11.0]]},"p1:11":{"f":"audio/p1-11.mp3","s":[[0.15,1.62],[2.07,3.48],[3.93,5.27],[5.72,6.82],[7.27,7.61],[8.06,8.45],[8.9,9.4],[9.85,10.28]]},"p1:12":{"f":"audio/p1-12.mp3","s":[[0.15,1.22],[1.67,2.81],[3.26,4.47],[4.92,6.09],[6.54,6.83],[7.28,7.63],[8.08,8.48],[8.93,9.25]]},"p1:13":{"f":"audio/p1-13.mp3","s":[[0.15,1.88],[2.33,3.65],[4.1,5.51],[5.96,6.97],[7.42,7.71],[8.16,8.46],[8.91,9.29],[9.74,10.1]]},"p1:14":{"f":"audio/p1-14.mp3","s":[[0.15,1.85],[2.3,3.95],[4.4,5.7],[6.15,7.24],[7.69,7.99],[8.44,8.71],[9.16,9.55],[10.0,10.33]]},"p1:15":{"f":"audio/p1-15.mp3","s":[[0.15,1.85],[2.3,3.45],[3.9,5.45],[5.9,7.15],[7.6,7.96],[8.41,8.7],[9.15,9.54],[9.99,10.33]]},"p1:16":{"f":"audio/p1-16.mp3","s":[[0.15,1.8],[2.25,3.38],[3.83,5.14],[5.59,7.21],[7.66,7.66],[8.11,8.29],[8.74,8.99],[9.44,9.62]]},"p1:17":{"f":"audio/p1-17.mp3","s":[[0.15,1.78],[2.23,4.02],[4.47,6.04],[6.49,8.0],[8.45,8.8],[9.25,9.64],[10.09,10.58],[11.03,11.46]]},"p1:18":{"f":"audio/p1-18.mp3","s":[[0.15,1.77],[2.22,3.51],[3.96,5.4],[5.85,7.33],[7.78,8.07],[8.52,8.88],[9.33,9.73],[10.18,10.5]]},"p1:19":{"f":"audio/p1-19.mp3","s":[[0.15,1.28],[1.73,2.7],[3.15,4.23],[4.68,5.9],[6.35,6.64],[7.09,7.39],[7.84,8.22],[8.67,9.03]]},"p3:0":{"f":"audio/p3-0.mp3","s":[[0.15,7.92],[8.27,11.79],[12.14,15.78],[16.13,26.78],[27.13,32.53]]},"p3:1":{"f":"audio/p3-1.mp3","s":[[0.15,3.83],[4.18,12.08],[12.43,17.48],[17.83,25.49]]},"p3:2":{"f":"audio/p3-2.mp3","s":[[0.15,4.2],[4.55,11.11],[11.46,20.82],[21.17,29.52]]},"p3:3":{"f":"audio/p3-3.mp3","s":[[0.15,9.62],[9.97,14.17],[14.52,20.05],[20.4,26.27],[26.62,32.77]]},"p3:4":{"f":"audio/p3-4.mp3","s":[[0.15,3.66],[4.01,9.5],[9.85,14.76],[15.11,20.26],[20.61,25.8]]},"p3:5":{"f":"audio/p3-5.mp3","s":[[0.15,6.06],[6.41,12.39],[12.74,20.63],[20.98,25.97]]},"p3:6":{"f":"audio/p3-6.mp3","s":[[0.15,7.06],[7.41,12.59],[12.94,18.73],[19.08,23.96],[24.31,31.26],[31.61,35.99]]},"p3:7":{"f":"audio/p3-7.mp3","s":[[0.15,7.16],[7.51,11.42],[11.77,17.64],[17.99,28.74],[29.09,33.95],[34.3,38.75]]},"p3:8":{"f":"audio/p3-8.mp3","s":[[0.15,6.9],[7.25,14.38],[14.73,18.34],[18.69,23.9]]},"p3:9":{"f":"audio/p3-9.mp3","s":[[0.15,4.2],[4.55,17.12],[17.47,23.28],[23.63,32.05]]},"p3:10":{"f":"audio/p3-10.mp3","s":[[0.15,6.06],[6.41,14.23],[14.58,21.04],[21.39,27.29],[27.64,34.24]]},"p3:11":{"f":"audio/p3-11.mp3","s":[[0.15,10.48],[10.83,17.01],[17.36,25.0],[25.35,29.71]]},"p3:12":{"f":"audio/p3-12.mp3","s":[[0.15,3.78],[4.13,11.66],[12.01,20.04],[20.39,23.64],[23.99,29.55]]},"p3:13":{"f":"audio/p3-13.mp3","s":[[0.15,5.2],[5.55,13.56],[13.91,18.31],[18.66,26.4]]},"p4:0":{"f":"audio/p4-0.mp3","s":[[0.15,24.87]]},"p4:1":{"f":"audio/p4-1.mp3","s":[[0.15,25.61]]},"p4:2":{"f":"audio/p4-2.mp3","s":[[0.15,30.79]]},"p4:3":{"f":"audio/p4-3.mp3","s":[[0.15,23.83]]},"p4:4":{"f":"audio/p4-4.mp3","s":[[0.15,25.99]]},"p4:5":{"f":"audio/p4-5.mp3","s":[[0.15,33.24]]},"p4:6":{"f":"audio/p4-6.mp3","s":[[0.15,31.06]]},"p4:7":{"f":"audio/p4-7.mp3","s":[[0.15,35.71]]},"p4:8":{"f":"audio/p4-8.mp3","s":[[0.15,32.04]]},"p4:9":{"f":"audio/p4-9.mp3","s":[[0.15,35.92]]},"p4:10":{"f":"audio/p4-10.mp3","s":[[0.15,34.18]]},"p4:11":{"f":"audio/p4-11.mp3","s":[[0.15,33.03]]},"p4:12":{"f":"audio/p4-12.mp3","s":[[0.15,31.95]]},"v":{"f":"audio/vocab.mp3","s":[[0.15,0.72],[1.02,1.87],[2.17,2.98],[3.28,3.85],[4.15,4.68],[4.98,5.58],[5.88,6.64],[6.94,7.41],[7.71,8.52],[8.82,9.57],[9.87,10.44],[10.74,11.74],[12.04,12.86],[13.16,13.98],[14.28,14.93],[15.23,15.83],[16.13,16.91],[17.21,17.79],[18.09,18.76],[19.06,19.57],[19.87,20.58],[20.88,21.53],[21.83,22.46],[22.76,23.41],[23.71,24.41],[24.71,25.46],[25.76,26.46],[26.76,27.24],[27.54,28.04],[28.34,28.94],[29.24,30.28],[30.58,31.61],[31.91,32.47],[32.77,33.35],[33.65,34.26],[34.56,35.09],[35.39,35.92],[36.22,36.72],[37.02,37.6],[37.9,38.41],[38.71,39.26],[39.56,40.39],[40.69,41.51],[41.81,42.23],[42.53,43.26],[43.56,44.2],[44.5,44.99],[45.29,46.05],[46.35,46.98],[47.28,47.65],[47.95,48.48],[48.78,49.36],[49.66,50.38],[50.68,51.33],[51.63,52.32],[52.62,53.21],[53.51,53.99],[54.29,54.98],[55.28,55.69],[55.99,56.82],[57.12,57.83],[58.13,58.75],[59.05,59.75],[60.05,60.6],[60.9,61.46],[61.76,62.27],[62.57,63.17],[63.47,63.86],[64.16,64.78],[65.08,65.65],[65.95,66.53],[66.83,67.46],[67.76,68.65],[68.95,69.47],[69.77,70.44],[70.74,71.51],[71.81,72.38],[72.68,73.35],[73.65,74.17],[74.47,75.03],[75.33,75.88],[76.18,76.97],[77.27,78.14],[78.44,78.94],[79.24,79.79],[80.09,80.56],[80.86,81.22],[81.52,82.02],[82.32,83.14],[83.44,84.38],[84.68,85.28],[85.58,86.43],[86.73,87.72],[88.02,88.5],[88.8,89.49],[89.79,90.23],[90.53,91.07],[91.37,92.22],[92.52,93.28],[93.58,94.63],[94.93,95.53],[95.83,96.61],[96.91,97.6],[97.9,98.65],[98.95,99.62],[99.92,100.37],[100.67,101.27],[101.57,101.93],[102.23,103.09],[103.39,104.15],[104.45,104.92],[105.22,105.88],[106.18,107.41],[107.71,108.49],[108.79,109.62],[109.92,110.53],[110.83,111.59],[111.89,112.49],[112.79,113.48],[113.78,114.55],[114.85,115.54],[115.84,116.53],[116.83,117.59],[117.89,118.66],[118.96,119.7],[120.0,120.8],[121.1,121.86],[122.16,122.74],[123.04,123.79],[124.09,124.78],[125.08,125.8],[126.1,126.69],[126.99,127.54],[127.84,128.46],[128.76,129.35],[129.65,130.28],[130.58,131.28],[131.58,132.31],[132.61,133.34],[133.64,134.37],[134.67,135.33],[135.63,136.16],[136.46,137.14],[137.44,138.23],[138.53,139.21],[139.51,140.03],[140.33,141.21],[141.51,142.11],[142.41,142.89],[143.19,143.79],[144.09,144.66],[144.96,145.45],[145.75,146.3],[146.6,147.41],[147.71,148.23],[148.53,149.16],[149.46,150.28],[150.58,151.39],[151.69,152.5],[152.8,153.43],[153.73,154.76],[155.06,155.65],[155.95,156.67],[156.97,157.55],[157.85,158.6],[158.9,159.59],[159.89,160.78],[161.08,161.71],[162.01,162.74],[163.04,163.51],[163.81,164.65],[164.95,165.78],[166.08,166.77],[167.07,167.82],[168.12,168.8],[169.1,169.74],[170.04,170.88],[171.18,171.99],[172.29,173.25],[173.55,174.38],[174.68,175.39],[175.69,176.23],[176.53,177.24],[177.54,178.18],[178.48,179.34],[179.64,180.33],[180.63,181.22],[181.52,182.15],[182.45,183.23],[183.53,184.07],[184.37,185.12],[185.42,186.36],[186.66,187.47],[187.77,188.42],[188.72,189.34],[189.64,190.47]]}};
 
 /* ================= PARTIES ================= */
@@ -2148,7 +2231,7 @@ function buildUnits(p,opts){
   return shuffle(ordered.slice(0,per)).map(i=>p+":"+i);
 }
 function startQuiz(view,units,opts){
-  quiz={view,units,base:units.length,i:0,ans:[],perms:[],retryPos:new Set(),retried:new Set(),opts:opts||{},sel:{},reveal:false,showScript:false,played:false,timer:null,lv:{},hn:{},lvMsg:{}};
+  quiz={view,units,base:units.length,i:0,ans:[],perms:[],retryPos:new Set(),retried:new Set(),opts:opts||{},sel:{},reveal:false,showScript:false,played:false,timer:null,lv:{},hn:{},lvMsg:{},lv67:{},hn67:{},lvMsg67:{}};
 }
 function stopTimer(){if(quiz&&quiz.timer){clearInterval(quiz.timer);quiz.timer=null}}
 /* Mélange les réponses ; si la question a déjà été vue, la bonne réponse change toujours de lettre */
@@ -2187,6 +2270,7 @@ function renderQuiz(){
   if(quiz.i>=quiz.units.length) return renderResult();
   const key=quiz.units[quiz.i],p=pk(key);
   if(p==="p5"&&quiz.opts.coach&&quiz.lv[quiz.i]===undefined)quiz.lv[quiz.i]=skLevel(skillOf(itemOf(key)));
+  initLv67(key,p);
   const prog=`<div class="progress" aria-hidden="true">${quiz.units.map((u,j)=>{const a=quiz.ans[j];let c="";
     if(a!==undefined){const it=itemOf(u);c=PARTS[pk(u)].set?(a.every((x,s)=>x===it.qs[s].a)?"ok":"ko"):(a===it.a?"ok":"ko")}else if(j===quiz.i)c="cur";return `<i class="${c}"></i>`}).join("")}</div>`;
   const rec=S.q[key];const answered=quiz.ans[quiz.i]!==undefined;
@@ -2197,7 +2281,7 @@ function renderQuiz(){
   $("#main").innerHTML=`<section class="view">${prog}<div class="card stack">${head}${body}</div></section>`;
   bindQuiz(key,p,answered);
 }
-function chronoOn(p,key){return (quiz.opts.chrono&&CHRONO[p])||(quiz.opts.coach&&p==="p5"&&quiz.lv[quiz.i]==="auto")}
+function chronoOn(p,key){return (quiz.opts.chrono&&CHRONO[p])||(quiz.opts.coach&&p==="p5"&&quiz.lv[quiz.i]==="auto")||(quiz.opts.coach67&&CHRONO[p]&&allAuto67())}
 function renderSingle(key,p,answered){
   const it=itemOf(key),perm=permFor(quiz.i),ch=quiz.ans[quiz.i];
   const coach=quiz.opts.coach&&p==="p5";
@@ -2245,13 +2329,14 @@ function renderSet(key,p,answered){
     const txt=esc(it.text).replace(/\{(\d)\}/g,(m,n)=>{const s=+n-1;return answered?`<span class="slot done">(${n}) ${esc(it.qs[s].o[it.qs[s].a])}</span>`:`<span class="slot">(${n}) ______</span>`});
     top+=`<div class="doc"><div class="db">${txt}</div></div>`;
   }
-  if(p==="p7") top+=it.docs.map(d=>`<div class="doc"><div class="dh">${esc(d.h)}</div><div class="db">${esc(d.b)}</div></div>`).join("");
+  if(p==="p7"){const mk=marks67(key,p);top+=it.docs.map(d=>`<div class="doc"><div class="dh">${esc(d.h)}</div><div class="db">${evMark(d.b,mk)}</div></div>`).join("")}
   const qs=it.qs.map((q,s)=>{const perm=perms[s],ch=sel[s];
-    let h=`<div class="subq"><span class="qt">${esc(q.q)}</span><div class="opts">${optionList(q,perm,ch,answered,`data-s="${s}"`)}</div>`;
+    const c67=quiz.opts.coach67&&(p==="p6"||p==="p7");
+    let h=`<div class="subq">${c67?`<div class="row" style="gap:6px"><span class="tag">${esc(SK67_BY_ID[skill67(p,it,q)].name)}</span>${lvlChip(lv67(s))}</div>`:""}<span class="qt">${esc(q.q)}</span>${c67&&!answered?hints67(key,p,s):""}<div class="opts">${optionList(q,perm,ch,answered,`data-s="${s}"`)}</div>`;
     if(answered){const ok=ch===q.a,dpos=d=>L[perm.indexOf(d)];
       h+=`<span class="mini ${ok?"ok":"ko"}">${ok?"✓ Bonne réponse":ch===-1?"⏱ Temps écoulé · la bonne : ("+dpos(q.a)+") "+esc(q.o[q.a]):"✗ Ta réponse : ("+dpos(ch)+") · la bonne : ("+dpos(q.a)+") "+esc(q.o[q.a])}</span>
       <div class="explain"><div class="ex-row"><span>${p==="p6"?"L'indice":"La preuve"}</span><div>${esc(q.k)}</div></div>
-      <div class="ex-row"><span>Chaque option</span>${whyList(q,perm,ch)}</div>${tipBox(q.t)}</div>`}
+      <div class="ex-row"><span>Chaque option</span>${whyList(q,perm,ch)}</div>${tipBox(q.t)}${c67?after67(key,p,s):""}</div>`}
     return h+`</div>`}).join("");
   let out=top+`<div class="stack" style="gap:16px">${qs}</div>`;
   if(answered){const allOk=ans.every((x,s)=>x===it.qs[s].a);
@@ -2269,7 +2354,7 @@ function bindQuiz(key,p,answered){
   if(PARTS[p].set){
     document.querySelectorAll(".opt[data-s]").forEach(b=>b.onclick=()=>{quiz.sel[quiz.i][+b.dataset.s]=+b.dataset.j;const y=window.scrollY;renderQuiz();window.scrollTo({top:y})});
     if($("#validate"))$("#validate").onclick=()=>{const sel=quiz.sel[quiz.i];quiz.ans[quiz.i]=sel.slice();
-      const nOk=sel.filter((x,s)=>x===it.qs[s].a).length;record(key,nOk,it.qs.length,quiz.perms[quiz.i].map((pm,s)=>pm.indexOf(it.qs[s].a)));stopAudio();afterAnswer(nOk===it.qs.length)};
+      const nOk=sel.filter((x,s)=>x===it.qs[s].a).length;record(key,nOk,it.qs.length,quiz.perms[quiz.i].map((pm,s)=>pm.indexOf(it.qs[s].a)));update67(key,sel);stopAudio();afterAnswer(nOk===it.qs.length)};
   } else {
     document.querySelectorAll(".opt[data-j]").forEach(b=>b.onclick=()=>answerSingle(+b.dataset.j));
   }
@@ -2283,6 +2368,7 @@ function bindQuiz(key,p,answered){
     const play=()=>playSegs(key,idxs,()=>speakSeq(seq),on=>{if(document.body.contains(btn))btn.textContent=on?"■ Lecture en cours…":lbl});
     btn.onclick=()=>{if(btn.textContent.startsWith("■")){stopAudio();btn.textContent=lbl}else play()};
     if(!answered&&!quiz.played&&(p==="p1"||p==="p2")){quiz.played=true;setTimeout(play,300)}}
+  document.querySelectorAll("[data-hs]").forEach(b=>b.onclick=()=>{const k=+b.dataset.hs;quiz.hn67[quiz.i]=quiz.hn67[quiz.i]||{};quiz.hn67[quiz.i][k]=(quiz.hn67[quiz.i][k]||0)+1;const y=window.scrollY;renderQuiz();window.scrollTo({top:y})});
   if($("#moreHint"))$("#moreHint").onclick=()=>{quiz.hn[quiz.i]=(quiz.hn[quiz.i]||0)+1;quiz.usedHint=quiz.usedHint||{};quiz.usedHint[quiz.i]=true;renderQuiz()};
   if(chronoOn(p,key)&&!answered){
     const tick=()=>{const left=timeLeft(p),el=$("#timer");if(el){el.textContent=fmtT(left);el.classList.toggle("low",left<=(PARTS[p].set?15:5))}
@@ -2302,7 +2388,7 @@ function timeUp(key,p){
   it.qs.forEach((_,s)=>{if(sel[s]===undefined)sel[s]=-1});
   quiz.ans[quiz.i]=sel.slice();quiz.timedOut=quiz.timedOut||{};quiz.timedOut[quiz.i]=true;
   const nOk=sel.filter((x,s)=>x===it.qs[s].a).length;
-  record(key,nOk,it.qs.length,quiz.perms[quiz.i].map((pm,s)=>pm.indexOf(it.qs[s].a)));stopAudio();afterAnswer(nOk===it.qs.length)}
+  record(key,nOk,it.qs.length,quiz.perms[quiz.i].map((pm,s)=>pm.indexOf(it.qs[s].a)));update67(key,sel);stopAudio();afterAnswer(nOk===it.qs.length)}
 function answerSingle(j){
   stopTimer();stopAudio();
   const key=quiz.units[quiz.i],it=itemOf(key),ok=j===it.a;
@@ -2333,7 +2419,8 @@ function renderResult(){
   </section>`;
   const v=quiz.view,opts=quiz.opts;
   if(opts.coach){const sec=$("#main section");if(sec)sec.insertAdjacentHTML("beforeend",coachResultCard())}
-  $("#again").onclick=()=>{if(opts.coach){startQuiz(v,opts.parts?reviewUnits(opts.parts):coachUnits(opts.skill||null),opts)}else if(opts.part){startQuiz(v,buildUnits(opts.part,opts),opts)}else{startQuiz(v,reviewUnits(opts.parts||ALLP),opts)}renderQuiz();window.scrollTo({top:0})};
+  if(opts.coach67){const sec=$("#main section");if(sec)sec.insertAdjacentHTML("beforeend",coach67ResultCard())}
+  $("#again").onclick=()=>{if(opts.coach67){startQuiz(v,opts.parts?reviewUnits(opts.parts):coach67Units(opts.skill67||null),opts)}else if(opts.coach){startQuiz(v,opts.parts?reviewUnits(opts.parts):coachUnits(opts.skill||null),opts)}else if(opts.part){startQuiz(v,buildUnits(opts.part,opts),opts)}else{startQuiz(v,reviewUnits(opts.parts||ALLP),opts)}renderQuiz();window.scrollTo({top:0})};
   $("#back").onclick=()=>{quiz=null;route()};
 }
 function reviewUnits(parts){const now=Date.now();
@@ -2594,6 +2681,7 @@ function coachView(){
   const count=id=>GRAMMAR.filter(g=>skillOf(g)===id).length;
   const nAuto=SKILLS.filter(s=>skLevel(s.id)==="auto").length;
   $("#main").innerHTML=`<section class="view">
+    ${coachSwitch("5")}
     <div><p class="eyebrow">Reading · Part 5 · ${GRAMMAR.length} questions · 20 règles</p><h2>Coach Partie 5</h2></div>
     <div class="card score">
       <div class="row between"><p class="eyebrow">Ton niveau en Part 5 · 7 derniers jours</p><span class="note">objectif 26 / 30</span></div>
@@ -2704,8 +2792,154 @@ function natureView(){
     renderQuiz();window.scrollTo({top:0})});
 }
 
+
+/* ================= COACH PARTIES 6 ET 7 ================= */
+/* Chaque question de Part 6 et 7 appartient à une compétence (SKILLS67). Même principe que le Coach Part 5 :
+   Guidé (0-1 réussite d'affilée) → 3 indices · Aidé (2-3) → indices sur demande · Automatisme (4+) → sans indice, avec chrono. */
+const CONN67=["however","therefore","as a result","in addition","nevertheless","consequently","otherwise","meanwhile","in contrast","for example","moreover","furthermore","instead","similarly","on the other hand","in the meantime","for instance","finally"];
+const FN67=/^(by|until|since|for|within|during|before|after|at|on|in|to|across|between|among|along|which|that|who|whom|whose|what|its|it's|their|his|whereas|despite|because|because of|although|while|when|unless|if|provided that|in case|so that|as soon as|as long as|as well as|as far as|as of|as for|as if|instead of|in spite of|ahead of|on behalf of|in observance of|throughout|except|besides|including|whichever|whatever|whoever|wherever|many of which|most of which|many of them|most of them|which many|which most|many of whom|most of whom|due to|rather|in place|as well as|as a result|in contrast|nevertheless|otherwise|meanwhile)$/i;
+function cls6(q){
+  if(/phrase va dans le trou/i.test(q.q)) return "s6-insert";
+  const o=q.o.map(x=>x.toLowerCase().trim());
+  if(o.filter(x=>CONN67.includes(x)||FN67.test(x)).length>=3) return "s6-link";
+  if(/milestone|accounted/.test(o.join(" "))) return "s6-voc";
+  const sh=o.slice().sort((a,b)=>a.length-b.length)[0];let fam=false;
+  for(let i=0;i+4<=sh.length&&!fam;i++){const sub=sh.slice(i,i+4);if(!/\s/.test(sub)&&o.every(x=>x.includes(sub)))fam=true}
+  if(fam||o.some(x=>/ly$/.test(x))){
+    const natureLike=o.some(x=>/(ly|tion|ment|ity|ance|ence|ness|ure|ive|able|ible|ful|ous|al|ic|ist|or)$/.test(x)&&!/^(will|has|had|is|was|be)\b/.test(x));
+    const verbLike=o.filter(x=>/^(will|has|have|had|is|are|was|were|be)\b|ed$|ing$|^to /.test(x)).length>=2;
+    return natureLike&&!verbLike?"s6-nature":"s6-temps";
+  }
+  return "s6-voc";
+}
+function cls7(q,set){
+  const t=q.q;
+  if(/position/i.test(t)&&/\[1\]/.test(t)) return "s7-insert";
+  if(/closest in meaning/i.test(t)) return "s7-syn";
+  if(/mean when|means when/i.test(t)) return "s7-intent";
+  if(/\bNOT\b/.test(t)) return "s7-not";
+  if(/mainly about|purpose|Why (did|was) .*(write|sent)|Why was the e-mail/i.test(t)) return "s7-main";
+  if(/\d\s*[×x−+÷=]\s*\d/.test(q.k)||(set.docs.length>1&&/Combine|Mémo :|Facture :|Tableau|Itinéraire :|E-mail du|deux documents|2ᵉ document|1ᵉʳ document/.test(q.k+" "+q.t))) return "s7-cross";
+  if(/suggested|implied|imply|most likely|probably/i.test(t)) return "s7-infer";
+  if(/indicated|true|stated|mentioned/i.test(t)) return "s7-true";
+  return "s7-detail";
+}
+function skill67(p,set,q){if(!q._sk)q._sk=q.sk||(p==="p6"?cls6(q):cls7(q,set));return q._sk}
+/* Indice 2 en Part 7 : surligne le passage du texte qui contient la preuve */
+function evFragments(q){
+  const out=[];(q.k||"").replace(/«\s*([^»]+?)\s*»/g,(m,x)=>{x.split(/…|\.\.\./).forEach(f=>{f=f.trim().replace(/^[,.;:]+|[,.;:]+$/g,"").trim();if(f.length>=8)out.push(f)});return m});
+  return out;
+}
+function evMark(text,marks){
+  let h=esc(text);
+  marks.forEach(([frag,n])=>{const e=esc(frag);const i=h.indexOf(e);if(i>=0)h=h.slice(0,i)+`<mark class="ev" data-n="${n}">`+e+`</mark>`+h.slice(i+e.length)});
+  return h;
+}
+function lv67(s){quiz.lv67[quiz.i]=quiz.lv67[quiz.i]||{};return quiz.lv67[quiz.i][s]}
+function initLv67(key,p){
+  if(!quiz.opts.coach67||!(p==="p6"||p==="p7"))return;
+  const it=itemOf(key);quiz.lv67[quiz.i]=quiz.lv67[quiz.i]||{};
+  it.qs.forEach((q,s)=>{if(quiz.lv67[quiz.i][s]===undefined)quiz.lv67[quiz.i][s]=skLevel(skill67(p,it,q))});
+}
+function hn67(s){quiz.hn67[quiz.i]=quiz.hn67[quiz.i]||{};return quiz.lv67[quiz.i][s]==="guide"?3:(quiz.hn67[quiz.i][s]||0)}
+/* Fragments à surligner pour les questions dont l'indice 2 est visible */
+function marks67(key,p){
+  if(!quiz.opts.coach67||p!=="p7"||quiz.ans[quiz.i]!==undefined)return [];
+  const it=itemOf(key),m=[];
+  it.qs.forEach((q,s)=>{if(lv67(s)!=="auto"&&hn67(s)>=2)evFragments(q).forEach(f=>m.push([f,s+1]))});
+  return m;
+}
+function hints67(key,p,s){
+  const it=itemOf(key),q=it.qs[s],sk=SK67_BY_ID[skill67(p,it,q)],lv=lv67(s);
+  if(lv==="auto") return `<div class="hintbar auto"><b>Automatisme</b> sur « ${esc(sk.name)} » : pas d'indice.</div>`;
+  const shown=hn67(s),frag=p==="p7"?evFragments(q):[];
+  const where=p==="p6"?esc(q.k):frag.length?`Regarde le passage surligné <b class="evn">${s+1}</b> dans le texte.`:`Cherche dans le texte le mot-clé de la question (ou un synonyme), puis lis la phrase entière.`;
+  const H=[["Type",`<b>${esc(sk.name)}</b> : ${esc(sk.spot)}`],["Où",where],["Méthode",esc(sk.rule)]];
+  return `<div class="hints">${shown?`<div class="hint compact">${H.map((h,i)=>i<shown?`<div class="hrow"><span class="eyebrow">${i+1} · ${h[0]}</span><span>${h[1]}</span></div>`:"").join("")}</div>`:""}
+    ${lv==="aide"&&shown<3?`<button class="btn ghost small" data-hs="${s}">Afficher l'indice ${shown+1} / 3</button>`:""}</div>`;
+}
+function after67(key,p,s){
+  const it=itemOf(key),q=it.qs[s],sk=SK67_BY_ID[skill67(p,it,q)],st=skStat(sk.id),m=(quiz.lvMsg67[quiz.i]||{})[s];
+  return `<div class="method"><div class="row between"><span class="eyebrow">${esc(sk.name)}</span><span class="row" style="gap:8px">${dots(st.st)}${lvlChip(skLevel(sk.id))}</span></div>
+    <ol>${sk.steps.map(x=>`<li>${esc(x)}</li>`).join("")}</ol><p class="note"><b>Piège :</b> ${esc(sk.trap)}</p>
+    ${m&&m.up?`<p class="lvlmsg up">Bravo : tu passes en <b>${LVL[m.after][0]}</b> sur cette compétence.</p>`:m&&!m.ok&&m.before!=="guide"?`<p class="lvlmsg down">Retour en <b>Guidé</b> sur cette compétence : les indices reviennent.</p>`:""}</div>`;
+}
+/* Après validation (ou fin du chrono) : progression de chaque compétence */
+function update67(key,sel){
+  const p=pk(key);if(p!=="p6"&&p!=="p7")return;
+  const it=itemOf(key);quiz.lvMsg67=quiz.lvMsg67||{};quiz.lvMsg67[quiz.i]={};
+  it.qs.forEach((q,s)=>{const ok=sel[s]===q.a,ch=updateSkill(skill67(p,it,q),ok);quiz.lvMsg67[quiz.i][s]={ok,before:ch.before,after:ch.after,up:ok&&ch.after!==ch.before}});
+}
+function allAuto67(){const l=quiz.lv67[quiz.i];return l&&Object.keys(l).length&&Object.values(l).every(x=>x==="auto")}
+function coach67Units(skillId){
+  const now=Date.now(),rec=k=>S.q[k];
+  const sets=[];["p6","p7"].forEach(p=>PARTS[p].bank.forEach((it,i)=>{const key=p+":"+i,r=rec(key);
+    const ids=it.qs.map(q=>skill67(p,it,q));
+    const weak=ids.reduce((a,id)=>a+(4-Math.min(4,skStat(id).st)),0)/ids.length;
+    sets.push({key,p,it,ids,due:r&&r.need>0&&r.due<=now,seen:!!r,t:r?r.t||0:0,weak,hits:skillId?ids.filter(x=>x===skillId).length:0})}));
+  const order=(a,b)=>(b.due-a.due)||(a.seen-b.seen)||(b.hits-a.hits)||(b.weak-a.weak)||(a.t-b.t);
+  if(skillId){
+    const pool=sets.filter(x=>x.hits>0).sort(order);
+    return shuffle(pool.slice(0,5).map(x=>x.key));
+  }
+  const picks=[];
+  const p6=sets.filter(x=>x.p==="p6").sort(order).slice(0,2);picks.push(...p6.map(x=>x.key));
+  const p7=sets.filter(x=>x.p==="p7").sort(order);
+  ["Court","Long","Multiple"].forEach(c=>{const x=p7.find(y=>!picks.includes(y.key)&&lenCat("p7",y.it)===c);if(x)picks.push(x.key)});
+  return picks;
+}
+function coachSwitch(active){return `<div class="seg coachseg" role="group" aria-label="Choisir le coach"><a href="#coach" class="${active==="5"?"on":""}">Partie 5</a><a href="#coach67" class="${active==="67"?"on":""}">Parties 6 et 7</a></div>`}
+function coach67View(){
+  if(quiz&&quiz.view==="coach67") return renderQuiz();
+  const s6=lastDays(7,["p6"]),s7=lastDays(7,["p7"]);
+  const sc6=s6.t?Math.round(s6.ok/s6.t*16):null,sc7=s7.t?Math.round(s7.ok/s7.t*54):null;
+  const due=errorsOf(["p6","p7"],true).length;
+  const counts={};["p6","p7"].forEach(p=>PARTS[p].bank.forEach(it=>it.qs.forEach(q=>{const id=skill67(p,it,q);counts[id]=(counts[id]||0)+1})));
+  const row=s=>{const st=skStat(s.id),a=st.ok+st.ko?Math.round(st.ok/(st.ok+st.ko)*100):null;
+    return `<details class="fiche skill"><summary><span class="sk-name">${esc(s.name)}</span><span class="row" style="gap:8px">${dots(st.st)}${lvlChip(skLevel(s.id))}</span></summary>
+    <div class="fiche-body"><div class="meta note">Réussite <b class="mono">${a!==null?a+" %":"–"}</b> · ${counts[s.id]||0} questions</div>
+    <div><span class="eyebrow">Comment la reconnaître</span><p>${esc(s.spot)}</p></div><div class="rule">${esc(s.rule)}</div>
+    <div><span class="eyebrow">Les étapes</span><ol>${s.steps.map(x=>`<li>${esc(x)}</li>`).join("")}</ol></div>
+    <div><span class="eyebrow">Exemples</span><ul>${s.ex.map(x=>`<li class="testfont">${esc(x)}</li>`).join("")}</ul></div>
+    <p class="note"><b>Piège :</b> ${esc(s.trap)}</p><div><button class="btn small" data-skill67="${s.id}">S'entraîner sur cette compétence</button></div></div></details>`};
+  $("#main").innerHTML=`<section class="view">
+    ${coachSwitch("67")}
+    <div><p class="eyebrow">Reading · ${PARTS.p6.bank.length} textes · ${PARTS.p7.bank.length} documents · 14 compétences</p><h2>Coach Parties 6 et 7</h2></div>
+    <div class="card score">
+      <div class="row between"><p class="eyebrow">Ton niveau · 7 derniers jours</p><span class="note">objectifs 14 / 16 et 47 / 54</span></div>
+      <div class="nums"><span class="tot mono ${sc6>=14?"ok":""}" style="font-size:2.2rem">P6 ${sc6!==null?sc6:"–"}<span class="muted" style="font-size:.5em"> / 16</span></span><span class="tot mono ${sc7>=47?"ok":""}" style="font-size:2.2rem">P7 ${sc7!==null?sc7:"–"}<span class="muted" style="font-size:.5em"> / 54</span></span></div>
+      <p class="note">Pour viser 870, il faut environ 88 % de réussite : 14 sur 16 en Part 6 et 47 sur 54 en Part 7. Estimation à partir de tes réponses, pas un score officiel.</p>
+    </div>
+    <div class="card stack">
+      <p class="eyebrow">Part 6 · tes 4 réflexes</p>
+      <ol class="reflex"><li><b>Lis le texte en entier une fois</b>, vite : en Part 6, le contexte compte.</li><li>Pour chaque trou, <b>regarde les options</b> : même racine → nature ; même verbe → temps ; petits mots → liaison ; 4 phrases → phrase à insérer.</li><li><b>Temps et liaison</b> : décide avec les phrases d'avant et d'après, pas avec la phrase seule.</li><li><b>Phrase à insérer</b> : elle doit faire le lien entre la phrase d'avant et celle d'après.</li></ol>
+      <p class="eyebrow">Part 7 · tes 5 réflexes</p>
+      <ol class="reflex"><li><b>Lis la question d'abord</b>, puis va chercher dans le texte.</li><li><b>Identifie le type</b> : sujet, détail, NOT, déduction, synonyme, citation, phrase à placer, calcul.</li><li><b>Cherche le mot-clé</b> de la question dans le texte, ou son synonyme.</li><li><b>Choisis la reformulation</b>, pas l'option qui répète les mots du texte.</li><li><b>Doubles et triples</b> : une info dans chaque document. Note-les avant de répondre.</li></ol>
+      <div class="row" style="gap:6px">${lvlChip("guide")}<span class="note">0-1 réussite d'affilée</span> → ${lvlChip("aide")}<span class="note">2-3</span> → ${lvlChip("auto")}<span class="note">4 et plus, avec chrono</span></div>
+      <p class="note">En mode Guidé, l'indice 2 surligne le passage du texte où se trouve la réponse. Une erreur te ramène en Guidé sur la compétence.</p>
+      <div class="row"><button class="btn" id="c67Go">Lancer une séance (2 textes + 3 documents)</button>${due?`<button class="btn bad" id="c67Err">Mes erreurs 6 et 7 <span class="n">${due}</span></button>`:""}</div>
+    </div>
+    <p class="eyebrow">Partie 6 · 5 compétences</p>
+    <div class="stack" style="gap:8px">${SKILLS67.filter(s=>s.part==="p6").map(row).join("")}</div>
+    <p class="eyebrow">Partie 7 · 9 compétences</p>
+    <div class="stack" style="gap:8px">${SKILLS67.filter(s=>s.part==="p7").map(row).join("")}</div>
+  </section>`;
+  $("#c67Go").onclick=()=>{startQuiz("coach67",coach67Units(null),{coach67:true});renderQuiz();window.scrollTo({top:0})};
+  if($("#c67Err"))$("#c67Err").onclick=()=>{startQuiz("coach67",reviewUnits(["p6","p7"]),{coach67:true,parts:["p6","p7"]});renderQuiz();window.scrollTo({top:0})};
+  document.querySelectorAll("[data-skill67]").forEach(b=>b.onclick=()=>{const id=b.dataset.skill67;startQuiz("coach67",coach67Units(id),{coach67:true,skill67:id});renderQuiz();window.scrollTo({top:0})});
+}
+function coach67ResultCard(){
+  const by={};
+  quiz.units.forEach((u,j)=>{const p=pk(u),a=quiz.ans[j];if(!(p==="p6"||p==="p7")||a===undefined)return;const it=itemOf(u);
+    it.qs.forEach((q,s)=>{const id=skill67(p,it,q);by[id]=by[id]||{ok:0,t:0};by[id].t++;if(a[s]===q.a)by[id].ok++})});
+  const rows=Object.entries(by).sort((a,b)=>a[1].ok/a[1].t-b[1].ok/b[1].t);
+  return `<div class="card stack"><p class="eyebrow">Tes compétences dans cette séance</p>
+    ${rows.map(([id,v])=>`<div class="row between"><span>${esc(SK67_BY_ID[id].name)}</span><span class="row" style="gap:8px"><span class="mono">${v.ok}/${v.t}</span>${dots(skStat(id).st)}${lvlChip(skLevel(id))}</span></div>`).join("")}
+    <p class="note">Les compétences encore en « Guidé » reviendront en priorité dans ta prochaine séance.</p></div>`;
+}
+
 /* ================= NAVIGATION ================= */
-const VIEWS={nature:()=>natureView(),coach:()=>coachView(),accueil:homeView,vocab:vocabView,ecoute:()=>sectionView("L"),lecture:()=>sectionView("R"),revision:revisionView,fiches:fichesView};
+const VIEWS={coach67:()=>coach67View(),nature:()=>natureView(),coach:()=>coachView(),accueil:homeView,vocab:vocabView,ecoute:()=>sectionView("L"),lecture:()=>sectionView("R"),revision:revisionView,fiches:fichesView};
 let current="accueil";
 function route(){
   let v=(location.hash||"#accueil").slice(1);
@@ -2713,7 +2947,7 @@ function route(){
   current=v;
   if(quiz&&quiz.view!==v){stopTimer();quiz=null}
   stopAudio();
-  document.querySelectorAll("nav.tabs a").forEach(a=>a.setAttribute("aria-current",a.dataset.v===v||(v==="revision"&&a.dataset.v==="accueil")||(v==="nature"&&a.dataset.v==="coach")?"page":"false"));
+  document.querySelectorAll("nav.tabs a").forEach(a=>a.setAttribute("aria-current",a.dataset.v===v||(v==="revision"&&a.dataset.v==="accueil")||((v==="nature"||v==="coach67")&&a.dataset.v==="coach")?"page":"false"));
   renderHeader();VIEWS[v]();
 }
 function softRefresh(){renderHeader();if(!quiz&&(current!=="vocab"||!vq||vq.i===0)){vq=null;VIEWS[current]()}}
